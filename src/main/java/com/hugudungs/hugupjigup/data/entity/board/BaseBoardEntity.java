@@ -11,7 +11,6 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
  */
 
 @Data
-@EntityListeners(AuditingEntityListener.class)
 @MappedSuperclass
 public abstract class BaseBoardEntity extends BaseEntity {
     /**
