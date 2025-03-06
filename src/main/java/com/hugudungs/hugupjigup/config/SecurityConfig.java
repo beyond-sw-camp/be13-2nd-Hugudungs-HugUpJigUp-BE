@@ -1,4 +1,4 @@
-package com.hugudungs.hugupjigup.Config;
+package com.hugudungs.hugupjigup.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
