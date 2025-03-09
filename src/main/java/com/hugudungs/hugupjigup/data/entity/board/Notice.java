@@ -20,11 +20,11 @@ import java.util.Date;
         @AttributeOverride(name = "views", column = @Column(name = "notice_number", columnDefinition = "INT DEFAULT 0"))
 })
 public class Notice extends BaseBoardEntity {
-    @ManyToOne
+    @OneToOne
     @JoinColumn(name = "notice_text_userId", nullable = false)
     private User user;  // FK - Users 테이블 참조
 
-    @ManyToOne
+    @OneToOne
     @JoinColumn(name = "text_type_id", nullable = false)
     private TextType textType;  // FK - TextType 테이블 참조
 
