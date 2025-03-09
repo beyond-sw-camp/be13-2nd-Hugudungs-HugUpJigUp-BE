@@ -18,7 +18,7 @@ import java.time.LocalDateTime;
 @MappedSuperclass
 public abstract class BaseEntity {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY) // AUTO에서 IDENTITY로 변경 (AUTO_INCREMENT)
     private long id;
 
     @Column(name = "created_at", updatable = false)
