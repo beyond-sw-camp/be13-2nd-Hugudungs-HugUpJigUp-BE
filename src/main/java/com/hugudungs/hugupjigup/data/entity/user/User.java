@@ -35,7 +35,7 @@ public class User extends BaseEntity {
 
     @Enumerated(EnumType.STRING)
     @Column(name = "login_type")
-    private LoginType loginType;  // 로그인 타입 (ENUM) (NULL 허용)
+    private LoginType loginType;  // 로그인 타입 (ENUM) (이것도 NULL 허용)
 
     public enum LoginType {
         GOOGLE, FACEBOOK, KAKAO, LOCAL
