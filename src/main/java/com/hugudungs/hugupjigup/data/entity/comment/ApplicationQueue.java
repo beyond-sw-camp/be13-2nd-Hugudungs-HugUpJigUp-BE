@@ -1,0 +1,18 @@
+package com.hugudungs.hugupjigup.data.entity.comment;
+
+import jakarta.persistence.AttributeOverride;
+import jakarta.persistence.AttributeOverrides;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Table;
+
+@Entity
+@Table(name="application_queue")
+@AttributeOverrides({
+        @AttributeOverride(name = "content", column = @Column(name = "application_queue_content"))
+})
+public class ApplicationQueue extends BaseComment {
+
+    @Column(nullable = false)
+    private Enum status; // 대기열 상태를 뜻함 (Ex. 대기중, 승낙, 멘토링 완료)
+}
