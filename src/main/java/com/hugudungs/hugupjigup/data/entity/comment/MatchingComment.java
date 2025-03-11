@@ -1,6 +1,5 @@
-package com.hugudungs.hugupjigup.data.entity.board.matching;
+package com.hugudungs.hugupjigup.data.entity.comment;
 
-import com.hugudungs.hugupjigup.data.entity.comment.BaseCommentEntity;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -13,6 +12,9 @@ import lombok.Setter;
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name = "matching_comment")
+@AttributeOverrides({
+        @AttributeOverride(name = "id", column = @Column(name = "matching_comment_id")),
+})
 public class MatchingComment extends BaseCommentEntity {
     /*
     평점

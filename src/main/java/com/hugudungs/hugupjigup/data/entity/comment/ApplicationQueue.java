@@ -9,6 +9,9 @@ import jakarta.persistence.Table;
 
 @Entity
 @Table(name="application_queue")
+@AttributeOverrides({
+        @AttributeOverride(name = "id", column = @Column(name = "application_queue_id")),
+})
 public class ApplicationQueue extends BaseEntity {
     @Column(nullable = false)
     private String content;
