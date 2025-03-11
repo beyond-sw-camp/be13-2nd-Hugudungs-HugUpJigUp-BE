@@ -14,12 +14,12 @@ import jakarta.persistence.Table;
 @AttributeOverrides({
         @AttributeOverride(name = "id", column = @Column(name = "matching_id")),
         @AttributeOverride(name = "title", column = @Column(name = "matching_title")),
-        @AttributeOverride(name = "content", column = @Column(name = "matching_content"))
+        @AttributeOverride(name = "content", column = @Column(name = "matching_content")),
+        @AttributeOverride(name = "views", column = @Column(name = "matching_views"))
 })
 public class Matching extends BaseBoardEntity {
-
     @ManyToOne(fetch = FetchType.LAZY)
-    private User userId;
+    private User user;
 
     @Column(nullable = false)
     private String tag; // 태그 (예: 작업, 기술)

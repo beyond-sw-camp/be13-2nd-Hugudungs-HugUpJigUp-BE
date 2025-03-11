@@ -1,16 +1,13 @@
 package com.hugudungs.hugupjigup.data.entity.comment;
 
-import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+
+import jakarta.persistence.AttributeOverride;
+import jakarta.persistence.AttributeOverrides;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Table;
 
 @Entity
-@Getter
-@Setter
-@NoArgsConstructor
-@AllArgsConstructor
 @Table(name = "matching_comment")
 @AttributeOverrides({
         @AttributeOverride(name = "id", column = @Column(name = "matching_comment_id")),

@@ -8,13 +8,9 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
 import jakarta.persistence.Table;
-import lombok.AllArgsConstructor;
-import lombok.NoArgsConstructor;
 
 @Entity
 @Table(name = "role_types")
-@NoArgsConstructor
-@AllArgsConstructor
 @AttributeOverride(name = "id", column = @Column(name = "role_type_id", columnDefinition = "TINYINT"))
 public class RoleTypes extends BaseEntity {
     @Enumerated(EnumType.STRING)

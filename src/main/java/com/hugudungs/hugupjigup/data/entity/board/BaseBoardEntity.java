@@ -6,19 +6,12 @@ import jakarta.persistence.Column;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
 import jakarta.persistence.MappedSuperclass;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-import lombok.RequiredArgsConstructor;
 
 /**
  * 게시판의 최소 엔티티를 포함한 추상 클래스
  */
 
-@Data
-@AllArgsConstructor
-@NoArgsConstructor
+
 @MappedSuperclass
 public abstract class BaseBoardEntity extends BaseEntity {
     @Enumerated(EnumType.STRING)
