@@ -1,6 +1,6 @@
 package com.hugudungs.hugupjigup.data.entity.board;
 
-import com.hugudungs.hugupjigup.data.entity.type.TextType;
+import com.hugudungs.hugupjigup.data.entity.user.User;
 import jakarta.persistence.*;
 import lombok.*;
 import java.util.Date;
@@ -20,12 +20,12 @@ import java.util.Date;
 })
 public class FreeText extends BaseBoardEntity{
     @ManyToOne
-    @JoinColumn(name = "text_type_id", nullable = false)
-    private TextType textType;
-//    현재 User 엔티티가 구현 되어있지 않으므로 일단 주석 처리했음. 구현 되면 주석을 제거하면 됨.
-//    @ManyToOne
-//    @JoinColumn(name = "userId", nullable = false)
-//    private Integer userId;
+    @JoinColumn(name = "board_type_id", nullable = false)
+    private BoardTypes boardTypeId;
+
+    @ManyToOne
+    @JoinColumn(name = "user_id", nullable = false)
+    private User userId;
 
     @Column(name = "free_date", nullable = false)
     @Temporal(TemporalType.DATE) // 자동으로 '년-월-일'형의 날짜 입력
