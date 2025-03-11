@@ -9,6 +9,7 @@ import jakarta.persistence.Table;
 @Entity
 @Table(name="matching")
 @AttributeOverrides({
+        @AttributeOverride(name = "id", column = @Column(name = "matching_id")),
         @AttributeOverride(name = "title", column = @Column(name = "matching_title")),
         @AttributeOverride(name = "content", column = @Column(name = "matching_content"))
 })
