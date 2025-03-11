@@ -14,9 +14,10 @@ import jakarta.persistence.Table;
 @AttributeOverrides({
         @AttributeOverride(name = "id", column = @Column(name = "notice_id")),
         @AttributeOverride(name = "title", column = @Column(name = "notice_title")),
-        @AttributeOverride(name = "content", column = @Column(name = "notice_content"))
+        @AttributeOverride(name = "content", column = @Column(name = "notice_content")),
+        @AttributeOverride(name = "views", column = @Column(name = "notice_views"))
 })
 public class Notice extends BaseBoardEntity {
     @ManyToOne(fetch = FetchType.LAZY)
-    private User userId;
+    private User user;
 }
