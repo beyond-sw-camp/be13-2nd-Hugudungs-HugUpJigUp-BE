@@ -6,7 +6,7 @@ import lombok.*;
 import java.util.Date;
 
 @Entity
-@Table(name = "free_text")
+@Table(name = "free")
 @Getter
 @Setter
 @NoArgsConstructor
