@@ -1,11 +1,12 @@
 package com.hugudungs.hugupjigup.data.entity.board;
 
 import com.hugudungs.hugupjigup.data.entity.user.User;
+
+import jakarta.persistence.FetchType;
 import jakarta.persistence.AttributeOverride;
 import jakarta.persistence.AttributeOverrides;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
-import jakarta.persistence.FetchType;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
@@ -22,7 +23,4 @@ public class Notice extends BaseBoardEntity {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id", referencedColumnName = "user_id")
     private User user;
-
-    @Column(name = "user_id", insertable = false, updatable = false)
-    private Long userId;
 }

@@ -1,4 +1,4 @@
-package com.hugudungs.hugupjigup.data.entity.enums;
+package com.hugudungs.hugupjigup.common.enums;
 
 public enum CommentType {
  COMMENT,

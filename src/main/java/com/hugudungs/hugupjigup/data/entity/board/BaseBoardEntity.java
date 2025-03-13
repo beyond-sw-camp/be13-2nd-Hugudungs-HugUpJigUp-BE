@@ -1,16 +1,12 @@
 package com.hugudungs.hugupjigup.data.entity.board;
 
 import com.hugudungs.hugupjigup.data.entity.common.BaseEntity;
-import com.hugudungs.hugupjigup.data.entity.enums.BoardType;
-import jakarta.persistence.Column;
+import com.hugudungs.hugupjigup.common.enums.BoardType;
 import jakarta.persistence.EnumType;
+
+import jakarta.persistence.Column;
 import jakarta.persistence.Enumerated;
 import jakarta.persistence.MappedSuperclass;
-
-/**
- * 게시판의 최소 엔티티를 포함한 추상 클래스
- */
-
 
 @MappedSuperclass
 public abstract class BaseBoardEntity extends BaseEntity {
