@@ -1,13 +1,13 @@
 package com.hugudungs.hugupjigup.data.entity.common;
 
+import jakarta.persistence.GenerationType;
 import jakarta.persistence.Column;
 import jakarta.persistence.EntityListeners;
 import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.MappedSuperclass;
 import lombok.AllArgsConstructor;
-import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
@@ -15,7 +15,7 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import java.time.LocalDateTime;
 
-@Data
+@Getter
 @AllArgsConstructor
 @NoArgsConstructor
 @EntityListeners(AuditingEntityListener.class)

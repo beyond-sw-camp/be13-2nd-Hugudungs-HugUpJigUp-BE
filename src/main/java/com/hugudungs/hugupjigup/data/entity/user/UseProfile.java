@@ -1,26 +1,26 @@
 package com.hugudungs.hugupjigup.data.entity.user;
 
 import com.hugudungs.hugupjigup.data.entity.common.BaseEntity;
-import com.hugudungs.hugupjigup.data.entity.enums.Gender;
-import com.hugudungs.hugupjigup.data.entity.enums.ProfileType;
+import com.hugudungs.hugupjigup.common.enums.Gender;
+import com.hugudungs.hugupjigup.common.enums.ProfileType;
+
+import jakarta.persistence.EnumType;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.AttributeOverride;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
-import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
-import jakarta.persistence.FetchType;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 
 @Entity
-@Table(name = "user_profile")
+@Table(name = "user_profiles")
 @AttributeOverride(name = "id", column = @Column(name = "profile_id"))
-public class User_profile extends BaseEntity{
-
+public class UseProfile extends BaseEntity{
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id", referencedColumnName = "user_id")
-    private User userId;
+    private User user;
 
     @Column(name = "current_job")
     private String currentJob;

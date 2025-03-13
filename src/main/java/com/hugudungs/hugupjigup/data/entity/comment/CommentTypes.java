@@ -1,12 +1,12 @@
 package com.hugudungs.hugupjigup.data.entity.comment;
 
 import com.hugudungs.hugupjigup.data.entity.common.BaseEntity;
-import com.hugudungs.hugupjigup.data.entity.enums.CommentType;
+import com.hugudungs.hugupjigup.common.enums.CommentType;
 
+import jakarta.persistence.EnumType;
 import jakarta.persistence.AttributeOverride;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
-import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;

@@ -1,9 +1,10 @@
 package com.hugudungs.hugupjigup.data.entity.comment;
 
 import com.hugudungs.hugupjigup.data.entity.common.BaseEntity;
-import com.hugudungs.hugupjigup.data.entity.enums.CommentType;
-import jakarta.persistence.Column;
+import com.hugudungs.hugupjigup.common.enums.CommentType;
+
 import jakarta.persistence.EnumType;
+import jakarta.persistence.Column;
 import jakarta.persistence.Enumerated;
 import jakarta.persistence.MappedSuperclass;
 
