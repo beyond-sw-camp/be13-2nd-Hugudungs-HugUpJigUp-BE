@@ -5,9 +5,6 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.JavaMailSenderImpl;
-import org.thymeleaf.TemplateEngine;
-import org.thymeleaf.spring6.SpringTemplateEngine;
-import org.thymeleaf.spring6.templateresolver.SpringResourceTemplateResolver;
 
 import java.util.Properties;
 
@@ -40,11 +37,4 @@ public class MailConfig {
 
         return mailSender;
     }
-
-//    @Bean
-//    public TemplateEngine templateEngine(SpringResourceTemplateResolver templateResolver) {
-//        SpringTemplateEngine templateEngine = new SpringTemplateEngine();
-//        templateEngine.setTemplateResolver(templateResolver);
-//        return templateEngine;
-//    }
 }
