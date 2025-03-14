@@ -27,10 +27,16 @@ public class RedisCacheServiceTest {
     }
 
     @Test
-    void cacheTest() {
+    void setAndGetTest() {
         cacheService.set("test", "test", 10);
         String value = cacheService.get("test");
         assertThat(value).isEqualTo("test");
         keys.add("test");
+    }
+
+    @Test
+    void getTestNotExistKey() {
+        String value = cacheService.get("test");
+        assertThat(value).isNull();
     }
 }
