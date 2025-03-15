@@ -7,8 +7,12 @@ import jakarta.persistence.EnumType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Enumerated;
 import jakarta.persistence.MappedSuperclass;
+import lombok.NoArgsConstructor;
+import lombok.experimental.SuperBuilder;
 
 @MappedSuperclass
+@SuperBuilder
+@NoArgsConstructor
 public abstract class BaseBoardEntity extends BaseEntity {
     @Enumerated(EnumType.STRING)
     @Column(name = "board_type", nullable = false)

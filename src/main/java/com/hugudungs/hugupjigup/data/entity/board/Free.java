@@ -10,8 +10,10 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
+import lombok.experimental.SuperBuilder;
 
 @Entity
+@SuperBuilder
 @Table(name = "free")
 @AttributeOverrides({
         @AttributeOverride(name = "id", column = @Column(name = "free_id", nullable = false)),
