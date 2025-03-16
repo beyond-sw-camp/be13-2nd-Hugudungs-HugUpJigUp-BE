@@ -26,9 +26,11 @@ public class NoticeServiceImpl implements NoticeService{
 
 
     @Override
-    public Long createNotice(Long userId, NoticeRequestDto requestDto) {
+    public NoticeResponseDto createNotice(Long userId, NoticeRequestDto requestDto) {
         //FIXME: userId로 User를 가져오는 로직이 완성되면 추가
-//        User user = userRepository.findById(userId).orElseThrow();
+        //FIXME: userId로 관리자를 판별하는 로직
+//        User user = userRepository.findById(userId)
+//                .orElseThrow(() -> new IllegalArgumentException("유효하지 않은 사용자 ID입니다."));
 
         Notice notice = Notice.builder()
                 .boardType(BoardType.NOTICE)
@@ -40,7 +42,16 @@ public class NoticeServiceImpl implements NoticeService{
 
         Notice savedNotice = noticeRepository.save(notice);
 
-        return savedNotice.getId();
+        NoticeResponseDto responseDto = NoticeResponseDto.builder()
+                .noticeId(savedNotice.getId())
+                .boardType(savedNotice.getBoardType())
+                .noticeTitle(savedNotice.getTitle())
+                .noticeContent(savedNotice.getContent())
+                .noticeViews(savedNotice.getViews())
+                .authorId(savedNotice.getAuthor().getId())
+                .build();
+
+        return responseDto;
     }
 
     @Override

@@ -6,7 +6,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
 public interface NoticeService {
-    Long createNotice(Long userId, NoticeRequestDto requestDto);
+    NoticeResponseDto createNotice(Long userId, NoticeRequestDto requestDto);
 
     NoticeResponseDto updateNotice(Long noticeId, String title, String content) throws Exception;
 
