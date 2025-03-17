@@ -73,4 +73,24 @@ public class MatchingServiceImpl implements MatchingService {
             throw new Exception("게시글 수정 중 데이터베이스 오류가 발생했습니다.", e);
         }
     }
+
+    @Override
+    public void deleteMatching(Long matchingId) throws Exception {
+        //FIXME: 현재 로그인한 유저의 아이디 가져오는 로직
+//        Long currentUserId = getCurrentUserId();
+        Long currentUserId = 1L;
+
+        Long authorId = matchingRepository
+                .findById(matchingId)
+                .orElseThrow()
+                .getAuthor()
+                .getId();
+
+        if (!authorId.equals(currentUserId)) {
+//            throw new UnauthorizedException("작성자만 삭제 할 수 있습니다.");
+            throw new RuntimeException("작성자만 삭제 할 수 있습니다.");
+        }
+
+        matchingRepository.deleteById(matchingId);
+    }
 }

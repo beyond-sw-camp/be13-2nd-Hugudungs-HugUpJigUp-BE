@@ -6,6 +6,8 @@ import com.hugudungs.hugupjigup.matching.service.MatchingService;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.ErrorResponseException;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -39,5 +41,20 @@ public class MatchingControllerImpl implements MatchingController {
         MatchingResponseDto responseDto = matchingService.updateMatching(matchingId, requestDto);
 
         return ResponseEntity.status(HttpStatus.OK).body(responseDto);
+    }
+
+    @Override
+    @DeleteMapping("/delete/{matchingId}")
+    public ResponseEntity<MatchingResponseDto> deleteMatching(Long matchingId) throws Exception {
+        try {
+            matchingService.deleteMatching(matchingId);
+            return ResponseEntity.status(HttpStatus.OK).build();
+        } catch (ErrorResponseException e) {
+//FIXME: UnauthorizedException 구현        } catch (UnauthorizedException e) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(null);
+        } catch (Exception e) {
+            //FIXME: 다른 예외 처리 생각
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+        }
     }
 }

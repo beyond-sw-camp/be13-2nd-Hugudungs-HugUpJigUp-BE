@@ -18,4 +18,7 @@ public interface MatchingController {
             @PathVariable Long matchingId,
             @RequestBody MatchingRequestDto requestDto) throws Exception;
 
+    @Operation(summary = "매칭 게시글 삭제 메서드", description = "매칭 게시글 삭제 메서드입니다.")
+    public ResponseEntity<MatchingResponseDto> deleteMatching(
+            @PathVariable Long matchingId) throws Exception;
 }
