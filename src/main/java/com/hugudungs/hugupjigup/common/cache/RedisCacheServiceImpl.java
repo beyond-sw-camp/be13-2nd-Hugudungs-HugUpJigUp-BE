@@ -25,9 +25,4 @@ public class RedisCacheServiceImpl implements CacheService {
     public void delete(String key) {
         redisTemplate.delete(key);
     }
-
-//    @Override
-//    public void deleteAl() {
-////        redisTemplate.delete();
-//    }
 }

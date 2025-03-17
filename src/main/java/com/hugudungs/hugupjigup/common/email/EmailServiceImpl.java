@@ -33,7 +33,6 @@ public class EmailServiceImpl implements EmailService {
             helper.setTo(to);
             helper.setSubject(subject);
             helper.setText(htmlContent, true); // HTML 내용 적용
-//        helper.setFrom("hugupjigup@gmail.com");
 
             // 메일 전송
             mailSender.send(message);

@@ -6,6 +6,4 @@ public interface CacheService {
     void set(String key, String value, long seconds);
 
     void delete(String key);
-
-//    void deleteAl();
 }
