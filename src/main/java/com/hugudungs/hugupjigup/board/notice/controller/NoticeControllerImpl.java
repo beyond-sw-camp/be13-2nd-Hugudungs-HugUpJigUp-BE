@@ -19,13 +19,7 @@ public class NoticeControllerImpl implements NoticeController {
     public NoticeControllerImpl(NoticeService noticeService) {
         this.noticeService = noticeService;
     }
-
-    @Operation(summary = "test 메서드", description = "test 메서드입니다.")
-    @GetMapping(value = "/test")
-    public String getHello(){
-        return "Hello World";
-    }
-
+    
     @Override
     @PostMapping("/create/{userId}")
     public ResponseEntity<NoticeResponseDto> createProject(
@@ -35,8 +29,9 @@ public class NoticeControllerImpl implements NoticeController {
 
         return ResponseEntity.status(HttpStatus.OK).body(responseDto);
     }
-
-    @PutMapping("/update/{noticeId}")
+    
+    @Override
+    @PutMapping("/{noticeId}")
     public ResponseEntity<NoticeResponseDto> updateProject(
             @PathVariable Long noticeId,
             @RequestBody NoticeRequestDto requestDto) throws Exception {
@@ -45,8 +40,8 @@ public class NoticeControllerImpl implements NoticeController {
         return ResponseEntity.status(HttpStatus.OK).body(responseDto);
     }
 
-
-    @DeleteMapping("/delete/{noticeId}")
+    @Override
+    @DeleteMapping("/{noticeId}")
     public ResponseEntity<NoticeResponseDto> deleteProject(
             @PathVariable Long noticeId) throws Exception {
         try {
@@ -58,6 +53,19 @@ public class NoticeControllerImpl implements NoticeController {
         } catch (Exception e) {
             //FIXME: 다른 예외 처리 생각
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+        }
+    }
+
+    @Override
+    @GetMapping("/{noticeId}")
+    public ResponseEntity<NoticeResponseDto> getNotice(@PathVariable Long noticeId) throws Exception {
+        try {
+            NoticeResponseDto responseDto = noticeService.getNoticeById(noticeId);
+
+            return ResponseEntity.status(HttpStatus.OK).body(responseDto);
+        } catch (RuntimeException e) {
+
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
         }
     }
 }

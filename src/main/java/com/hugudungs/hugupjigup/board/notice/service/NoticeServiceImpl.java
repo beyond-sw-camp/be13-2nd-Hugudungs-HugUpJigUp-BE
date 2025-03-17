@@ -98,6 +98,19 @@ public class NoticeServiceImpl implements NoticeService{
 
     @Override
     public NoticeResponseDto getNoticeById(Long noticeId) {
-        return null;
+        Notice notice = noticeRepository.findById(noticeId).orElseThrow();
+
+        NoticeResponseDto responseDto = NoticeResponseDto.builder()
+                .noticeId(notice.getId())
+                .createDate(notice.getCreatedAt())
+                .updateDate(notice.getUpdatedAt())
+                .boardType(notice.getBoardType())
+                .noticeContent(notice.getContent())
+                .noticeTitle(notice.getTitle())
+                .noticeViews(notice.getViews())
+                .authorId(notice.getAuthor().getId())
+                .build();
+
+        return responseDto;
     }
 }
