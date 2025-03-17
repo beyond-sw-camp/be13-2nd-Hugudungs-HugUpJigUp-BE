@@ -1,6 +1,5 @@
 package com.hugudungs.hugupjigup.data.entity.comment;
 
-import com.hugudungs.hugupjigup.common.enums.CommentType;
 import com.hugudungs.hugupjigup.data.entity.board.Free;
 import com.hugudungs.hugupjigup.data.entity.user.User;
 
@@ -32,4 +31,7 @@ public class FreeComment extends BaseCommentEntity {
     @JoinColumn(name = "user_id", nullable = false)
     private User user;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "comment_type_id", nullable = false)
+    private CommentTypes commentTypeId;
 }
