@@ -7,6 +7,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -26,6 +27,16 @@ public class MatchingControllerImpl implements MatchingController {
             Long userId,
             MatchingRequestDto requestDto) {
         MatchingResponseDto responseDto = matchingService.createMatching(userId, requestDto);
+
+        return ResponseEntity.status(HttpStatus.OK).body(responseDto);
+    }
+
+    @Override
+    @PutMapping("/update/{matchingId}")
+    public ResponseEntity<MatchingResponseDto> updateMatching(
+            Long matchingId,
+            MatchingRequestDto requestDto) throws Exception {
+        MatchingResponseDto responseDto = matchingService.updateMatching(matchingId, requestDto);
 
         return ResponseEntity.status(HttpStatus.OK).body(responseDto);
     }

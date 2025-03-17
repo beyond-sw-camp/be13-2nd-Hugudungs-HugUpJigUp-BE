@@ -45,4 +45,32 @@ public class MatchingServiceImpl implements MatchingService {
 
         return responseDto;
     }
+
+    @Override
+    public MatchingResponseDto updateMatching(Long matchingId, MatchingRequestDto requestDto) throws Exception {
+        Matching post = matchingRepository.findById(matchingId).orElseThrow();
+
+        post.setTitle(requestDto.getTitle());
+        post.setContent(requestDto.getContent());
+        post.setTag(requestDto.getTag());
+
+        try {
+            Matching updatedMatching = matchingRepository.saveAndFlush(post);
+
+            MatchingResponseDto responseDto = MatchingResponseDto.builder()
+                    .createdAt(updatedMatching.getCreatedAt())
+                    .updatedAt(updatedMatching.getUpdatedAt())
+                    .boardType(updatedMatching.getBoardType())
+                    .matchingId(updatedMatching.getId())
+                    .matchingTitle(updatedMatching.getTitle())
+                    .matchingContent(updatedMatching.getContent())
+                    .matchingViews(updatedMatching.getViews())
+                    .authorId(updatedMatching.getAuthor() != null ? updatedMatching.getAuthor().getId() : null)
+                    .build();
+
+            return responseDto;
+        } catch (RuntimeException e) {
+            throw new Exception("게시글 수정 중 데이터베이스 오류가 발생했습니다.", e);
+        }
+    }
 }

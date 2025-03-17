@@ -12,4 +12,10 @@ public interface MatchingController {
     public ResponseEntity<MatchingResponseDto> createMatching(
             @PathVariable Long userId,
             @RequestBody MatchingRequestDto requestDto);
+
+    @Operation(summary = "매칭 게시글 수정 메서드", description = "매칭 게시글 수정 메서드입니다.")
+    public ResponseEntity<MatchingResponseDto> updateMatching(
+            @PathVariable Long matchingId,
+            @RequestBody MatchingRequestDto requestDto) throws Exception;
+
 }
