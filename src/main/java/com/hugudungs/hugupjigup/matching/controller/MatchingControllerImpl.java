@@ -11,6 +11,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.ErrorResponseException;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -30,7 +31,7 @@ public class MatchingControllerImpl implements MatchingController {
     @PostMapping("/create/{userId}")
     public ResponseEntity<MatchingResponseDto> createMatching(
             Long userId,
-            MatchingRequestDto requestDto) {
+            MatchingRequestDto requestDto) throws Exception  {
         MatchingResponseDto responseDto = matchingService.createMatching(userId, requestDto);
 
         return ResponseEntity.status(HttpStatus.OK).body(responseDto);
@@ -58,14 +59,14 @@ public class MatchingControllerImpl implements MatchingController {
 //FIXME: UnauthorizedException 구현        } catch (UnauthorizedException e) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(null);
         } catch (Exception e) {
-            
+
             //FIXME: 다른 예외 처리 생각
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
         }
     }
 
-    @GetMapping("/{pageable}")
     @Override
+    @GetMapping("/{pageable}")
     public ResponseEntity<Page<MatchingResponseDto>> getMatching(Pageable pageable) throws Exception {
         try {
             Page<MatchingResponseDto> responseDto = matchingService.getMatchingPosts(pageable);
@@ -78,6 +79,20 @@ public class MatchingControllerImpl implements MatchingController {
 
             //FIXME: 다른 예외 처리 생각
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+        }
+    }
+
+    @Override
+    @GetMapping("/{matchingId}")
+    public ResponseEntity<MatchingResponseDto> getMatchingById(Long matchingId) throws Exception {
+        try {
+            MatchingResponseDto responseDto = matchingService.getMatchingById(matchingId);
+
+            return ResponseEntity.status(HttpStatus.OK).body(responseDto);
+//            FIXME: 커스텀 에러 구문 } catch (RuntimeException e) {
+        } catch (RuntimeException e) {
+
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
         }
     }
 }

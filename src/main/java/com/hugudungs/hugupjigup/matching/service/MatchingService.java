@@ -6,11 +6,13 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
 public interface MatchingService {
-    MatchingResponseDto createMatching(Long userId, MatchingRequestDto requestDto);
+    MatchingResponseDto createMatching(Long userId, MatchingRequestDto requestDto) throws Exception ;
 
     MatchingResponseDto updateMatching(Long matchingId, MatchingRequestDto requestDto) throws Exception;
 
     void deleteMatching(Long matchingId) throws Exception;
 
-    Page<MatchingResponseDto> getMatchingPosts(Pageable pageable);
+    Page<MatchingResponseDto> getMatchingPosts(Pageable pageable) throws Exception ;
+
+    MatchingResponseDto getMatchingById(Long matchingId) throws Exception;
 }

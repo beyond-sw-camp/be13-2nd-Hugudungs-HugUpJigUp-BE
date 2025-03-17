@@ -13,7 +13,7 @@ public interface MatchingController {
     @Operation(summary = "매칭 게시글 등록 메서드", description = "매칭 게시글 등록 메서드입니다.")
     public ResponseEntity<MatchingResponseDto> createMatching(
             @PathVariable Long userId,
-            @RequestBody MatchingRequestDto requestDto);
+            @RequestBody MatchingRequestDto requestDto) throws Exception ;
 
     @Operation(summary = "매칭 게시글 수정 메서드", description = "매칭 게시글 수정 메서드입니다.")
     public ResponseEntity<MatchingResponseDto> updateMatching(
@@ -25,5 +25,10 @@ public interface MatchingController {
             @PathVariable Long matchingId) throws Exception;
 
     @Operation(summary = "매칭 게시판 조회 메서드", description = "매칭 게시판 조회 메서드입니다.")
-    public ResponseEntity<Page<MatchingResponseDto>> getMatching(Pageable pageable) throws Exception;
+    public ResponseEntity<Page<MatchingResponseDto>> getMatching(
+            @RequestBody Pageable pageable) throws Exception;
+
+    @Operation(summary = "매칭 게시글 조회 메서드", description = "매칭 게시글 조회 메서드입니다.")
+    public ResponseEntity<MatchingResponseDto> getMatchingById(
+            @PathVariable Long matchingId) throws Exception;
 }

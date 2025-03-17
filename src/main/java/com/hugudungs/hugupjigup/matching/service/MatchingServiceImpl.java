@@ -1,6 +1,7 @@
 package com.hugudungs.hugupjigup.matching.service;
 
 import com.hugudungs.hugupjigup.common.enums.BoardType;
+import com.hugudungs.hugupjigup.data.entity.board.Notice;
 import com.hugudungs.hugupjigup.data.entity.matching.Matching;
 import com.hugudungs.hugupjigup.matching.data.MatchingRepository;
 import com.hugudungs.hugupjigup.matching.data.dto.MatchingRequestDto;
@@ -97,7 +98,7 @@ public class MatchingServiceImpl implements MatchingService {
     }
 
     @Override
-    public Page<MatchingResponseDto> getMatchingPosts(Pageable pageable) {
+    public Page<MatchingResponseDto> getMatchingPosts(Pageable pageable) throws Exception {
         Page<Matching> matchings = matchingRepository.findAll(pageable);
 
         return matchings.map(matching -> MatchingResponseDto.builder()
@@ -112,5 +113,32 @@ public class MatchingServiceImpl implements MatchingService {
                 .authorId(matching.getAuthor().getId())
                 .build()
         );
+    }
+
+    @Override
+    public MatchingResponseDto getMatchingById(Long matchingId) throws Exception {
+        try {
+            Matching matching = matchingRepository.findById(matchingId)
+                    .orElseThrow(() -> new RuntimeException("해당 매칭 게시글이 존재하지 않습니다."));
+
+            if (matching.getAuthor() == null) {
+                throw new RuntimeException("작성자가 존재하지 않습니다.");
+            }
+
+            MatchingResponseDto responseDto = MatchingResponseDto.builder()
+                    .matchingId(matching.getId())
+                    .createdAt(matching.getCreatedAt())
+                    .updatedAt(matching.getUpdatedAt())
+                    .boardType(matching.getBoardType())
+                    .matchingContent(matching.getContent())
+                    .matchingTitle(matching.getTitle())
+                    .matchingViews(matching.getViews())
+                    .authorId(matching.getAuthor().getId())
+                    .build();
+
+            return responseDto;
+        } catch (RuntimeException e) {
+            throw new Exception("게시글 조회 중 데이터베이스 오류가 발생했습니다. (ID: " + matchingId + ")", e);
+        }
     }
 }
