@@ -4,6 +4,7 @@ import com.hugudungs.hugupjigup.matching.data.dto.MatchingRequestDto;
 import com.hugudungs.hugupjigup.matching.data.dto.MatchingResponseDto;
 import com.hugudungs.hugupjigup.matching.service.MatchingService;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import org.springframework.dao.DataAccessException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
@@ -31,67 +32,74 @@ public class MatchingControllerImpl implements MatchingController {
     @PostMapping("/create/{userId}")
     public ResponseEntity<MatchingResponseDto> createMatching(
             Long userId,
-            MatchingRequestDto requestDto) throws Exception  {
-        MatchingResponseDto responseDto = matchingService.createMatching(userId, requestDto);
+            MatchingRequestDto requestDto) {
+        try {
+            MatchingResponseDto responseDto = matchingService.createMatching(userId, requestDto);
 
-        return ResponseEntity.status(HttpStatus.OK).body(responseDto);
+            return ResponseEntity.status(HttpStatus.OK).body(responseDto);
+        } catch (DataAccessException e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
+        }
     }
 
     @Override
     @PutMapping("/update/{matchingId}")
     public ResponseEntity<MatchingResponseDto> updateMatching(
             Long matchingId,
-            MatchingRequestDto requestDto) throws Exception {
-        MatchingResponseDto responseDto = matchingService.updateMatching(matchingId, requestDto);
+            MatchingRequestDto requestDto) {
+        try {
+            MatchingResponseDto responseDto = matchingService.updateMatching(matchingId, requestDto);
 
-        return ResponseEntity.status(HttpStatus.OK).body(responseDto);
+            return ResponseEntity.status(HttpStatus.OK).body(responseDto);
+        } catch (DataAccessException e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
+        }
     }
 
     @Override
     @DeleteMapping("/delete/{matchingId}")
-    public ResponseEntity<MatchingResponseDto> deleteMatching(Long matchingId) throws Exception {
+    public ResponseEntity<Void> deleteMatching(Long matchingId) {
         try {
             matchingService.deleteMatching(matchingId);
 
             return ResponseEntity.status(HttpStatus.OK).build();
-        } catch (ErrorResponseException e) {
-
-//FIXME: UnauthorizedException 구현        } catch (UnauthorizedException e) {
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(null);
+//        } catch (UnauthorizedException e) {
+//            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+        } catch (DataAccessException e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
         } catch (Exception e) {
-
-            //FIXME: 다른 예외 처리 생각
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
         }
     }
 
     @Override
-    @GetMapping("/{pageable}")
-    public ResponseEntity<Page<MatchingResponseDto>> getMatching(Pageable pageable) throws Exception {
+    @GetMapping("/posts")
+    public ResponseEntity<Page<MatchingResponseDto>> getMatchingPosts(Pageable pageable) {
         try {
             Page<MatchingResponseDto> responseDto = matchingService.getMatchingPosts(pageable);
 
             return ResponseEntity.status(HttpStatus.OK).body(responseDto);
-        } catch (ErrorResponseException e) {
-
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(null);
+        } catch (DataAccessException e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
         } catch (Exception e) {
-
-            //FIXME: 다른 예외 처리 생각
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
         }
     }
 
     @Override
     @GetMapping("/{matchingId}")
-    public ResponseEntity<MatchingResponseDto> getMatchingById(Long matchingId) throws Exception {
+    public ResponseEntity<MatchingResponseDto> getMatchingById(Long matchingId) {
         try {
             MatchingResponseDto responseDto = matchingService.getMatchingById(matchingId);
 
             return ResponseEntity.status(HttpStatus.OK).body(responseDto);
-//            FIXME: 커스텀 에러 구문 } catch (RuntimeException e) {
         } catch (RuntimeException e) {
-
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
+        } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
         }
     }

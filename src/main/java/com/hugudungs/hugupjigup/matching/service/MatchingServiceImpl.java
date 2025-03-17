@@ -1,11 +1,11 @@
 package com.hugudungs.hugupjigup.matching.service;
 
 import com.hugudungs.hugupjigup.common.enums.BoardType;
-import com.hugudungs.hugupjigup.data.entity.board.Notice;
 import com.hugudungs.hugupjigup.data.entity.matching.Matching;
 import com.hugudungs.hugupjigup.matching.data.MatchingRepository;
 import com.hugudungs.hugupjigup.matching.data.dto.MatchingRequestDto;
 import com.hugudungs.hugupjigup.matching.data.dto.MatchingResponseDto;
+import org.springframework.dao.DataAccessException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -18,46 +18,52 @@ public class MatchingServiceImpl implements MatchingService {
         this.matchingRepository = matchingRepository;
     }
 
-
     @Override
-    public MatchingResponseDto createMatching(Long userId, MatchingRequestDto requestDto) {
-        //FIXME: userId로 User를 가져오는 로직이 완성되면 추가
-        //FIXME: userId로 관리자를 판별하는 로직
-//        User user = userRepository.findById(userId)
-//                .orElseThrow(() -> new IllegalArgumentException("유효하지 않은 사용자 ID입니다."));
+    public MatchingResponseDto createMatching(Long userId, MatchingRequestDto requestDto) throws Exception {
+        try {
+            // FIXME: userId로 User를 가져오는 로직이 완성되면 추가
+            // User user = userRepository.findById(userId)
+            //         .orElseThrow(() -> new IllegalArgumentException("유효하지 않은 사용자 ID입니다."));
 
-        Matching matching = Matching.builder()
-                .boardType(BoardType.MATCHING)
-                .title(requestDto.getTitle())
-                .content(requestDto.getContent())
-                .views(0)
-                .tag(requestDto.getTag())
-//                .user(user)
-                .build();
+            Matching matching = Matching.builder()
+                    .boardType(BoardType.MATCHING)
+                    .title(requestDto.getTitle())
+                    .content(requestDto.getContent())
+                    .views(0)
+                    .tag(requestDto.getTag())
+                    // .user(user)
+                    .build();
 
-        Matching savedMatching = matchingRepository.save(matching);
+            Matching savedMatching = matchingRepository.save(matching);
 
-        MatchingResponseDto responseDto = MatchingResponseDto.builder()
-                .matchingId(savedMatching.getId())
-                .boardType(savedMatching.getBoardType())
-                .matchingTitle(savedMatching.getTitle())
-                .matchingContent(savedMatching.getContent())
-                .matchingViews(savedMatching.getViews())
-                .authorId(savedMatching.getAuthor().getId())
-                .build();
+            MatchingResponseDto responseDto = MatchingResponseDto.builder()
+                    .matchingId(savedMatching.getId())
+                    .boardType(savedMatching.getBoardType())
+                    .matchingTitle(savedMatching.getTitle())
+                    .matchingContent(savedMatching.getContent())
+                    .matchingViews(savedMatching.getViews())
+                    .authorId(savedMatching.getAuthor() != null ? savedMatching.getAuthor().getId() : null)
+                    .build();
 
-        return responseDto;
+            return responseDto;
+        } catch (DataAccessException e) {
+            throw new Exception("게시글 생성 중 데이터베이스 오류가 발생했습니다.", e);
+        } catch (Exception e) {
+            throw new Exception("게시글 생성 중 예기치 않은 오류가 발생했습니다.", e);
+        }
     }
+
 
     @Override
     public MatchingResponseDto updateMatching(Long matchingId, MatchingRequestDto requestDto) throws Exception {
-        Matching post = matchingRepository.findById(matchingId).orElseThrow();
-
-        post.setTitle(requestDto.getTitle());
-        post.setContent(requestDto.getContent());
-        post.setTag(requestDto.getTag());
-
         try {
+            Matching post = matchingRepository.findById(matchingId)
+                    .orElseThrow(() -> new RuntimeException("해당 매칭 게시글이 존재하지 않습니다."));
+
+            post.setTitle(requestDto.getTitle());
+            post.setContent(requestDto.getContent());
+            post.setTag(requestDto.getTag());
+
             Matching updatedMatching = matchingRepository.saveAndFlush(post);
 
             MatchingResponseDto responseDto = MatchingResponseDto.builder()
@@ -72,47 +78,63 @@ public class MatchingServiceImpl implements MatchingService {
                     .build();
 
             return responseDto;
-        } catch (RuntimeException e) {
+        } catch (DataAccessException e) {
             throw new Exception("게시글 수정 중 데이터베이스 오류가 발생했습니다.", e);
+        } catch (Exception e) {
+            throw new Exception("게시글 수정 중 예기치 않은 오류가 발생했습니다.", e);
         }
     }
 
     @Override
     public void deleteMatching(Long matchingId) throws Exception {
-        //FIXME: 현재 로그인한 유저의 아이디 가져오는 로직
-//        Long currentUserId = getCurrentUserId();
-        Long currentUserId = 1L;
+        try {
+            // FIXME: 현재 로그인한 유저의 아이디 가져오는 로직
+            // Long currentUserId = getCurrentUserId();
+            Long currentUserId = 1L;
 
-        Long authorId = matchingRepository
-                .findById(matchingId)
-                .orElseThrow()
-                .getAuthor()
-                .getId();
+            Matching matching = matchingRepository.findById(matchingId)
+                    .orElseThrow(() -> new RuntimeException("해당 매칭 게시글이 존재하지 않습니다. (ID: " + matchingId + ")"));
 
-        if (!authorId.equals(currentUserId)) {
-//            throw new UnauthorizedException("작성자만 삭제 할 수 있습니다.");
-            throw new RuntimeException("작성자만 삭제 할 수 있습니다.");
+            if (matching.getAuthor() == null) {
+                throw new RuntimeException("작성자가 존재하지 않습니다.");
+            }
+
+            Long authorId = matching.getAuthor().getId();
+
+            if (!authorId.equals(currentUserId)) {
+                throw new RuntimeException("작성자만 삭제할 수 있습니다.");
+            }
+
+            matchingRepository.deleteById(matchingId);
+        } catch (DataAccessException e) {
+            throw new Exception("게시글 삭제 중 데이터베이스 오류가 발생했습니다.", e);
+        } catch (Exception e) {
+            throw new Exception("게시글 삭제 중 예기치 않은 오류가 발생했습니다.", e);
         }
-
-        matchingRepository.deleteById(matchingId);
     }
 
     @Override
     public Page<MatchingResponseDto> getMatchingPosts(Pageable pageable) throws Exception {
-        Page<Matching> matchings = matchingRepository.findAll(pageable);
+        try {
+            Page<Matching> matchings = matchingRepository.findAll(pageable);
 
-        return matchings.map(matching -> MatchingResponseDto.builder()
-                .matchingId(matching.getId())
-                .createdAt(matching.getCreatedAt())
-                .updatedAt(matching.getUpdatedAt())
-                .boardType(matching.getBoardType())
-                .matchingContent(matching.getContent())
-                .matchingTitle(matching.getTitle())
-                .matchingViews(matching.getViews())
-                .tag(matching.getTag())
-                .authorId(matching.getAuthor().getId())
-                .build()
-        );
+            return matchings.map(matching -> MatchingResponseDto.builder()
+                    .matchingId(matching.getId())
+                    .createdAt(matching.getCreatedAt())
+                    .updatedAt(matching.getUpdatedAt())
+                    .boardType(matching.getBoardType())
+                    .matchingContent(matching.getContent())
+                    .matchingTitle(matching.getTitle())
+                    .matchingViews(matching.getViews())
+                    .tag(matching.getTag())
+                    .authorId(matching.getAuthor() != null ? matching.getAuthor().getId() : null)
+                    .build()
+            );
+        } catch (DataAccessException e) {
+            throw new Exception("게시글 목록 조회 중 데이터베이스 오류가 발생했습니다.", e);
+        } catch (Exception e) {
+            throw new Exception("게시글 목록 조회 중 예기치 않은 오류가 발생했습니다.", e);
+        }
     }
 
     @Override

@@ -21,11 +21,11 @@ public interface MatchingController {
             @RequestBody MatchingRequestDto requestDto) throws Exception;
 
     @Operation(summary = "매칭 게시글 삭제 메서드", description = "매칭 게시글 삭제 메서드입니다.")
-    public ResponseEntity<MatchingResponseDto> deleteMatching(
+    public ResponseEntity<Void> deleteMatching(
             @PathVariable Long matchingId) throws Exception;
 
     @Operation(summary = "매칭 게시판 조회 메서드", description = "매칭 게시판 조회 메서드입니다.")
-    public ResponseEntity<Page<MatchingResponseDto>> getMatching(
+    public ResponseEntity<Page<MatchingResponseDto>> getMatchingPosts(
             @RequestBody Pageable pageable) throws Exception;
 
     @Operation(summary = "매칭 게시글 조회 메서드", description = "매칭 게시글 조회 메서드입니다.")
