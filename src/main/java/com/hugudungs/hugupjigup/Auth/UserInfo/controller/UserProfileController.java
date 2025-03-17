@@ -23,7 +23,7 @@ public class UserProfileController {
     // Get
     // 유저의 기본 정보 조회
     @Operation(summary = "유저 프로필 조회", description = "유저의 프로필을 조회합니다.")
-    @GetMapping("/users/{email}")
+    @GetMapping("/{email}")
     public UserProfileResponseDTO getUserProfile(@PathVariable String email) {
         return userService.getUserProfileByEmail(email);
     }
