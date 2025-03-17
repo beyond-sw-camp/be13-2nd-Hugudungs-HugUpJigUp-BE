@@ -8,6 +8,7 @@ import com.hugudungs.hugupjigup.data.entity.board.Notice;
 import com.hugudungs.hugupjigup.data.entity.user.User;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -71,8 +72,23 @@ public class NoticeServiceImpl implements NoticeService{
     }
 
     @Override
-    public void deleteNotice(Long id) throws Exception {
+    public void deleteNotice(Long noticeId) throws Exception {
+        //FIXME: 현재 로그인한 유저의 아이디 가져오는 로직
+//        Long currentUserId = getCurrentUserId();
+        Long currentUserId = 1L;
 
+        Long authorId = noticeRepository
+                .findById(noticeId)
+                .orElseThrow()
+                .getAuthor()
+                .getId();
+
+        if (!authorId.equals(currentUserId)) {
+//            throw new UnauthorizedException("작성자만 삭제 할 수 있습니다.");
+            throw new RuntimeException("작성자만 삭제 할 수 있습니다.");
+        }
+
+        noticeRepository.deleteById(noticeId);
     }
 
     @Override

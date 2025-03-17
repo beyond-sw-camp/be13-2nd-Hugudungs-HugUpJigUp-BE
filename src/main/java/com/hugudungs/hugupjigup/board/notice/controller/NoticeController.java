@@ -17,4 +17,8 @@ public interface NoticeController {
     public ResponseEntity<NoticeResponseDto> updateProject(
             @PathVariable Long noticeId,
             @RequestBody NoticeRequestDto requestDto) throws Exception;
-    }
+
+    @Operation(summary = "공지 게시글 삭제 메서드", description = "공지 게시글 삭제 메서드입니다.")
+    public ResponseEntity<NoticeResponseDto> deleteProject(
+            @PathVariable Long noticeId) throws Exception;
+}

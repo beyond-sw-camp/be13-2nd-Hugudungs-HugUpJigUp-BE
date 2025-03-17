@@ -7,6 +7,7 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.ErrorResponseException;
 import org.springframework.web.bind.annotation.*;
 
 @Tag(name = "공지 게시판 API", description = "공지 게시판 API")
@@ -42,5 +43,21 @@ public class NoticeControllerImpl implements NoticeController {
         NoticeResponseDto responseDto = noticeService.updateNotice(noticeId, requestDto);
 
         return ResponseEntity.status(HttpStatus.OK).body(responseDto);
+    }
+
+
+    @DeleteMapping("/delete/{noticeId}")
+    public ResponseEntity<NoticeResponseDto> deleteProject(
+            @PathVariable Long noticeId) throws Exception {
+        try {
+            noticeService.deleteNotice(noticeId);
+            return ResponseEntity.status(HttpStatus.OK).build();
+        } catch (ErrorResponseException e) {
+//FIXME: UnauthorizedException 구현        } catch (UnauthorizedException e) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(null);
+        } catch (Exception e) {
+            //FIXME: 다른 예외 처리 생각
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+        }
     }
 }
