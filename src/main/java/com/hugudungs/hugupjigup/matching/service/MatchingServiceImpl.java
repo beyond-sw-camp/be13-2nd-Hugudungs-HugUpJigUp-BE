@@ -5,6 +5,8 @@ import com.hugudungs.hugupjigup.data.entity.matching.Matching;
 import com.hugudungs.hugupjigup.matching.data.MatchingRepository;
 import com.hugudungs.hugupjigup.matching.data.dto.MatchingRequestDto;
 import com.hugudungs.hugupjigup.matching.data.dto.MatchingResponseDto;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -92,5 +94,23 @@ public class MatchingServiceImpl implements MatchingService {
         }
 
         matchingRepository.deleteById(matchingId);
+    }
+
+    @Override
+    public Page<MatchingResponseDto> getMatchingPosts(Pageable pageable) {
+        Page<Matching> matchings = matchingRepository.findAll(pageable);
+
+        return matchings.map(matching -> MatchingResponseDto.builder()
+                .matchingId(matching.getId())
+                .createdAt(matching.getCreatedAt())
+                .updatedAt(matching.getUpdatedAt())
+                .boardType(matching.getBoardType())
+                .matchingContent(matching.getContent())
+                .matchingTitle(matching.getTitle())
+                .matchingViews(matching.getViews())
+                .tag(matching.getTag())
+                .authorId(matching.getAuthor().getId())
+                .build()
+        );
     }
 }
