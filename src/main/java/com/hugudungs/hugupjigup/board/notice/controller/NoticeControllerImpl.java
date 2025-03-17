@@ -34,4 +34,13 @@ public class NoticeControllerImpl implements NoticeController {
 
         return ResponseEntity.status(HttpStatus.OK).body(responseDto);
     }
+
+    @PutMapping("/update/{noticeId}")
+    public ResponseEntity<NoticeResponseDto> updateProject(
+            @PathVariable Long noticeId,
+            @RequestBody NoticeRequestDto requestDto) throws Exception {
+        NoticeResponseDto responseDto = noticeService.updateNotice(noticeId, requestDto);
+
+        return ResponseEntity.status(HttpStatus.OK).body(responseDto);
+    }
 }

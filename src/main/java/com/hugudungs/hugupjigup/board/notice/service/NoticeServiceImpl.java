@@ -10,6 +10,9 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
+import java.util.Optional;
+
 @Service
 public class NoticeServiceImpl implements NoticeService{
     private final NoticeRepository noticeRepository;
@@ -55,8 +58,16 @@ public class NoticeServiceImpl implements NoticeService{
     }
 
     @Override
-    public NoticeResponseDto updateNotice(Long noticeId, String title, String content) throws Exception {
-        return null;
+    public NoticeResponseDto updateNotice(Long noticeId, NoticeRequestDto requestDto) throws Exception {
+        Notice post = noticeRepository.findById(noticeId).get();
+
+        NoticeResponseDto responseDto = NoticeResponseDto.builder()
+                .noticeId(noticeId)
+                .noticeTitle(requestDto.getTitle())
+                .noticeContent(requestDto.getTitle())
+                .updateDate(LocalDateTime.now())
+                .build();
+        return responseDto;
     }
 
     @Override

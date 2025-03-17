@@ -8,7 +8,7 @@ import org.springframework.data.domain.Pageable;
 public interface NoticeService {
     NoticeResponseDto createNotice(Long userId, NoticeRequestDto requestDto);
 
-    NoticeResponseDto updateNotice(Long noticeId, String title, String content) throws Exception;
+    NoticeResponseDto updateNotice(Long noticeId, NoticeRequestDto requestDto) throws Exception;
 
     void deleteNotice(Long id) throws Exception;
 

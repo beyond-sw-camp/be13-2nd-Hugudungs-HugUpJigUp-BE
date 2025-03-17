@@ -8,8 +8,13 @@ import org.springframework.web.bind.annotation.*;
 
 
 public interface NoticeController {
-    @Operation(summary = "프로젝트 등록 메서드", description = "프로젝트 등록 메서드입니다.")
+    @Operation(summary = "공지 게시글 등록 메서드", description = "공지 게시글 등록 메서드입니다.")
     public ResponseEntity<NoticeResponseDto> createProject(
             @PathVariable Long userId,
             @RequestBody NoticeRequestDto requestDto);
+
+    @Operation(summary = "공지 게시글 수정 메서드", description = "공지 게시글 수정 메서드입니다.")
+    public ResponseEntity<NoticeResponseDto> updateProject(
+            @PathVariable Long noticeId,
+            @RequestBody NoticeRequestDto requestDto) throws Exception;
     }
