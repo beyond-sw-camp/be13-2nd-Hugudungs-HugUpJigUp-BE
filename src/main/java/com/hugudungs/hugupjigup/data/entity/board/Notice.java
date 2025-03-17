@@ -19,4 +19,6 @@ import lombok.experimental.SuperBuilder;
         @AttributeOverride(name = "content", column = @Column(name = "notice_content")),
         @AttributeOverride(name = "views", column = @Column(name = "notice_views"))
 })
-public class Notice extends BaseBoardEntity { }
+public class Notice extends BaseBoardEntity {
+
+}

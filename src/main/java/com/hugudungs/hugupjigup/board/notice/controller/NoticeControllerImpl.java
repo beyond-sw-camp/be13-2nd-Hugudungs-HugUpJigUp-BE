@@ -4,10 +4,10 @@ import com.hugudungs.hugupjigup.board.notice.data.dto.NoticeRequestDto;
 import com.hugudungs.hugupjigup.board.notice.data.dto.NoticeResponseDto;
 import com.hugudungs.hugupjigup.board.notice.service.NoticeService;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import org.springframework.dao.DataAccessException;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.ErrorResponseException;
 import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -27,67 +27,80 @@ public class NoticeControllerImpl implements NoticeController {
     public NoticeControllerImpl(NoticeService noticeService) {
         this.noticeService = noticeService;
     }
-    
+
     @Override
     @PostMapping("/create/{userId}")
-    public ResponseEntity<NoticeResponseDto> createProject(
+    public ResponseEntity<NoticeResponseDto> createNotice(
             @PathVariable Long userId,
             @RequestBody NoticeRequestDto requestDto) {
-        NoticeResponseDto responseDto = noticeService.createNotice(userId, requestDto);
+        try {
+            NoticeResponseDto responseDto = noticeService.createNotice(userId, requestDto);
 
-        return ResponseEntity.status(HttpStatus.OK).body(responseDto);
+            return ResponseEntity.status(HttpStatus.OK).body(responseDto);
+        } catch (DataAccessException e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
+        }
     }
-    
+
     @Override
     @PutMapping("/update/{noticeId}")
-    public ResponseEntity<NoticeResponseDto> updateProject(
+    public ResponseEntity<NoticeResponseDto> updateNotice(
             @PathVariable Long noticeId,
-            @RequestBody NoticeRequestDto requestDto) throws Exception {
-        NoticeResponseDto responseDto = noticeService.updateNotice(noticeId, requestDto);
+            @RequestBody NoticeRequestDto requestDto) {
+        try {
+            NoticeResponseDto responseDto = noticeService.updateNotice(noticeId, requestDto);
 
-        return ResponseEntity.status(HttpStatus.OK).body(responseDto);
+            return ResponseEntity.status(HttpStatus.OK).body(responseDto);
+        } catch (DataAccessException e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
+        }
     }
 
     @Override
     @DeleteMapping("/delete/{noticeId}")
-    public ResponseEntity<NoticeResponseDto> deleteProject(
-            @PathVariable Long noticeId) throws Exception {
+    public ResponseEntity<Void> deleteNotice(
+            @PathVariable Long noticeId) {
         try {
             noticeService.deleteNotice(noticeId);
+
             return ResponseEntity.status(HttpStatus.OK).build();
-        } catch (ErrorResponseException e) {
-//FIXME: UnauthorizedException 구현        } catch (UnauthorizedException e) {
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(null);
+//        } catch (UnauthorizedException e) {
+//            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+        } catch (DataAccessException e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
         } catch (Exception e) {
-            //FIXME: 다른 예외 처리 생각
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
         }
     }
 
     @Override
     @GetMapping("/get/{noticeId}")
-    public ResponseEntity<NoticeResponseDto> getNotice(@PathVariable Long noticeId) throws Exception {
+    public ResponseEntity<NoticeResponseDto> getNotice(@PathVariable Long noticeId) {
         try {
             NoticeResponseDto responseDto = noticeService.getNoticeById(noticeId);
 
             return ResponseEntity.status(HttpStatus.OK).body(responseDto);
-//            FIXME: 커스텀 에러 구문 } catch (RuntimeException e) {
         } catch (RuntimeException e) {
-
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
+        } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
         }
     }
 
     @Override
-    @GetMapping("/{pageable}")
+    @GetMapping("/posts")
     public ResponseEntity<Page<NoticeResponseDto>> getNoticePosts(Pageable pageable) {
         try {
             Page<NoticeResponseDto> responseDto = noticeService.getNoticePosts(pageable);
 
             return ResponseEntity.status(HttpStatus.OK).body(responseDto);
-//FIXME: 커스텀 에러 구문        } catch (RuntimeException e) {
-        } catch (RuntimeException e) {
-
+        } catch (DataAccessException e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
+        } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
         }
     }

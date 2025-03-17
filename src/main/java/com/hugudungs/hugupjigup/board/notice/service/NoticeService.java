@@ -6,13 +6,13 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
 public interface NoticeService {
-    NoticeResponseDto createNotice(Long userId, NoticeRequestDto requestDto);
+    NoticeResponseDto createNotice(Long userId, NoticeRequestDto requestDto) throws Exception;
 
     NoticeResponseDto updateNotice(Long noticeId, NoticeRequestDto requestDto) throws Exception;
 
     void deleteNotice(Long id) throws Exception;
 
-    Page<NoticeResponseDto> getNoticePosts(Pageable pageable);
+    Page<NoticeResponseDto> getNoticePosts(Pageable pageable) throws Exception;
 
-    NoticeResponseDto getNoticeById(Long noticeId);
+    NoticeResponseDto getNoticeById(Long noticeId) throws Exception;
 }

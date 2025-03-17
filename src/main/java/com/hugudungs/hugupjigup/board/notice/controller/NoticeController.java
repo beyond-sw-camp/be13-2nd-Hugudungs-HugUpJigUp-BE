@@ -11,17 +11,17 @@ import org.springframework.web.bind.annotation.RequestBody;
 
 public interface NoticeController {
     @Operation(summary = "공지 게시글 등록 메서드", description = "공지 게시글 등록 메서드입니다.")
-    public ResponseEntity<NoticeResponseDto> createProject(
+    public ResponseEntity<NoticeResponseDto> createNotice(
             @PathVariable Long userId,
-            @RequestBody NoticeRequestDto requestDto);
+            @RequestBody NoticeRequestDto requestDto) throws Exception;
 
     @Operation(summary = "공지 게시글 수정 메서드", description = "공지 게시글 수정 메서드입니다.")
-    public ResponseEntity<NoticeResponseDto> updateProject(
+    public ResponseEntity<NoticeResponseDto> updateNotice(
             @PathVariable Long noticeId,
             @RequestBody NoticeRequestDto requestDto) throws Exception;
 
     @Operation(summary = "공지 게시글 삭제 메서드", description = "공지 게시글 삭제 메서드입니다.")
-    public ResponseEntity<NoticeResponseDto> deleteProject(
+    public ResponseEntity<Void> deleteNotice(
             @PathVariable Long noticeId) throws Exception;
 
     @Operation(summary = "공지 게시글 조회 메서드", description = "공지 게시글 조회 메서드입니다.")
@@ -30,5 +30,5 @@ public interface NoticeController {
 
     @Operation(summary = "공지 게시판 조회 메서드", description = "공지 게시판 조회 메서드입니다.")
     public ResponseEntity<Page<NoticeResponseDto>> getNoticePosts(
-            @PathVariable Pageable pageable);
+            @PathVariable Pageable pageable) throws Exception;
 }

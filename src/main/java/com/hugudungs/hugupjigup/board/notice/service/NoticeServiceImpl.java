@@ -6,121 +6,157 @@ import com.hugudungs.hugupjigup.board.notice.data.dto.NoticeResponseDto;
 import com.hugudungs.hugupjigup.common.enums.BoardType;
 import com.hugudungs.hugupjigup.data.entity.board.Notice;
 import com.hugudungs.hugupjigup.data.entity.user.User;
+import org.springframework.dao.DataAccessException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDateTime;
-
 @Service
-public class NoticeServiceImpl implements NoticeService{
+public class NoticeServiceImpl implements NoticeService {
     private final NoticeRepository noticeRepository;
-//    private final UserRepository userRepository;
 
-    /**
-     * NoticeRepository 생성
-     * @param noticeRepository
-     * @see NoticeRepository
-     */
     public NoticeServiceImpl(NoticeRepository noticeRepository) {
         this.noticeRepository = noticeRepository;
     }
 
-
     @Override
-    public NoticeResponseDto createNotice(Long userId, NoticeRequestDto requestDto) {
-        //FIXME: userId로 User를 가져오는 로직이 완성되면 추가
-        //FIXME: userId로 관리자를 판별하는 로직
-//        User user = userRepository.findById(userId)
-//                .orElseThrow(() -> new IllegalArgumentException("유효하지 않은 사용자 ID입니다."));
+    public NoticeResponseDto createNotice(Long userId, NoticeRequestDto requestDto) throws Exception {
+        try {
+            //FIXME: userId로 User를 가져오는 로직이 완성되면 추가
+            //FIXME: userId로 관리자를 판별하는 로직
+//            User user = userRepository.findById(userId)
+//                    .orElseThrow(() -> new IllegalArgumentException("유효하지 않은 사용자 ID입니다."));
 
-        Notice notice = Notice.builder()
-                .boardType(BoardType.NOTICE)
-                .title(requestDto.getTitle())
-                .content(requestDto.getContent())
-                .views(0)
-//                .user(user)
-                .build();
+            Notice notice = Notice.builder()
+                    .boardType(BoardType.NOTICE)
+                    .title(requestDto.getTitle())
+                    .content(requestDto.getContent())
+                    .views(0)
+//                    .user(user)
+                    .build();
 
-        Notice savedNotice = noticeRepository.save(notice);
+            Notice savedNotice = noticeRepository.save(notice);
 
-        NoticeResponseDto responseDto = NoticeResponseDto.builder()
-                .noticeId(savedNotice.getId())
-                .boardType(savedNotice.getBoardType())
-                .noticeTitle(savedNotice.getTitle())
-                .noticeContent(savedNotice.getContent())
-                .noticeViews(savedNotice.getViews())
-                .authorId(savedNotice.getAuthor().getId())
-                .build();
+            NoticeResponseDto responseDto = NoticeResponseDto.builder()
+                    .noticeId(savedNotice.getId())
+                    .boardType(savedNotice.getBoardType())
+                    .noticeTitle(savedNotice.getTitle())
+                    .noticeContent(savedNotice.getContent())
+                    .noticeViews(savedNotice.getViews())
+                    .authorId(savedNotice.getAuthor() != null ? savedNotice.getAuthor().getId() : null)
+                    .build();
 
-        return responseDto;
+            return responseDto;
+        } catch (DataAccessException e) {
+            throw new Exception("게시글 생성 중 데이터베이스 오류가 발생했습니다.", e);
+        } catch (Exception e) {
+            throw new Exception("게시글 생성 중 예기치 않은 오류가 발생했습니다.", e);
+        }
     }
 
     @Override
     public NoticeResponseDto updateNotice(Long noticeId, NoticeRequestDto requestDto) throws Exception {
-        Notice post = noticeRepository.findById(noticeId).get();
+        try {
+            Notice post = noticeRepository.findById(noticeId)
+                    .orElseThrow(() -> new RuntimeException("해당 공지 게시글이 존재하지 않습니다."));
 
-        NoticeResponseDto responseDto = NoticeResponseDto.builder()
-                .noticeId(noticeId)
-                .noticeTitle(requestDto.getTitle())
-                .noticeContent(requestDto.getTitle())
-                .updateDate(LocalDateTime.now())
-                .build();
-        return responseDto;
+            post.setTitle(requestDto.getTitle());
+            post.setContent(requestDto.getContent());
+
+            Notice updatedNotice = noticeRepository.saveAndFlush(post);
+
+            NoticeResponseDto responseDto = NoticeResponseDto.builder()
+                    .noticeId(updatedNotice.getId())
+                    .noticeTitle(updatedNotice.getTitle())
+                    .noticeContent(updatedNotice.getContent())
+                    .updateDate(updatedNotice.getUpdatedAt())
+                    .build();
+
+            return responseDto;
+        } catch (DataAccessException e) {
+            throw new Exception("게시글 수정 중 데이터베이스 오류가 발생했습니다.", e);
+        } catch (Exception e) {
+            throw new Exception("게시글 수정 중 예기치 않은 오류가 발생했습니다.", e);
+        }
     }
 
     @Override
     public void deleteNotice(Long noticeId) throws Exception {
-        //FIXME: 현재 로그인한 유저의 아이디 가져오는 로직
-//        Long currentUserId = getCurrentUserId();
-        Long currentUserId = 1L;
+        try {
+            //FIXME: 현재 로그인한 유저의 아이디 가져오는 로직
+//            Long currentUserId = getCurrentUserId();
+            Long currentUserId = 1L;
 
-        Long authorId = noticeRepository
-                .findById(noticeId)
-                .orElseThrow()
-                .getAuthor()
-                .getId();
+            Notice notice = noticeRepository.findById(noticeId)
+                    .orElseThrow(() -> new RuntimeException("해당 공지 게시글이 존재하지 않습니다."));
 
-        if (!authorId.equals(currentUserId)) {
-//            throw new UnauthorizedException("작성자만 삭제 할 수 있습니다.");
-            throw new RuntimeException("작성자만 삭제 할 수 있습니다.");
+            if (notice.getAuthor() == null) {
+                throw new RuntimeException("작성자가 존재하지 않습니다.");
+            }
+
+            Long authorId = notice.getAuthor().getId();
+
+            if (!authorId.equals(currentUserId)) {
+                throw new RuntimeException("작성자만 삭제할 수 있습니다.");
+            }
+
+            noticeRepository.deleteById(noticeId);
+        } catch (DataAccessException e) {
+            throw new Exception("게시글 삭제 중 데이터베이스 오류가 발생했습니다.", e);
+        } catch (Exception e) {
+            throw new Exception("게시글 삭제 중 예기치 않은 오류가 발생했습니다.", e);
         }
-
-        noticeRepository.deleteById(noticeId);
     }
 
     @Override
-    public NoticeResponseDto getNoticeById(Long noticeId) {
-        Notice notice = noticeRepository.findById(noticeId).orElseThrow();
+    public NoticeResponseDto getNoticeById(Long noticeId) throws Exception {
+        try {
+            Notice notice = noticeRepository.findById(noticeId)
+                    .orElseThrow(() -> new RuntimeException("해당 공지 게시글이 존재하지 않습니다."));
 
-        NoticeResponseDto responseDto = NoticeResponseDto.builder()
-                .noticeId(notice.getId())
-                .createDate(notice.getCreatedAt())
-                .updateDate(notice.getUpdatedAt())
-                .boardType(notice.getBoardType())
-                .noticeContent(notice.getContent())
-                .noticeTitle(notice.getTitle())
-                .noticeViews(notice.getViews())
-                .authorId(notice.getAuthor().getId())
-                .build();
+            if (notice.getAuthor() == null) {
+                throw new RuntimeException("작성자가 존재하지 않습니다.");
+            }
 
-        return responseDto;
+            NoticeResponseDto responseDto = NoticeResponseDto.builder()
+                    .noticeId(notice.getId())
+                    .createDate(notice.getCreatedAt())
+                    .updateDate(notice.getUpdatedAt())
+                    .boardType(notice.getBoardType())
+                    .noticeContent(notice.getContent())
+                    .noticeTitle(notice.getTitle())
+                    .noticeViews(notice.getViews())
+                    .authorId(notice.getAuthor().getId())
+                    .build();
+
+            return responseDto;
+        } catch (RuntimeException e) {
+            throw new Exception("게시글 조회 중 예기치 않은 오류가 발생했습니다.", e);
+        } catch (Exception e) {
+            throw new Exception("게시글 조회 중 예기치 않은 오류가 발생했습니다.", e);
+        }
     }
 
     @Override
-    public Page<NoticeResponseDto> getNoticePosts(Pageable pageable) {
-        Page<Notice> noticePage = noticeRepository.findAll(pageable);
+    public Page<NoticeResponseDto> getNoticePosts(Pageable pageable) throws Exception {
+        try {
+            Page<Notice> noticePage = noticeRepository.findAll(pageable);
 
-        return noticePage.map(notice -> NoticeResponseDto.builder()
-                .noticeId(notice.getId())
-                .createDate(notice.getCreatedAt())
-                .updateDate(notice.getUpdatedAt())
-                .boardType(notice.getBoardType())
-                .noticeContent(notice.getContent())
-                .noticeTitle(notice.getTitle())
-                .noticeViews(notice.getViews())
-                .authorId(notice.getAuthor().getId())
-                .build()
-        );
+            return noticePage.map(notice -> NoticeResponseDto.builder()
+                    .noticeId(notice.getId())
+                    .createDate(notice.getCreatedAt())
+                    .updateDate(notice.getUpdatedAt())
+                    .boardType(notice.getBoardType())
+                    .noticeContent(notice.getContent())
+                    .noticeTitle(notice.getTitle())
+                    .noticeViews(notice.getViews())
+                    .authorId(notice.getAuthor() != null ? notice.getAuthor().getId() : null)
+                    .build()
+            );
+        } catch (DataAccessException e) {
+            throw new Exception("게시글 목록 조회 중 데이터베이스 오류가 발생했습니다.", e);
+        } catch (Exception e) {
+            throw new Exception("게시글 목록 조회 중 예기치 않은 오류가 발생했습니다.", e);
+        }
     }
 }
