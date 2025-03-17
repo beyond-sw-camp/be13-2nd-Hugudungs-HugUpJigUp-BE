@@ -8,11 +8,9 @@ import com.hugudungs.hugupjigup.data.entity.board.Notice;
 import com.hugudungs.hugupjigup.data.entity.user.User;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
-import java.util.Optional;
 
 @Service
 public class NoticeServiceImpl implements NoticeService{
@@ -92,11 +90,6 @@ public class NoticeServiceImpl implements NoticeService{
     }
 
     @Override
-    public Page<NoticeResponseDto> getNoticePosts(Pageable pageable) {
-        return null;
-    }
-
-    @Override
     public NoticeResponseDto getNoticeById(Long noticeId) {
         Notice notice = noticeRepository.findById(noticeId).orElseThrow();
 
@@ -112,5 +105,22 @@ public class NoticeServiceImpl implements NoticeService{
                 .build();
 
         return responseDto;
+    }
+
+    @Override
+    public Page<NoticeResponseDto> getNoticePosts(Pageable pageable) {
+        Page<Notice> noticePage = noticeRepository.findAll(pageable);
+
+        return noticePage.map(notice -> NoticeResponseDto.builder()
+                .noticeId(notice.getId())
+                .createDate(notice.getCreatedAt())
+                .updateDate(notice.getUpdatedAt())
+                .boardType(notice.getBoardType())
+                .noticeContent(notice.getContent())
+                .noticeTitle(notice.getTitle())
+                .noticeViews(notice.getViews())
+                .authorId(notice.getAuthor().getId())
+                .build()
+        );
     }
 }
