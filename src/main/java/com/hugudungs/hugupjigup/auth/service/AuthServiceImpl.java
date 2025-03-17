@@ -62,6 +62,7 @@ public class AuthServiceImpl implements AuthService {
         if (originOtp == null || !originOtp.equals(otpCode)) {
             return false;
         }
+        cacheService.delete(this.createOtpKey(email));
         // 인증 성공시 verified redis에 저장 유효기간 10분
         cacheService.set(this.verifiedUserKey(email),"1", 60 * 10);
         return true;
@@ -74,6 +75,16 @@ public class AuthServiceImpl implements AuthService {
         if (getVerified == null) {
             throw new RuntimeException("인증되지 않은 사용자입니다.");
         }
+
+        userRepository.findByEmail(email).ifPresent(user -> {
+            throw new RuntimeException("이미 가입된 이메일입니다.");
+        });
+
+        userRepository.findByNickName(signUpRequestDto.getNickname()).ifPresent(user -> {
+            throw new RuntimeException("이미 사용중인 닉네임입니다.");
+        });
+
+        cacheService.delete(this.verifiedUserKey(email));
         User user = User.builder()
                 .email(signUpRequestDto.getEmail())
                 .password(passwordEncoder.encode(signUpRequestDto.getPassword()))
