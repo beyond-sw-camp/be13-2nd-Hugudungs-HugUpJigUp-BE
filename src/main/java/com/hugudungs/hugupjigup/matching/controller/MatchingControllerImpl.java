@@ -18,6 +18,8 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.List;
+
 @Tag(name = "매칭 게시판 API", description = "매칭 게시판 API")
 @RestController
 @RequestMapping("/api/v1/matching")
@@ -29,7 +31,6 @@ public class MatchingControllerImpl implements MatchingController {
     }
 
     @Override
-    @PostMapping("/create/{userId}")
     public ResponseEntity<MatchingResponseDto> createMatching(
             Long userId,
             MatchingRequestDto requestDto) {
@@ -78,9 +79,9 @@ public class MatchingControllerImpl implements MatchingController {
 
     @Override
     @GetMapping("/posts")
-    public ResponseEntity<Page<MatchingResponseDto>> getMatchingPosts(Pageable pageable) {
+    public ResponseEntity<Page<List<MatchingResponseDto>>> getMatchingPosts(Pageable pageable) {
         try {
-            Page<MatchingResponseDto> responseDto = matchingService.getMatchingPosts(pageable);
+            Page<List<MatchingResponseDto>> responseDto = matchingService.getMatchingPosts(pageable);
 
             return ResponseEntity.status(HttpStatus.OK).body(responseDto);
         } catch (DataAccessException e) {

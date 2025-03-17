@@ -5,6 +5,8 @@ import com.hugudungs.hugupjigup.matching.data.dto.MatchingResponseDto;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
+import java.util.List;
+
 public interface MatchingService {
     MatchingResponseDto createMatching(Long userId, MatchingRequestDto requestDto) throws Exception ;
 
@@ -12,7 +14,7 @@ public interface MatchingService {
 
     void deleteMatching(Long matchingId) throws Exception;
 
-    Page<MatchingResponseDto> getMatchingPosts(Pageable pageable) throws Exception ;
+    Page<List<MatchingResponseDto>> getMatchingPosts(Pageable pageable) throws Exception ;
 
     MatchingResponseDto getMatchingById(Long matchingId) throws Exception;
 }
