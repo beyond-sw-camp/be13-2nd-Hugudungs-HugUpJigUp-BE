@@ -5,6 +5,7 @@ import com.hugudungs.hugupjigup.auth.dto.VerificationOtpRequestDto;
 import com.hugudungs.hugupjigup.auth.repository.UserRepository;
 import com.hugudungs.hugupjigup.common.cache.CacheService;
 import com.hugudungs.hugupjigup.common.email.EmailService;
+import com.hugudungs.hugupjigup.common.enums.LoginType;
 import com.hugudungs.hugupjigup.data.entity.user.User;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -77,6 +78,7 @@ public class AuthServiceImpl implements AuthService {
                 .email(signUpRequestDto.getEmail())
                 .password(passwordEncoder.encode(signUpRequestDto.getPassword()))
                 .nickName(signUpRequestDto.getNickname())
+                .loginType(LoginType.COMMON)
                 .build();
         userRepository.save(user);
     }

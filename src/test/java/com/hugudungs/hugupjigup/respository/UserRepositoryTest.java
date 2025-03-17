@@ -18,7 +18,7 @@ public class UserRepositoryTest {
     private UserRepository userRepository;
 
     @AfterEach
-    void afterAll() {
+    void afterEach() {
         userRepository.deleteAll();
     }
 

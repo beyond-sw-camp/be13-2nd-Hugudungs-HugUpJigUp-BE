@@ -1,5 +1,6 @@
 package com.hugudungs.hugupjigup.auth.controller;
 
+import com.hugudungs.hugupjigup.auth.dto.SendOtpRequestDto;
 import com.hugudungs.hugupjigup.auth.dto.SignUpRequestDto;
 import com.hugudungs.hugupjigup.auth.dto.VerificationOtpRequestDto;
 import com.hugudungs.hugupjigup.common.dto.ResponseDto;
@@ -14,7 +15,7 @@ public interface AuthController {
 
     ResponseEntity<ResponseDto<Void>> nicknameDuplicateCheck(@RequestParam("nickname") String nickname);
 
-    ResponseEntity<ResponseDto<Void>> sendOtp(@RequestBody String email);
+    ResponseEntity<ResponseDto<Void>> sendOtp(@RequestBody SendOtpRequestDto sendOtpRequestDto);
 
     ResponseEntity<ResponseDto<Void>> verificationOtp(@RequestBody VerificationOtpRequestDto verificationOtpRequestDto);
 
