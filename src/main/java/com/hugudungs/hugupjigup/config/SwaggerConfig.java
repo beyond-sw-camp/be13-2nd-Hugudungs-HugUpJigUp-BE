@@ -13,7 +13,7 @@ public class SwaggerConfig {
     @Bean
     public OpenAPI openAPI(@Value("${springdoc.swagger-ui.version}") String springdocVersion) {
         Info info = new Info()
-                .title("타이틀 입력")
+                .title("허겁직업 프로젝트")
                 .version(springdocVersion)
                 .description("API에 대한 설명 부분")
                 .version("1.0.0"); // API의 버전

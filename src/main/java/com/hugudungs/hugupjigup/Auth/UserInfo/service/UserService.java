@@ -85,15 +85,16 @@ public class UserService {
         user.setNickName(updateUserProfileDTO.getName());
         user.setEmail(updateUserProfileDTO.getEmail());
 
+        // 현재 직업과 희망직업은 따로 수정하기로 정함
         // userProfile 엔티티를 가져와서 currentJob과 desiredJob을 수정
-        UserProfile userProfile = userProfileRepository.findByUser(user)
-                .orElseThrow(() -> new RuntimeException("UserProfile not found"));
-
-        userProfile.setCurrentJob(updateUserProfileDTO.getCurrentJob());
-        userProfile.setDesiredJob(updateUserProfileDTO.getDesiredJob());
+//        UserProfile userProfile = userProfileRepository.findByUser(user)
+//                .orElseThrow(() -> new RuntimeException("UserProfile not found"));
+//
+//        userProfile.setCurrentJob(updateUserProfileDTO.getCurrentJob());
+//        userProfile.setDesiredJob(updateUserProfileDTO.getDesiredJob());
 
         // 변경된 유저와 프로필 정보를 저장
         userRepository.save(user);
-        userProfileRepository.save(userProfile);
+//        userProfileRepository.save(userProfile);
     }
 }

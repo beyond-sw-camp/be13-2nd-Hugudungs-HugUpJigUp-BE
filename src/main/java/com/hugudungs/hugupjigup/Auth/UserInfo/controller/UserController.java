@@ -1,27 +1,33 @@
 package com.hugudungs.hugupjigup.Auth.UserInfo.controller;
 
 import com.hugudungs.hugupjigup.Auth.UserInfo.dto.user.UpdateUserProfileDTO;
+import com.hugudungs.hugupjigup.Auth.UserInfo.dto.user.UserProfileResponseDTO;
 import com.hugudungs.hugupjigup.Auth.UserInfo.service.UserService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.parameters.RequestBody;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 
 @RestController
 @RequestMapping("/api-docs/user")
-@Tag(name = "유저 프로필 수정", description = "유저 프로필 수정 API")
-public class UserProfileUpdateController {
+@Tag(name = "유저 프로필", description = "유저 프로필 API")
+public class UserController {
 
     private final UserService userService;
 
-    public UserProfileUpdateController(UserService userService) {
+    public UserController(UserService userService) {
         this.userService = userService;
+    }
+
+    // Get
+    // 유저의 기본 정보 조회
+    @Operation(summary = "유저 프로필 조회", description = "유저의 프로필을 조회합니다.")
+    @GetMapping("/{email}")
+    public UserProfileResponseDTO getUserProfile(@PathVariable String email) {
+        return userService.getUserProfileByEmail(email);
     }
 
     // Put
@@ -35,7 +41,6 @@ public class UserProfileUpdateController {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
-//    @Operation(summary = "유저 멘토 프로필 수정", description = "유저의 멘토 프로필 정보를 수정합니다.")
-//    @PutMapping("/users/{email}")
+    // 유저 멘토 정보 수정
 
 }
