@@ -1,5 +1,7 @@
 package com.hugudungs.hugupjigup.Auth.UserInfo.service;
 
+import com.hugudungs.hugupjigup.Auth.UserInfo.dto.user.UpdateUserMenteeProfileDTO;
+import com.hugudungs.hugupjigup.Auth.UserInfo.dto.user.UpdateUserMentorProfileDTO;
 import com.hugudungs.hugupjigup.common.enums.ProfileType;
 import com.hugudungs.hugupjigup.Auth.UserInfo.dto.user.UpdateUserProfileDTO;
 import com.hugudungs.hugupjigup.Auth.UserInfo.dto.user.UserProfileResponseDTO;
@@ -74,9 +76,9 @@ public class UserService {
     }
 
     // 기존의 updateUserProfile 메서드 유지
-    public void updateUserProfile(String email, UpdateUserProfileDTO updateUserProfileDTO) {
+    public UpdateUserProfileDTO updateUserProfile(String email, UpdateUserProfileDTO updateUserProfileDTO) {
         User user = userRepository.findByEmail(email)
-                .orElseThrow(() -> new RuntimeException("User not found"));
+                .orElseThrow(() -> new RuntimeException("유저를 찾을 수 없습니다."));
 
         // 아직 암호화는 추가 안함 조건도 아직 없음
         user.setPassword(updateUserProfileDTO.getPassword());
@@ -85,16 +87,53 @@ public class UserService {
         user.setNickName(updateUserProfileDTO.getName());
         user.setEmail(updateUserProfileDTO.getEmail());
 
-        // 현재 직업과 희망직업은 따로 수정하기로 정함
-        // userProfile 엔티티를 가져와서 currentJob과 desiredJob을 수정
-//        UserProfile userProfile = userProfileRepository.findByUser(user)
-//                .orElseThrow(() -> new RuntimeException("UserProfile not found"));
-//
-//        userProfile.setCurrentJob(updateUserProfileDTO.getCurrentJob());
-//        userProfile.setDesiredJob(updateUserProfileDTO.getDesiredJob());
-
-        // 변경된 유저와 프로필 정보를 저장
         userRepository.save(user);
-//        userProfileRepository.save(userProfile);
+
+        return new UpdateUserProfileDTO(
+                user.getNickName(),
+                user.getEmail(),
+                user.getPassword()
+        );
+    }
+
+
+    public UpdateUserMentorProfileDTO updateUserMentorProfile(String email, UpdateUserMentorProfileDTO updateUserMentorProfileDTO) {
+        User user = userRepository.findByEmail(email)
+                .orElseThrow(() -> new RuntimeException("유저를 찾을 수 없습니다."));
+
+        UserProfile userProfile = userProfileRepository.findByUser(user)
+                .orElseThrow(() -> new RuntimeException("유저 프로필을 찾을 수 없습니다."));
+
+        userProfile.setCurrentJob(updateUserMentorProfileDTO.getCurrentJob());
+        userProfile.setIntroduction(updateUserMentorProfileDTO.getIntroduction());
+        userProfile.setExperience(updateUserMentorProfileDTO.getExperience());
+
+        // 이제 유저 멘토 프로필 레파지토리에 저장하는 코드인 userMentorProfileRepository.save(userProfile); 해야함
+
+        return new UpdateUserMentorProfileDTO(
+            userProfile.getCurrentJob(),
+            userProfile.getIntroduction(),
+            userProfile.getExperience()
+        );
+    }
+
+    public UpdateUserMenteeProfileDTO updateUserMenteeProfile(String email, UpdateUserMenteeProfileDTO updateUserMenteeProfileDTO) {
+        User user = userRepository.findByEmail(email)
+                .orElseThrow(() -> new RuntimeException("유저를 찾을 수 없습니다."));
+
+        UserProfile userProfile = userProfileRepository.findByUser(user)
+                .orElseThrow(() -> new RuntimeException("유저 프로필을 찾을 수 없습니다."));
+
+        userProfile.setDesiredJob(updateUserMenteeProfileDTO.getDesiredJob());
+        userProfile.setIntroduction(updateUserMenteeProfileDTO.getIntroduction());
+        userProfile.setExperience(updateUserMenteeProfileDTO.getExperience());
+
+        // 이제 유저 멘토 프로필 레파지토리에 저장하는 코드인 userMentorProfileRepository.save(userProfile); 해야함
+
+        return new UpdateUserMenteeProfileDTO(
+                userProfile.getDesiredJob(),
+                userProfile.getIntroduction(),
+                userProfile.getExperience()
+        );
     }
 }
