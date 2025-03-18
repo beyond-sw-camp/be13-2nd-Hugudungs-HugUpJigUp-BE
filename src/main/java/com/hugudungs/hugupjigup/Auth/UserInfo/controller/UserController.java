@@ -4,59 +4,24 @@ import com.hugudungs.hugupjigup.Auth.UserInfo.dto.user.UpdateUserMenteeProfileDT
 import com.hugudungs.hugupjigup.Auth.UserInfo.dto.user.UpdateUserMentorProfileDTO;
 import com.hugudungs.hugupjigup.Auth.UserInfo.dto.user.UpdateUserProfileDTO;
 import com.hugudungs.hugupjigup.Auth.UserInfo.dto.user.UserProfileResponseDTO;
-import com.hugudungs.hugupjigup.Auth.UserInfo.service.UserService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.parameters.RequestBody;
-import io.swagger.v3.oas.annotations.tags.Tag;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
 
+public interface UserController {
 
-@RestController
-@RequestMapping("/api-docs/user")
-@Tag(name = "유저 프로필", description = "유저 프로필 API")
-public class UserController {
-
-    private final UserService userService;
-
-    public UserController(UserService userService) {
-        this.userService = userService;
-    }
-
-    // Get
     // 유저의 기본 정보 조회
     @Operation(summary = "유저 프로필 조회", description = "유저의 프로필을 조회합니다.")
-    @GetMapping("/{email}")
-    public UserProfileResponseDTO getUserProfile(@PathVariable String email) {
-        return userService.getUserProfileByEmail(email);
-    }
+    UserProfileResponseDTO getUserProfile(String email);
 
-    // Put
     // 유저의 기본 정보 수정
     @Operation(summary = "유저 프로필 수정", description = "유저의 프로필 정보를 수정합니다.")
-    @PutMapping("/{email}")
-    public UpdateUserProfileDTO updateUserProfile(@PathVariable String email,
-                                                  @RequestBody UpdateUserProfileDTO updateUserProfileDTO) {
-        return userService.updateUserProfile(email, updateUserProfileDTO);
-    }
+    UpdateUserProfileDTO updateUserProfile(String email, UpdateUserProfileDTO updateUserProfileDTO);
 
     // 유저 멘토 정보 수정
     @Operation(summary = "유저 멘토 프로필 수정", description = "유저의 멘토 프로필 정보를 수정합니다.")
-    @PutMapping("{email}/mentor")
-    public UpdateUserMentorProfileDTO updateUserMentorProfile(@PathVariable String email,
-                                                              @RequestBody UpdateUserMentorProfileDTO updateUserMentorProfileDTO) {
-
-        return userService.updateUserMentorProfile(email, updateUserMentorProfileDTO);
-    }
+    UpdateUserMentorProfileDTO updateUserMentorProfile(String email, UpdateUserMentorProfileDTO updateUserMentorProfileDTO);
 
     // 유저 멘티 정보 수정
-    @Operation(summary = "유저 멘티 프로필 수정", description = "유저의 멘토 프로필 정보를 수정합니다.")
-    @PutMapping("{email}/mentee")
-    public UpdateUserMenteeProfileDTO updateUserMenteeProfile(@PathVariable String email,
-                                                              @RequestBody UpdateUserMenteeProfileDTO updateUserMenteeProfileDTO) {
-
-        return userService.updateUserMenteeProfile(email, updateUserMenteeProfileDTO);
-    }
-
+    @Operation(summary = "유저 멘티 프로필 수정", description = "유저의 멘티 프로필 정보를 수정합니다.")
+    UpdateUserMenteeProfileDTO updateUserMenteeProfile(String email, UpdateUserMenteeProfileDTO updateUserMenteeProfileDTO);
 }
