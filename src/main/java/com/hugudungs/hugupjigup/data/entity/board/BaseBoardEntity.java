@@ -3,6 +3,7 @@ package com.hugudungs.hugupjigup.data.entity.board;
 import com.hugudungs.hugupjigup.common.enums.BoardType;
 import com.hugudungs.hugupjigup.data.entity.common.BaseEntity;
 import com.hugudungs.hugupjigup.data.entity.user.User;
+
 import jakarta.persistence.*;
 import lombok.Builder;
 import lombok.Getter;

@@ -10,15 +10,14 @@ import java.time.LocalDateTime;
 
 @Getter
 @Builder
-@NoArgsConstructor
 @AllArgsConstructor
 public class NoticeResponseDto {
-    private Long noticeId;
-    private String noticeTitle;
-    private String noticeContent;
-    private BoardType boardType;
-    private Long authorId;
-    private int noticeViews;
-    private LocalDateTime createDate;
-    private LocalDateTime updateDate;
+    private final Long noticeId;
+    private final String noticeTitle;
+    private final String noticeContent;
+    private final BoardType boardType;
+    private final Long authorId;
+    private final int noticeViews;
+    private final LocalDateTime createDate;
+    private final LocalDateTime updateDate;
 }

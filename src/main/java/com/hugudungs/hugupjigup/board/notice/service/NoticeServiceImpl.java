@@ -3,21 +3,18 @@ package com.hugudungs.hugupjigup.board.notice.service;
 import com.hugudungs.hugupjigup.board.notice.data.NoticeRepository;
 import com.hugudungs.hugupjigup.board.notice.data.dto.NoticeRequestDto;
 import com.hugudungs.hugupjigup.board.notice.data.dto.NoticeResponseDto;
-import com.hugudungs.hugupjigup.common.enums.BoardType;
 import com.hugudungs.hugupjigup.data.entity.board.Notice;
 import com.hugudungs.hugupjigup.data.entity.user.User;
+import lombok.RequiredArgsConstructor;
 import org.springframework.dao.DataAccessException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 @Service
+@RequiredArgsConstructor
 public class NoticeServiceImpl implements NoticeService {
     private final NoticeRepository noticeRepository;
-
-    public NoticeServiceImpl(NoticeRepository noticeRepository) {
-        this.noticeRepository = noticeRepository;
-    }
 
     @Override
     public NoticeResponseDto createNotice(Long userId, NoticeRequestDto requestDto) throws Exception {
@@ -28,16 +25,15 @@ public class NoticeServiceImpl implements NoticeService {
 //                    .orElseThrow(() -> new IllegalArgumentException("유효하지 않은 사용자 ID입니다."));
 
             Notice notice = Notice.builder()
-                    .boardType(BoardType.NOTICE)
+                    .boardType(requestDto.getBoardType())
                     .title(requestDto.getTitle())
                     .content(requestDto.getContent())
-                    .views(0)
 //                    .user(user)
                     .build();
 
             Notice savedNotice = noticeRepository.save(notice);
 
-            NoticeResponseDto responseDto = NoticeResponseDto.builder()
+            return NoticeResponseDto.builder()
                     .noticeId(savedNotice.getId())
                     .boardType(savedNotice.getBoardType())
                     .noticeTitle(savedNotice.getTitle())
@@ -45,8 +41,6 @@ public class NoticeServiceImpl implements NoticeService {
                     .noticeViews(savedNotice.getViews())
                     .authorId(savedNotice.getAuthor() != null ? savedNotice.getAuthor().getId() : null)
                     .build();
-
-            return responseDto;
         } catch (DataAccessException e) {
             throw new Exception("게시글 생성 중 데이터베이스 오류가 발생했습니다.", e);
         } catch (Exception e) {
@@ -131,8 +125,6 @@ public class NoticeServiceImpl implements NoticeService {
 
             return responseDto;
         } catch (RuntimeException e) {
-            throw new Exception("게시글 조회 중 예기치 않은 오류가 발생했습니다.", e);
-        } catch (Exception e) {
             throw new Exception("게시글 조회 중 예기치 않은 오류가 발생했습니다.", e);
         }
     }
