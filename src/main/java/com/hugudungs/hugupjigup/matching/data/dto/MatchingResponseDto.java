@@ -10,16 +10,15 @@ import java.time.LocalDateTime;
 
 @Getter
 @Builder
-@NoArgsConstructor
 @AllArgsConstructor
 public class MatchingResponseDto {
-    private Long matchingId;
-    private LocalDateTime createdAt;
-    private LocalDateTime updatedAt;
-    private BoardType boardType;
-    private String matchingContent;
-    private String matchingTitle;
-    private int matchingViews;
-    private String tag;
-    private Long authorId;
+    private final Long matchingId;
+    private final LocalDateTime createdAt;
+    private final LocalDateTime updatedAt;
+    private final BoardType boardType;
+    private final String matchingContent;
+    private final String matchingTitle;
+    private final int matchingViews;
+    private final String tag;
+    private final Long authorId;
 }

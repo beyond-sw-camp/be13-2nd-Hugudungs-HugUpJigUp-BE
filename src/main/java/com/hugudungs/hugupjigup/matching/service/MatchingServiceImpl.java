@@ -29,17 +29,16 @@ public class MatchingServiceImpl implements MatchingService {
             //         .orElseThrow(() -> new IllegalArgumentException("유효하지 않은 사용자 ID입니다."));
 
             Matching matching = Matching.builder()
-                    .boardType(BoardType.MATCHING)
+                    .boardType(requestDto.getBoardType())
                     .title(requestDto.getTitle())
                     .content(requestDto.getContent())
-                    .views(0)
                     .tag(requestDto.getTag())
                     // .user(user)
                     .build();
 
             Matching savedMatching = matchingRepository.save(matching);
 
-            MatchingResponseDto responseDto = MatchingResponseDto.builder()
+            return MatchingResponseDto.builder()
                     .matchingId(savedMatching.getId())
                     .boardType(savedMatching.getBoardType())
                     .matchingTitle(savedMatching.getTitle())
@@ -47,15 +46,12 @@ public class MatchingServiceImpl implements MatchingService {
                     .matchingViews(savedMatching.getViews())
                     .authorId(savedMatching.getAuthor() != null ? savedMatching.getAuthor().getId() : null)
                     .build();
-
-            return responseDto;
         } catch (DataAccessException e) {
             throw new Exception("게시글 생성 중 데이터베이스 오류가 발생했습니다.", e);
         } catch (Exception e) {
             throw new Exception("게시글 생성 중 예기치 않은 오류가 발생했습니다.", e);
         }
     }
-
 
     @Override
     public MatchingResponseDto updateMatching(Long matchingId, MatchingRequestDto requestDto) throws Exception {
@@ -69,7 +65,7 @@ public class MatchingServiceImpl implements MatchingService {
 
             Matching updatedMatching = matchingRepository.saveAndFlush(post);
 
-            MatchingResponseDto responseDto = MatchingResponseDto.builder()
+            return MatchingResponseDto.builder()
                     .createdAt(updatedMatching.getCreatedAt())
                     .updatedAt(updatedMatching.getUpdatedAt())
                     .boardType(updatedMatching.getBoardType())
@@ -79,8 +75,6 @@ public class MatchingServiceImpl implements MatchingService {
                     .matchingViews(updatedMatching.getViews())
                     .authorId(updatedMatching.getAuthor() != null ? updatedMatching.getAuthor().getId() : null)
                     .build();
-
-            return responseDto;
         } catch (DataAccessException e) {
             throw new Exception("게시글 수정 중 데이터베이스 오류가 발생했습니다.", e);
         } catch (Exception e) {
@@ -147,7 +141,6 @@ public class MatchingServiceImpl implements MatchingService {
         }
     }
 
-
     @Override
     public MatchingResponseDto getMatchingById(Long matchingId) throws Exception {
         try {
@@ -158,7 +151,7 @@ public class MatchingServiceImpl implements MatchingService {
                 throw new RuntimeException("작성자가 존재하지 않습니다.");
             }
 
-            MatchingResponseDto responseDto = MatchingResponseDto.builder()
+            return MatchingResponseDto.builder()
                     .matchingId(matching.getId())
                     .createdAt(matching.getCreatedAt())
                     .updatedAt(matching.getUpdatedAt())
@@ -168,8 +161,6 @@ public class MatchingServiceImpl implements MatchingService {
                     .matchingViews(matching.getViews())
                     .authorId(matching.getAuthor().getId())
                     .build();
-
-            return responseDto;
         } catch (RuntimeException e) {
             throw new Exception("게시글 조회 중 데이터베이스 오류가 발생했습니다. (ID: " + matchingId + ")", e);
         }
