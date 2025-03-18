@@ -87,7 +87,7 @@ public class UserService {
         user.setNickName(updateUserProfileDTO.getName());
         user.setEmail(updateUserProfileDTO.getEmail());
 
-        userRepository.save(user);
+        userRepository.saveAndFlush(user);
 
         return new UpdateUserProfileDTO(
                 user.getNickName(),
@@ -101,14 +101,14 @@ public class UserService {
         User user = userRepository.findByEmail(email)
                 .orElseThrow(() -> new RuntimeException("유저를 찾을 수 없습니다."));
 
-        UserProfile userProfile = userProfileRepository.findByUser(user)
+        UserProfile userProfile = userProfileRepository.findMentorProfileByUserId(user.getId())
                 .orElseThrow(() -> new RuntimeException("유저 프로필을 찾을 수 없습니다."));
 
         userProfile.setCurrentJob(updateUserMentorProfileDTO.getCurrentJob());
         userProfile.setIntroduction(updateUserMentorProfileDTO.getIntroduction());
         userProfile.setExperience(updateUserMentorProfileDTO.getExperience());
 
-        // 이제 유저 멘토 프로필 레파지토리에 저장하는 코드인 userMentorProfileRepository.save(userProfile); 해야함
+        userProfileRepository.saveAndFlush(userProfile);
 
         return new UpdateUserMentorProfileDTO(
             userProfile.getCurrentJob(),
@@ -121,14 +121,14 @@ public class UserService {
         User user = userRepository.findByEmail(email)
                 .orElseThrow(() -> new RuntimeException("유저를 찾을 수 없습니다."));
 
-        UserProfile userProfile = userProfileRepository.findByUser(user)
+        UserProfile userProfile = userProfileRepository.findMenteeProfileByUserId(user.getId())
                 .orElseThrow(() -> new RuntimeException("유저 프로필을 찾을 수 없습니다."));
 
         userProfile.setDesiredJob(updateUserMenteeProfileDTO.getDesiredJob());
         userProfile.setIntroduction(updateUserMenteeProfileDTO.getIntroduction());
         userProfile.setExperience(updateUserMenteeProfileDTO.getExperience());
 
-        // 이제 유저 멘토 프로필 레파지토리에 저장하는 코드인 userMentorProfileRepository.save(userProfile); 해야함
+        userProfileRepository.saveAndFlush(userProfile);
 
         return new UpdateUserMenteeProfileDTO(
                 userProfile.getDesiredJob(),
