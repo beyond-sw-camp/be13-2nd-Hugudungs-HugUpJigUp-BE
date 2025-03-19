@@ -17,7 +17,6 @@ public interface MatchingController {
     @PostMapping("/matching/{userId}")
     @Operation(summary = "매칭 게시글 등록 메서드", description = "매칭 게시글 등록 메서드입니다.")
     public ResponseEntity<MatchingResponseDto> createMatching(
-            @PathVariable Long userId,
             @RequestBody MatchingRequestDto requestDto) throws Exception ;
 
     @Operation(summary = "매칭 게시글 수정 메서드", description = "매칭 게시글 수정 메서드입니다.")

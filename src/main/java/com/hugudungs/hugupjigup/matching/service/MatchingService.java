@@ -8,7 +8,7 @@ import org.springframework.data.domain.Pageable;
 import java.util.List;
 
 public interface MatchingService {
-    MatchingResponseDto createMatching(Long userId, MatchingRequestDto requestDto) throws Exception ;
+    MatchingResponseDto createMatching(MatchingRequestDto requestDto) throws Exception ;
 
     MatchingResponseDto updateMatching(Long matchingId, MatchingRequestDto requestDto) throws Exception;
 

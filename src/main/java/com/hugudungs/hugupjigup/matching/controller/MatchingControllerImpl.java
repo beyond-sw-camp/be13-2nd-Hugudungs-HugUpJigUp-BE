@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -32,10 +33,9 @@ public class MatchingControllerImpl implements MatchingController {
 
     @Override
     public ResponseEntity<MatchingResponseDto> createMatching(
-            Long userId,
-            MatchingRequestDto requestDto) {
+            @RequestBody MatchingRequestDto requestDto) {
         try {
-            MatchingResponseDto responseDto = matchingService.createMatching(userId, requestDto);
+            MatchingResponseDto responseDto = matchingService.createMatching(requestDto);
 
             return ResponseEntity.status(HttpStatus.OK).body(responseDto);
         } catch (DataAccessException e) {

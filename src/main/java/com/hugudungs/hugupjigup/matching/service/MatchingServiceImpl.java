@@ -1,39 +1,41 @@
 package com.hugudungs.hugupjigup.matching.service;
 
-import com.hugudungs.hugupjigup.common.enums.BoardType;
 import com.hugudungs.hugupjigup.data.entity.matching.Matching;
+import com.hugudungs.hugupjigup.data.entity.user.User;
 import com.hugudungs.hugupjigup.matching.data.MatchingRepository;
 import com.hugudungs.hugupjigup.matching.data.dto.MatchingRequestDto;
 import com.hugudungs.hugupjigup.matching.data.dto.MatchingResponseDto;
+import com.hugudungs.hugupjigup.user.data.UserRepository;
+import lombok.RequiredArgsConstructor;
 import org.springframework.dao.DataAccessException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.List;
-
 @Service
+@RequiredArgsConstructor
 public class MatchingServiceImpl implements MatchingService {
     private final MatchingRepository matchingRepository;
-
-    public MatchingServiceImpl(MatchingRepository matchingRepository) {
-        this.matchingRepository = matchingRepository;
-    }
+    private final UserRepository userRepository;
 
     @Override
-    public MatchingResponseDto createMatching(Long userId, MatchingRequestDto requestDto) throws Exception {
+    public MatchingResponseDto createMatching(MatchingRequestDto requestDto) throws Exception {
         try {
             // FIXME: userId로 User를 가져오는 로직이 완성되면 추가
             // User user = userRepository.findById(userId)
             //         .orElseThrow(() -> new IllegalArgumentException("유효하지 않은 사용자 ID입니다."));
+            User user = userRepository.findById(1L)
+                    .orElseGet(() -> {
+                        User newUser = new User();
+                        return userRepository.save(newUser);
+                    });
 
             Matching matching = Matching.builder()
                     .boardType(requestDto.getBoardType())
                     .title(requestDto.getTitle())
                     .content(requestDto.getContent())
                     .tag(requestDto.getTag())
-                    // .user(user)
+                    .author(user)
                     .build();
 
             Matching savedMatching = matchingRepository.save(matching);
@@ -45,6 +47,9 @@ public class MatchingServiceImpl implements MatchingService {
                     .matchingContent(savedMatching.getContent())
                     .matchingViews(savedMatching.getViews())
                     .authorId(savedMatching.getAuthor() != null ? savedMatching.getAuthor().getId() : null)
+                    .tag(savedMatching.getTag())
+                    .createdAt(savedMatching.getCreatedAt())
+                    .updatedAt(savedMatching.getUpdatedAt())
                     .build();
         } catch (DataAccessException e) {
             throw new Exception("게시글 생성 중 데이터베이스 오류가 발생했습니다.", e);
