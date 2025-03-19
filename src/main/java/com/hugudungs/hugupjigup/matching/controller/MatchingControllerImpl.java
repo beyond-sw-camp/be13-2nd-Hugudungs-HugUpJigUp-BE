@@ -79,9 +79,9 @@ public class MatchingControllerImpl implements MatchingController {
 
     @Override
     @GetMapping("/posts")
-    public ResponseEntity<Page<List<MatchingResponseDto>>> getMatchingPosts(Pageable pageable) {
+    public ResponseEntity<Page<MatchingResponseDto>> getMatchingPosts(Pageable pageable) {
         try {
-            Page<List<MatchingResponseDto>> responseDto = matchingService.getMatchingPosts(pageable);
+            Page<MatchingResponseDto> responseDto = matchingService.getMatchingPosts(pageable);
 
             return ResponseEntity.status(HttpStatus.OK).body(responseDto);
         } catch (DataAccessException e) {

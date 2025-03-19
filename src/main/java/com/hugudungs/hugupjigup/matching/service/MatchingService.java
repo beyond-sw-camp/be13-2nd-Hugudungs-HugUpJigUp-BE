@@ -14,7 +14,7 @@ public interface MatchingService {
 
     void deleteMatching(Long matchingId) throws Exception;
 
-    Page<List<MatchingResponseDto>> getMatchingPosts(Pageable pageable) throws Exception ;
+    Page<MatchingResponseDto> getMatchingPosts(Pageable pageable) throws Exception ;
 
     MatchingResponseDto getMatchingById(Long matchingId) throws Exception;
 }

@@ -30,7 +30,7 @@ public interface MatchingController {
             @PathVariable Long matchingId) throws Exception;
 
     @Operation(summary = "매칭 게시판 조회 메서드", description = "매칭 게시판 조회 메서드입니다.")
-    public ResponseEntity<Page<List<MatchingResponseDto>>> getMatchingPosts(
+    public ResponseEntity<Page<MatchingResponseDto>> getMatchingPosts(
             @ParameterObject Pageable pageable) throws Exception;
 
     @Operation(summary = "매칭 게시글 조회 메서드", description = "매칭 게시글 조회 메서드입니다.")

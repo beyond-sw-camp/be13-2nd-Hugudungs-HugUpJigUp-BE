@@ -111,28 +111,23 @@ public class MatchingServiceImpl implements MatchingService {
     }
 
     @Override
-    public Page<List<MatchingResponseDto>> getMatchingPosts(Pageable pageable) throws Exception {
+    public Page<MatchingResponseDto> getMatchingPosts(Pageable pageable) throws Exception {
         try {
             // Matching 엔티티를 페이징 처리하여 가져오기
-            Page<Matching> matchings = matchingRepository.findAll(pageable);
+            Page<Matching> matchingPage = matchingRepository.findAll(pageable);
 
-            // 각 Matching 엔티티를 List<MatchingResponseDto>로 변환
-            return matchings.map(matching -> {
-                // DTO 리스트 생성
-                List<MatchingResponseDto> dtoList = new ArrayList<>();
-                dtoList.add(MatchingResponseDto.builder()
-                        .matchingId(matching.getId())
-                        .createdAt(matching.getCreatedAt())
-                        .updatedAt(matching.getUpdatedAt())
-                        .boardType(matching.getBoardType())
-                        .matchingContent(matching.getContent())
-                        .matchingTitle(matching.getTitle())
-                        .matchingViews(matching.getViews())
-                        .tag(matching.getTag())
-                        .authorId(matching.getAuthor() != null ? matching.getAuthor().getId() : null)
-                        .build());
-                return dtoList; // 리스트 반환
-            });
+            // 각 Matching 엔티티를 MatchingResponseDto로 변환
+            return matchingPage.map(matching -> MatchingResponseDto.builder()
+                    .matchingId(matching.getId())
+                    .createdAt(matching.getCreatedAt())
+                    .updatedAt(matching.getUpdatedAt())
+                    .boardType(matching.getBoardType())
+                    .matchingContent(matching.getContent())
+                    .matchingTitle(matching.getTitle())
+                    .matchingViews(matching.getViews())
+                    .tag(matching.getTag())
+                    .authorId(matching.getAuthor() != null ? matching.getAuthor().getId() : null)
+                    .build());
 
         } catch (DataAccessException e) {
             throw new Exception("게시글 목록 조회 중 데이터베이스 오류가 발생했습니다.", e);
