@@ -4,13 +4,13 @@ import com.hugudungs.hugupjigup.auth.dto.SignUpRequestDto;
 import com.hugudungs.hugupjigup.auth.dto.VerificationOtpRequestDto;
 
 public interface AuthService {
-    boolean findUserByEmail(String email);
+    boolean hasUserByEmail(String email);
 
-    boolean findUserByNickname(String nickname);
+    boolean hasUserByNickname(String nickname);
 
     void sendOtp(String email);
 
-    boolean verifyOtp(VerificationOtpRequestDto verificationOtpRequestDto);
+    boolean checkOtpValidity(VerificationOtpRequestDto verificationOtpRequestDto);
 
     void createUser(SignUpRequestDto signUpRequestDto);
 }

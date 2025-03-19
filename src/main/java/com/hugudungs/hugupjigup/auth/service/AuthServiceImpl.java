@@ -24,21 +24,13 @@ public class AuthServiceImpl implements AuthService {
     private final PasswordEncoder passwordEncoder;
 
     @Override
-    public boolean findUserByEmail(String email) {
-        Optional<User> user = userRepository.findByEmail(email);
-        if (user.isPresent()) {
-            return true;
-        }
-        return false;
+    public boolean hasUserByEmail(String email) {
+        return userRepository.findByEmail(email).isPresent();
     }
 
     @Override
-    public boolean findUserByNickname(String nickname) {
-        Optional<User> user = userRepository.findByNickName(nickname);
-        if (user.isPresent()) {
-            return true;
-        }
-        return false;
+    public boolean hasUserByNickname(String nickname) {
+        return userRepository.findByNickName(nickname).isPresent();
     }
 
     @Override
@@ -55,7 +47,7 @@ public class AuthServiceImpl implements AuthService {
     }
 
     @Override
-    public boolean verifyOtp(VerificationOtpRequestDto verificationOtpRequestDto) {
+    public boolean checkOtpValidity(VerificationOtpRequestDto verificationOtpRequestDto) {
         String email = verificationOtpRequestDto.getEmail();
         String otpCode = verificationOtpRequestDto.getOtp();
         String originOtp = cacheService.get(this.createOtpKey(email));
@@ -65,6 +57,7 @@ public class AuthServiceImpl implements AuthService {
         cacheService.delete(this.createOtpKey(email));
         // 인증 성공시 verified redis에 저장 유효기간 10분
         cacheService.set(this.verifiedUserKey(email),"1", 60 * 10);
+
         return true;
     }
 
@@ -72,6 +65,7 @@ public class AuthServiceImpl implements AuthService {
     public void createUser(SignUpRequestDto signUpRequestDto) {
         String email = signUpRequestDto.getEmail();
         String getVerified = cacheService.get(this.verifiedUserKey(email));
+
         if (getVerified == null) {
             throw new RuntimeException("인증되지 않은 사용자입니다.");
         }
@@ -85,12 +79,14 @@ public class AuthServiceImpl implements AuthService {
         });
 
         cacheService.delete(this.verifiedUserKey(email));
+
         User user = User.builder()
                 .email(signUpRequestDto.getEmail())
                 .password(passwordEncoder.encode(signUpRequestDto.getPassword()))
                 .nickName(signUpRequestDto.getNickname())
                 .loginType(LoginType.COMMON)
                 .build();
+
         userRepository.save(user);
     }
 
@@ -99,6 +95,7 @@ public class AuthServiceImpl implements AuthService {
         for (int i = 0; i < 6; i++) {
             otp.append((int) (Math.random() * 10));
         }
+
         return otp.toString();
     }
 

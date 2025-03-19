@@ -14,6 +14,7 @@ public class ThymeleafConfig {
         templateResolver.setTemplateMode("HTML");
         templateResolver.setCharacterEncoding("UTF-8");
         templateResolver.setCacheable(false);  // 개발 단계에서는 캐시를 비활성화하는 것이 좋습니다.
+
         return templateResolver;
     }
 }

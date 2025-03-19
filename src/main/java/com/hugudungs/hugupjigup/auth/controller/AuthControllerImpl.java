@@ -25,7 +25,8 @@ public class AuthControllerImpl implements AuthController {
     @Override
     public ResponseEntity<ResponseDto<Void>> emailDuplicateCheck(@RequestParam String email) {
         // true if email is already in use, false otherwise
-        boolean result = authService.findUserByEmail(email);
+        boolean result = authService.hasUserByEmail(email);
+
         return ResponseEntity.ok(
                 new ResponseDto<>(
                         HttpStatus.OK.value(),
@@ -40,7 +41,8 @@ public class AuthControllerImpl implements AuthController {
     @Override
     public ResponseEntity<ResponseDto<Void>> nicknameDuplicateCheck(@RequestParam String nickname) {
         // true if nickname is already in use, false otherwise
-        boolean result = authService.findUserByNickname(nickname);
+        boolean result = authService.hasUserByNickname(nickname);
+
         return ResponseEntity.ok(
                 new ResponseDto<>(
                         HttpStatus.OK.value(),
@@ -55,6 +57,7 @@ public class AuthControllerImpl implements AuthController {
     @Override
     public ResponseEntity<ResponseDto<Void>> sendOtp(@RequestBody SendOtpRequestDto sendOtpRequestDto) {
         authService.sendOtp(sendOtpRequestDto.getEmail());
+
         return ResponseEntity.ok(
                 new ResponseDto<>(
                         HttpStatus.OK.value(),
@@ -68,7 +71,8 @@ public class AuthControllerImpl implements AuthController {
     @PostMapping("/otp/verification")
     @Override
     public ResponseEntity<ResponseDto<Void>> verificationOtp(@RequestBody VerificationOtpRequestDto verificationOtpRequestDto) {
-        boolean result = authService.verifyOtp(verificationOtpRequestDto);
+        boolean result = authService.checkOtpValidity(verificationOtpRequestDto);
+
         return ResponseEntity.ok(
                 new ResponseDto<>(
                         HttpStatus.OK.value(),
@@ -83,6 +87,7 @@ public class AuthControllerImpl implements AuthController {
     @Override
     public ResponseEntity<ResponseDto<Void>> signUp(@RequestBody SignUpRequestDto signUpRequestDto) {
         authService.createUser(signUpRequestDto);
+
         return ResponseEntity.ok(
                 new ResponseDto<>(
                         HttpStatus.OK.value(),

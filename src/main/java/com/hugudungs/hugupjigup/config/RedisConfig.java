@@ -18,7 +18,6 @@ public class RedisConfig {
 
     @Bean
     public RedisConnectionFactory redisConnectionFactory() {
-
         // Redis와 연결을 담당하는 RedisConnectionFactory 빈을 생성
         return new LettuceConnectionFactory(host, port);
     }
