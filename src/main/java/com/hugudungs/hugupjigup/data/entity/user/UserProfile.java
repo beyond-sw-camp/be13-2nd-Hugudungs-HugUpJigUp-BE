@@ -13,14 +13,16 @@ import jakarta.persistence.Enumerated;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
+@Builder
 @Setter
 @Getter
 @Entity
 @Table(name = "user_profiles")
 @AttributeOverride(name = "id", column = @Column(name = "profile_id"))
+@AllArgsConstructor
+@NoArgsConstructor
 public class UserProfile extends BaseEntity{
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id", referencedColumnName = "user_id")

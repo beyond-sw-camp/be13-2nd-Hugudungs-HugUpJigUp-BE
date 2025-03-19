@@ -11,8 +11,6 @@ import lombok.Setter;
 @AllArgsConstructor
 public class UpdateUserMenteeProfileDTO {
     private String desiredJob;
-
     private String introduction;
-
     private String experience;
 }

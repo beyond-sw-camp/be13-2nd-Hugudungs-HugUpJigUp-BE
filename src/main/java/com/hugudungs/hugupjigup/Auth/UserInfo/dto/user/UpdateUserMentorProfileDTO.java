@@ -9,10 +9,7 @@ import lombok.Getter;
 @Builder
 @AllArgsConstructor
 public class UpdateUserMentorProfileDTO {
-
     private String currentJob;
-
     private String introduction;
-
     private String experience;
 }

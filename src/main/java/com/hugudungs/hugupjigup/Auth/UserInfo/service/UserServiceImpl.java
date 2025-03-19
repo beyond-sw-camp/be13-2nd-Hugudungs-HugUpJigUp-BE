@@ -29,6 +29,7 @@ public class UserServiceImpl implements UserService {
     private final MatchingRepository matchingRepository;
     private final MatchingCommentRepository matchingCommentRepository;
 
+    // 유저 정보 조회
     @Override
     public UserProfileResponseDTO getUserProfileByEmail(String email) {
         User user = userRepository.findByEmail(email)
@@ -64,6 +65,7 @@ public class UserServiceImpl implements UserService {
         );
     }
 
+    // 유저 기본 프로필 수정
     @Override
     public UpdateUserProfileDTO updateUserProfile(String email, UpdateUserProfileDTO updateUserProfileDTO) {
         User user = userRepository.findByEmail(email)
@@ -72,6 +74,13 @@ public class UserServiceImpl implements UserService {
         user.setPassword(updateUserProfileDTO.getPassword());
         user.setNickName(updateUserProfileDTO.getName());
         user.setEmail(updateUserProfileDTO.getEmail());
+
+        // 현재 setter를 이용해서 수정중이라 builder test 중입니다.
+//        user.builder()
+//                        .password(updateUserProfileDTO.getPassword())
+//                                .nickName(updateUserProfileDTO.getName())
+//                                        .email(updateUserProfileDTO.getEmail())
+//                                                .build();
 
         userRepository.saveAndFlush(user);
 
@@ -82,6 +91,7 @@ public class UserServiceImpl implements UserService {
         );
     }
 
+    // 멘티 프로필 수정
     @Override
     public UpdateUserMentorProfileDTO updateUserMentorProfile(String email, UpdateUserMentorProfileDTO updateUserMentorProfileDTO) {
         User user = userRepository.findByEmail(email)
@@ -103,6 +113,7 @@ public class UserServiceImpl implements UserService {
         );
     }
 
+    // 멘토 프로필 수정
     @Override
     public UpdateUserMenteeProfileDTO updateUserMenteeProfile(String email, UpdateUserMenteeProfileDTO updateUserMenteeProfileDTO) {
         User user = userRepository.findByEmail(email)
