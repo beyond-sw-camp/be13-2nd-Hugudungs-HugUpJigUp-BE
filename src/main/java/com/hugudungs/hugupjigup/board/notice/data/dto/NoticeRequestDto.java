@@ -8,5 +8,4 @@ public class NoticeRequestDto {
     private String title;
     private String content;
     private BoardType boardType;
-    private Long userId;
 }

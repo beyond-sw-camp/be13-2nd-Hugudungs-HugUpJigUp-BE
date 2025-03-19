@@ -5,30 +5,40 @@ import com.hugudungs.hugupjigup.board.notice.data.dto.NoticeRequestDto;
 import com.hugudungs.hugupjigup.board.notice.data.dto.NoticeResponseDto;
 import com.hugudungs.hugupjigup.data.entity.board.Notice;
 import com.hugudungs.hugupjigup.data.entity.user.User;
+import com.hugudungs.hugupjigup.user.data.UserRepository;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.dao.DataAccessException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+@Slf4j
 @Service
 @RequiredArgsConstructor
 public class NoticeServiceImpl implements NoticeService {
     private final NoticeRepository noticeRepository;
+    private final UserRepository userRepository;
 
     @Override
-    public NoticeResponseDto createNotice(Long userId, NoticeRequestDto requestDto) throws Exception {
+    public NoticeResponseDto createNotice(NoticeRequestDto requestDto) throws Exception {
         try {
-            //FIXME: userId로 User를 가져오는 로직이 완성되면 추가
+            //FIXME: 현재 로그인한 유저의 아이디 가져오는 로직
             //FIXME: userId로 관리자를 판별하는 로직
 //            User user = userRepository.findById(userId)
 //                    .orElseThrow(() -> new IllegalArgumentException("유효하지 않은 사용자 ID입니다."));
+            User user = userRepository.findById(1L) // 실제 존재하는 ID 사용
+                    .orElseGet(() -> {
+                        User newUser = new User();
+                        // 필요한 User 필드 설정
+                        return userRepository.save(newUser);
+                    });
 
             Notice notice = Notice.builder()
                     .boardType(requestDto.getBoardType())
                     .title(requestDto.getTitle())
                     .content(requestDto.getContent())
-//                    .user(user)
+                    .author(user)
                     .build();
 
             Notice savedNotice = noticeRepository.save(notice);
@@ -40,8 +50,11 @@ public class NoticeServiceImpl implements NoticeService {
                     .noticeContent(savedNotice.getContent())
                     .noticeViews(savedNotice.getViews())
                     .authorId(savedNotice.getAuthor() != null ? savedNotice.getAuthor().getId() : null)
+                    .createDate(savedNotice.getCreatedAt())
+                    .updateDate(savedNotice.getUpdatedAt())
                     .build();
         } catch (DataAccessException e) {
+            log.error("Database error details: ", e); // 원본 예외 로깅
             throw new Exception("게시글 생성 중 데이터베이스 오류가 발생했습니다.", e);
         } catch (Exception e) {
             throw new Exception("게시글 생성 중 예기치 않은 오류가 발생했습니다.", e);
