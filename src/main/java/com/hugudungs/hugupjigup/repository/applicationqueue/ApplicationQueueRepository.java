@@ -5,10 +5,10 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 public interface ApplicationQueueRepository extends JpaRepository<ApplicationQueue, Long> {
-
     // 특정 매칭 ID에 대한 신청 목록 조회
     List<ApplicationQueue> findByMatchingId(Long matchingId);
 

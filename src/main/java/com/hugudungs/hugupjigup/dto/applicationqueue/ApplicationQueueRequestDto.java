@@ -8,7 +8,7 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class ApplicationQueueDto {
+public class ApplicationQueueRequestDto {
 
     @Schema(description = "매칭 ID", example = "1")
     @NotNull(message = "매칭 ID는 필수 입력값입니다.")

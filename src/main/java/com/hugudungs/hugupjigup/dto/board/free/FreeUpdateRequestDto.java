@@ -6,7 +6,7 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class FreeUpdateDto {
+public class FreeUpdateRequestDto {
     @NotNull(message = "title은 필수 입력값입니다.")
     private String title;
 

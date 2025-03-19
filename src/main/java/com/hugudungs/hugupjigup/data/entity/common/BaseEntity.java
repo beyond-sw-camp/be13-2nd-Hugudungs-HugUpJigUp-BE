@@ -19,7 +19,7 @@ import java.time.LocalDateTime;
 @Getter
 @AllArgsConstructor
 @NoArgsConstructor
-@SuperBuilder  // ✅ 부모 클래스에도 @SuperBuilder 추가해야 함
+@SuperBuilder
 @EntityListeners(AuditingEntityListener.class)
 @MappedSuperclass
 public abstract class BaseEntity {

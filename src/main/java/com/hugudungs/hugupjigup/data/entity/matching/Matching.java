@@ -26,5 +26,5 @@ public class Matching extends BaseBoardEntity {
     private User user;
 
     @Column(nullable = false)
-    private String tag; // 태그 (예: 작업, 기술)
+    private String tag;
 }

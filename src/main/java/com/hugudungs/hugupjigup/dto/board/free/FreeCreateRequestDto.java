@@ -8,8 +8,8 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class FreeGenerationDto {
-    @NotNull(message = "boardType은 필수 입력값입니다.") // ✅ 필수 값 설정
+public class FreeCreateRequestDto {
+    @NotNull(message = "boardType은 필수 입력값입니다.")
     private BoardType boardType;
 
     @NotBlank(message = "title은 필수 입력값입니다.")

@@ -1,7 +1,6 @@
 package com.hugudungs.hugupjigup.data.entity.board;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.hugudungs.hugupjigup.data.entity.user.User;
 
 import jakarta.persistence.FetchType;
@@ -24,7 +23,7 @@ import lombok.experimental.SuperBuilder;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@SuperBuilder  // ✅ 부모 클래스(BaseBoardEntity)의 빌더 패턴 적용
+@SuperBuilder
 @AttributeOverrides({
         @AttributeOverride(name = "id", column = @Column(name = "free_id", nullable = false)),
         @AttributeOverride(name = "title", column = @Column(name = "free_title", nullable = false)),
@@ -33,7 +32,7 @@ import lombok.experimental.SuperBuilder;
 })
 public class Free extends BaseBoardEntity{
 
-    @JsonIgnore // ✅ JSON 변환 시 제외
+    @JsonIgnore
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id", nullable = false)
     private User user;

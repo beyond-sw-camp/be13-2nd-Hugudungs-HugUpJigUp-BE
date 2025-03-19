@@ -22,6 +22,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @NoArgsConstructor
+@AllArgsConstructor
 @AttributeOverrides({
         @AttributeOverride(name = "id", column = @Column(name = "application_queue_id")),
 })
@@ -39,12 +40,4 @@ public class ApplicationQueue extends BaseEntity {
 
     @Column(nullable = false)
     private ApplicationQueueStatus applicationQueueStatus;
-
-    // ✅ 추가: 모든 필드를 받는 생성자
-    public ApplicationQueue(Matching matching, User user, String content, ApplicationQueueStatus status) {
-        this.matching = matching;
-        this.user = user;
-        this.content = content;
-        this.applicationQueueStatus = status;
-    }
 }
