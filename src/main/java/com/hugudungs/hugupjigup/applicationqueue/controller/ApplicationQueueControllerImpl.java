@@ -18,8 +18,8 @@ public class ApplicationQueueControllerImpl implements ApplicationQueueControlle
 
     @Override
     public ResponseEntity<ApplicationQueueResponseDto> createApplication(Long matchingId, ApplicationQueueRequestDto requestDto) {
-        requestDto.setMatchingId(matchingId);
-        return ResponseEntity.ok(applicationQueueService.createApplication(matchingId, requestDto));
+        ApplicationQueueResponseDto createdApplication = applicationQueueService.createApplication(matchingId, requestDto);
+        return ResponseEntity.ok(createdApplication);
     }
 
     @Override
