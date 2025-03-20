@@ -1,9 +1,7 @@
-package com.hugudungs.hugupjigup.repository.board;
+package com.hugudungs.hugupjigup.matching.data;
 
 import com.hugudungs.hugupjigup.data.entity.matching.Matching;
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.stereotype.Repository;
 
-@Repository
 public interface MatchingRepository extends JpaRepository<Matching, Long> {
 }
