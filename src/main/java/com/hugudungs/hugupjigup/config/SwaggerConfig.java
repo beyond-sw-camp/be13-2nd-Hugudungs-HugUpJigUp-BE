@@ -15,8 +15,7 @@ public class SwaggerConfig {
         Info info = new Info()
                 .title("타이틀 입력")
                 .version(springdocVersion)
-                .description("API에 대한 설명 부분")
-                .version("1.0.0"); // API의 버전
+                .description("API에 대한 설명 부분");
 
         return new OpenAPI()
                 .components(new Components())
