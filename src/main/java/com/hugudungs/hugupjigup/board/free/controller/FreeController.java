@@ -1,9 +1,9 @@
-package com.hugudungs.hugupjigup.controller;
+package com.hugudungs.hugupjigup.board.free.controller;
 
-import com.hugudungs.hugupjigup.dto.board.free.FreeCreateRequestDto;
-import com.hugudungs.hugupjigup.dto.board.free.FreeSearchRequestDto;
-import com.hugudungs.hugupjigup.dto.board.free.FreeSearchResponseDto;
-import com.hugudungs.hugupjigup.dto.board.free.FreeUpdateRequestDto;
+import com.hugudungs.hugupjigup.board.free.data.dto.FreeCreateRequestDto;
+import com.hugudungs.hugupjigup.board.free.data.dto.FreeSearchRequestDto;
+import com.hugudungs.hugupjigup.board.free.data.dto.FreeSearchResponseDto;
+import com.hugudungs.hugupjigup.board.free.data.dto.FreeUpdateRequestDto;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springdoc.core.annotations.ParameterObject;

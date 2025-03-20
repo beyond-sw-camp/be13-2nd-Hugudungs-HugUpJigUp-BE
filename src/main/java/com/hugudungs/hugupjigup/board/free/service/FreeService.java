@@ -1,9 +1,9 @@
-package com.hugudungs.hugupjigup.service;
+package com.hugudungs.hugupjigup.board.free.service;
 
-import com.hugudungs.hugupjigup.dto.board.free.FreeCreateRequestDto;
-import com.hugudungs.hugupjigup.dto.board.free.FreeSearchRequestDto;
-import com.hugudungs.hugupjigup.dto.board.free.FreeSearchResponseDto;
-import com.hugudungs.hugupjigup.dto.board.free.FreeUpdateRequestDto;
+import com.hugudungs.hugupjigup.board.free.data.dto.FreeCreateRequestDto;
+import com.hugudungs.hugupjigup.board.free.data.dto.FreeSearchRequestDto;
+import com.hugudungs.hugupjigup.board.free.data.dto.FreeSearchResponseDto;
+import com.hugudungs.hugupjigup.board.free.data.dto.FreeUpdateRequestDto;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 

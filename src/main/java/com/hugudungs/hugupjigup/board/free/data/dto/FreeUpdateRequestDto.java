@@ -1,4 +1,4 @@
-package com.hugudungs.hugupjigup.dto.board.free;
+package com.hugudungs.hugupjigup.board.free.data.dto;
 
 import jakarta.validation.constraints.NotNull;
 import lombok.Getter;

@@ -1,10 +1,10 @@
-package com.hugudungs.hugupjigup.controller;
+package com.hugudungs.hugupjigup.board.free.controller;
 
-import com.hugudungs.hugupjigup.dto.board.free.FreeCreateRequestDto;
-import com.hugudungs.hugupjigup.dto.board.free.FreeSearchRequestDto;
-import com.hugudungs.hugupjigup.dto.board.free.FreeSearchResponseDto;
-import com.hugudungs.hugupjigup.dto.board.free.FreeUpdateRequestDto;
-import com.hugudungs.hugupjigup.service.FreeService;
+import com.hugudungs.hugupjigup.board.free.data.dto.FreeCreateRequestDto;
+import com.hugudungs.hugupjigup.board.free.data.dto.FreeSearchRequestDto;
+import com.hugudungs.hugupjigup.board.free.data.dto.FreeSearchResponseDto;
+import com.hugudungs.hugupjigup.board.free.data.dto.FreeUpdateRequestDto;
+import com.hugudungs.hugupjigup.board.free.service.FreeService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;

@@ -1,4 +1,4 @@
-package com.hugudungs.hugupjigup.dto.board.free;
+package com.hugudungs.hugupjigup.board.free.data.dto;
 
 import com.hugudungs.hugupjigup.common.enums.BoardType;
 import jakarta.validation.constraints.NotBlank;

@@ -1,5 +1,6 @@
-package com.hugudungs.hugupjigup.dto.board.free;
+package com.hugudungs.hugupjigup.board.free.data.dto;
 
+import com.hugudungs.hugupjigup.common.enums.BoardType;
 import com.hugudungs.hugupjigup.data.entity.board.Free;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -12,7 +13,7 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 public class FreeSearchResponseDto {
     private Long id;
-    private String boardType;
+    private BoardType boardType;
     private String title;
     private String content;
     private String userNickname;
@@ -26,7 +27,8 @@ public class FreeSearchResponseDto {
                 .id(free.getId())
                 .title(free.getTitle())
                 .content(free.getContent())
-                .userNickname(free.getUser().getNickName())
+                .userNickname(free.getAuthor().getNickName())
+                .boardType(free.getBoardType())
                 .views(free.getViews())
                 .createdAt(free.getCreatedAt())
                 .updatedAt(free.getUpdatedAt())

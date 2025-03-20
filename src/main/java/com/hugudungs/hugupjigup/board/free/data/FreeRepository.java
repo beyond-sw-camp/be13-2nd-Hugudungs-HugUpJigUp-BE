@@ -1,4 +1,4 @@
-package com.hugudungs.hugupjigup.repository.board;
+package com.hugudungs.hugupjigup.board.free.data;
 
 import com.hugudungs.hugupjigup.data.entity.board.Free;
 import org.springframework.data.domain.Page;
