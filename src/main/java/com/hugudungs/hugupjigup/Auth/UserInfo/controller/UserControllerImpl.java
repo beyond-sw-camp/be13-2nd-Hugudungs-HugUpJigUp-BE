@@ -37,6 +37,11 @@ public class UserControllerImpl implements UserController {
                     content = @Content(mediaType = "application/json")
             ),
             @ApiResponse(
+                    responseCode = "403",
+                    description = "FORBIDDEN - 해당 유저 정보를 찾을 수 없음",
+                    content = @Content(mediaType = "application/json")
+            ),
+            @ApiResponse(
                     responseCode = "500",
                     description = "INTERNAL SERVER ERROR - 서버 오류 발생",
                     content = @Content(mediaType = "application/json")
@@ -64,6 +69,11 @@ public class UserControllerImpl implements UserController {
             @ApiResponse(
                     responseCode = "401",
                     description = "UNAUTHORIZED - 인증되지 않은 사용자",
+                    content = @Content(mediaType = "application/json")
+            ),
+            @ApiResponse(
+                    responseCode = "403",
+                    description = "FORBIDDEN - 해당 유저 정보를 찾을 수 없음",
                     content = @Content(mediaType = "application/json")
             ),
             @ApiResponse(
@@ -97,11 +107,13 @@ public class UserControllerImpl implements UserController {
                     description = "UNAUTHORIZED - 인증되지 않은 사용자",
                     content = @Content(mediaType = "application/json")
             ),
+
             @ApiResponse(
                     responseCode = "500",
                     description = "INTERNAL SERVER ERROR - 서버 오류 발생",
                     content = @Content(mediaType = "application/json")
             )
+
     })
     @PutMapping("{email}/mentor")
     public UpdateUserMentorProfileDTO updateUserMentorProfile(@PathVariable String email,
@@ -126,6 +138,11 @@ public class UserControllerImpl implements UserController {
             @ApiResponse(
                     responseCode = "401",
                     description = "UNAUTHORIZED - 인증되지 않은 사용자",
+                    content = @Content(mediaType = "application/json")
+            ),
+            @ApiResponse(
+                    responseCode = "403",
+                    description = "FORBIDDEN - 해당 유저 정보를 찾을 수 없음",
                     content = @Content(mediaType = "application/json")
             ),
             @ApiResponse(
