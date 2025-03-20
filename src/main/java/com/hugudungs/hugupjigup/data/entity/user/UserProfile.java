@@ -13,11 +13,18 @@ import jakarta.persistence.Enumerated;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
+import lombok.*;
+import lombok.experimental.SuperBuilder;
 
+@Setter
+@Getter
 @Entity
 @Table(name = "user_profiles")
 @AttributeOverride(name = "id", column = @Column(name = "profile_id"))
-public class UseProfile extends BaseEntity{
+@AllArgsConstructor
+@NoArgsConstructor
+@SuperBuilder
+public class UserProfile extends BaseEntity{
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id", referencedColumnName = "user_id")
     private User user;
@@ -47,4 +54,5 @@ public class UseProfile extends BaseEntity{
     @Enumerated(EnumType.STRING)
     @Column(name = "gender")
     private Gender gender;
+
 }

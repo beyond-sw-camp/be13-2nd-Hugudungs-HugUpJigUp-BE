@@ -1,10 +1,11 @@
 package com.hugudungs.hugupjigup.data.entity.user;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.hugudungs.hugupjigup.data.entity.common.BaseEntity;
 import com.hugudungs.hugupjigup.common.enums.LoginType;
 
+import lombok.*;
+import lombok.experimental.SuperBuilder;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.AttributeOverride;
@@ -18,10 +19,14 @@ import lombok.Getter;
 
 import java.time.LocalDateTime;
 
-@Entity
+@Setter
 @Getter
+@Entity
 @Table(name = "users")
 @AttributeOverride(name = "id", column = @Column(name = "user_id"))
+@NoArgsConstructor
+@AllArgsConstructor
+@SuperBuilder
 public class User extends BaseEntity {
     @JsonIgnore
     @ManyToOne(fetch = FetchType.LAZY)
@@ -37,10 +42,11 @@ public class User extends BaseEntity {
     @Column(name = "user_password", nullable = false)
     private String password;
 
-    @Column(name = "user_deleted_at", nullable = true)
+    @Column(name = "user_deleted_at")
     private LocalDateTime deletedAt;
 
     @Enumerated(EnumType.STRING)
     @Column(name = "user_login_type", nullable = false)
     private LoginType loginType;
+
 }
