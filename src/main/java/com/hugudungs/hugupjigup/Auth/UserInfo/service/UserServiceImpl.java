@@ -75,12 +75,12 @@ public class UserServiceImpl implements UserService {
         user.setNickName(updateUserProfileDTO.getName());
         user.setEmail(updateUserProfileDTO.getEmail());
 
-        // 현재 setter를 이용해서 수정중이라 builder test 중입니다.
-//        user.builder()
-//                        .password(updateUserProfileDTO.getPassword())
-//                                .nickName(updateUserProfileDTO.getName())
-//                                        .email(updateUserProfileDTO.getEmail())
-//                                                .build();
+    // 현재 setter를 이용해서 수정중이라 builder test 중입니다
+        user.builder()
+                .password(updateUserProfileDTO.getPassword())
+                .nickName(updateUserProfileDTO.getName())
+                .email(updateUserProfileDTO.getEmail())
+                .build();
 
         userRepository.saveAndFlush(user);
 

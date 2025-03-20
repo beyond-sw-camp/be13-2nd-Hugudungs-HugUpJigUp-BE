@@ -5,6 +5,7 @@ import com.hugudungs.hugupjigup.common.enums.LoginType;
 
 import jakarta.persistence.*;
 import lombok.*;
+import lombok.experimental.SuperBuilder;
 
 import java.time.LocalDateTime;
 
@@ -15,7 +16,7 @@ import java.time.LocalDateTime;
 @AttributeOverride(name = "id", column = @Column(name = "user_id"))
 @NoArgsConstructor(access = AccessLevel.PROTECTED) // 기본 생성자 제한
 @AllArgsConstructor
-@Builder
+@SuperBuilder
 public class User extends BaseEntity {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "role_type_id", referencedColumnName = "role_type_id")

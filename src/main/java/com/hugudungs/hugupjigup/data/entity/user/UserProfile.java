@@ -14,8 +14,8 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import lombok.*;
+import lombok.experimental.SuperBuilder;
 
-@Builder
 @Setter
 @Getter
 @Entity
@@ -23,6 +23,7 @@ import lombok.*;
 @AttributeOverride(name = "id", column = @Column(name = "profile_id"))
 @AllArgsConstructor
 @NoArgsConstructor
+@SuperBuilder
 public class UserProfile extends BaseEntity{
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id", referencedColumnName = "user_id")
