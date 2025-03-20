@@ -39,8 +39,11 @@ public class UserServiceImpl implements UserService {
                 .orElseThrow(() -> new RuntimeException("유저 프로필을 찾을 수 없습니다."));
 
         int writtenPostsCount = Optional.ofNullable(postRepository.countByUser(user)).orElse(0);
+
         int writtenCommentsCount = Optional.ofNullable(commentRepository.countByUser(user)).orElse(0);
+
         int mentoringOpenedCount = Optional.ofNullable(matchingRepository.countByUser(user)).orElse(0);
+
         int menteeJoinedCount = Optional.ofNullable(matchingCommentRepository.countByUserComments(user)).orElse(0);
 
         String mentorIntroduction = "자기 소개 추가해주세요";

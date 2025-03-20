@@ -7,6 +7,6 @@ import org.springframework.data.jpa.repository.Query;
 
 public interface PostRepository extends JpaRepository<Free, Long> {
 
-    @Query("SELECT COUNT(f) FROM Free f WHERE f.user = :user")
+    @Query("SELECT COUNT(f) FROM Free f WHERE f.author = :user")
     int countByUser(User user);
 }

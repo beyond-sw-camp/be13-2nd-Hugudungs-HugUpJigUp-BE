@@ -7,6 +7,6 @@ import org.springframework.data.jpa.repository.Query;
 
 public interface MatchingRepository extends JpaRepository<Matching, Long> {
 
-    @Query("SELECT COUNT(m) FROM Matching m WHERE m.user = :user")
+    @Query("SELECT COUNT(m) FROM Matching m WHERE m.author = :user")
     int countByUser(User user);
 }
