@@ -1,4 +1,4 @@
-package com.hugudungs.hugupjigup.dto.applicationqueue;
+package com.hugudungs.hugupjigup.applicationqueue.data.dto;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.NotBlank;

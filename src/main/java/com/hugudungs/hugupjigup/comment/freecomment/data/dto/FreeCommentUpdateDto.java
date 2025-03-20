@@ -1,4 +1,4 @@
-package com.hugudungs.hugupjigup.dto.comment.freecomment;
+package com.hugudungs.hugupjigup.comment.freecomment.data.dto;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.NotBlank;

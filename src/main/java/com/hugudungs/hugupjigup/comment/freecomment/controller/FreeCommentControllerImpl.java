@@ -1,9 +1,9 @@
 //package com.hugudungs.hugupjigup.controller;
 //
-//import com.hugudungs.hugupjigup.dto.comment.freecomment.FreeCommentGenerationDto;
-//import com.hugudungs.hugupjigup.dto.comment.freecomment.FreeCommentGenerationResponseDto;
-//import com.hugudungs.hugupjigup.dto.comment.freecomment.FreeCommentUpdateDto;
-//import com.hugudungs.hugupjigup.dto.comment.freecomment.FreeCommentUpdateResponseDto;
+//import com.hugudungs.hugupjigup.comment.freecomment.data.dto.FreeCommentGenerationDto;
+//import com.hugudungs.hugupjigup.comment.freecomment.data.dto.FreeCommentGenerationResponseDto;
+//import com.hugudungs.hugupjigup.comment.freecomment.data.dto.FreeCommentUpdateDto;
+//import com.hugudungs.hugupjigup.comment.freecomment.data.dto.FreeCommentUpdateResponseDto;
 //import com.hugudungs.hugupjigup.service.FreeCommentService;
 //import lombok.RequiredArgsConstructor;
 //import org.springframework.http.ResponseEntity;

@@ -4,9 +4,9 @@
 //import com.hugudungs.hugupjigup.data.entity.matching.ApplicationQueue;
 //import com.hugudungs.hugupjigup.data.entity.matching.Matching;
 //import com.hugudungs.hugupjigup.data.entity.user.User;
-//import com.hugudungs.hugupjigup.dto.applicationqueue.ApplicationQueueRequestDto;
-//import com.hugudungs.hugupjigup.dto.applicationqueue.ApplicationQueueResponseDto;
-//import com.hugudungs.hugupjigup.dto.applicationqueue.ApplicationQueueUpdateDto;
+//import com.hugudungs.hugupjigup.applicationqueue.data.dto.ApplicationQueueRequestDto;
+//import com.hugudungs.hugupjigup.applicationqueue.data.dto.ApplicationQueueResponseDto;
+//import com.hugudungs.hugupjigup.applicationqueue.data.dto.ApplicationQueueUpdateDto;
 //import com.hugudungs.hugupjigup.matching.data.MatchingRepository;
 //import com.hugudungs.hugupjigup.user.data.UserRepository;
 //import lombok.RequiredArgsConstructor;

@@ -1,8 +1,8 @@
 //package com.hugudungs.hugupjigup.controller;
 //
-//import com.hugudungs.hugupjigup.dto.applicationqueue.ApplicationQueueRequestDto;
-//import com.hugudungs.hugupjigup.dto.applicationqueue.ApplicationQueueResponseDto;
-//import com.hugudungs.hugupjigup.dto.applicationqueue.ApplicationQueueUpdateDto;
+//import com.hugudungs.hugupjigup.applicationqueue.data.dto.ApplicationQueueRequestDto;
+//import com.hugudungs.hugupjigup.applicationqueue.data.dto.ApplicationQueueResponseDto;
+//import com.hugudungs.hugupjigup.applicationqueue.data.dto.ApplicationQueueUpdateDto;
 //import com.hugudungs.hugupjigup.service.ApplicationQueueService;
 //import lombok.RequiredArgsConstructor;
 //import org.springframework.http.ResponseEntity;

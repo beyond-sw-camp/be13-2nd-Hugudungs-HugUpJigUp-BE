@@ -4,10 +4,10 @@
 //import com.hugudungs.hugupjigup.data.entity.comment.CommentTypes;
 //import com.hugudungs.hugupjigup.data.entity.comment.FreeComment;
 //import com.hugudungs.hugupjigup.data.entity.user.User;
-//import com.hugudungs.hugupjigup.dto.comment.freecomment.FreeCommentGenerationDto;
-//import com.hugudungs.hugupjigup.dto.comment.freecomment.FreeCommentGenerationResponseDto;
-//import com.hugudungs.hugupjigup.dto.comment.freecomment.FreeCommentUpdateDto;
-//import com.hugudungs.hugupjigup.dto.comment.freecomment.FreeCommentUpdateResponseDto;
+//import com.hugudungs.hugupjigup.comment.freecomment.data.dto.FreeCommentGenerationDto;
+//import com.hugudungs.hugupjigup.comment.freecomment.data.dto.FreeCommentGenerationResponseDto;
+//import com.hugudungs.hugupjigup.comment.freecomment.data.dto.FreeCommentUpdateDto;
+//import com.hugudungs.hugupjigup.comment.freecomment.data.dto.FreeCommentUpdateResponseDto;
 //import com.hugudungs.hugupjigup.repository.comment.CommentTypesRepository;
 //import com.hugudungs.hugupjigup.repository.comment.FreeCommentRepository;
 //import com.hugudungs.hugupjigup.board.free.data.FreeRepository;

@@ -1,9 +1,9 @@
-package com.hugudungs.hugupjigup.controller;
+package com.hugudungs.hugupjigup.comment.freecomment.controller;
 
-import com.hugudungs.hugupjigup.dto.comment.freecomment.FreeCommentGenerationDto;
-import com.hugudungs.hugupjigup.dto.comment.freecomment.FreeCommentGenerationResponseDto;
-import com.hugudungs.hugupjigup.dto.comment.freecomment.FreeCommentUpdateDto;
-import com.hugudungs.hugupjigup.dto.comment.freecomment.FreeCommentUpdateResponseDto;
+import com.hugudungs.hugupjigup.comment.freecomment.data.dto.FreeCommentGenerationDto;
+import com.hugudungs.hugupjigup.comment.freecomment.data.dto.FreeCommentGenerationResponseDto;
+import com.hugudungs.hugupjigup.comment.freecomment.data.dto.FreeCommentUpdateDto;
+import com.hugudungs.hugupjigup.comment.freecomment.data.dto.FreeCommentUpdateResponseDto;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import org.springframework.http.ResponseEntity;
