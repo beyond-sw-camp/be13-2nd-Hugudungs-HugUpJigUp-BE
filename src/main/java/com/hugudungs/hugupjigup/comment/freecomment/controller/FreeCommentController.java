@@ -6,6 +6,7 @@ import com.hugudungs.hugupjigup.comment.freecomment.data.dto.FreeCommentUpdateDt
 import com.hugudungs.hugupjigup.comment.freecomment.data.dto.FreeCommentUpdateResponseDto;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -18,6 +19,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/api/v1/free")
+@Tag(name = "자유 게시판 댓글 API", description = "자유 게시판 댓글 관련 API 목록")
 public interface FreeCommentController {
 
     @Operation(summary = "댓글 생성", description = "특정 게시글에 댓글을 생성합니다.")

@@ -1,5 +1,6 @@
 package com.hugudungs.hugupjigup.board.free.service;
 
+import com.hugudungs.hugupjigup.common.enums.BoardType;
 import com.hugudungs.hugupjigup.data.entity.board.Free;
 import com.hugudungs.hugupjigup.data.entity.user.User;
 import com.hugudungs.hugupjigup.board.free.data.dto.FreeCreateRequestDto;
@@ -26,14 +27,15 @@ public class FreeServiceImpl implements FreeService {
         User user = userRepository.findById(requestDto.getUserId())
                 .orElseThrow(() -> new IllegalArgumentException("해당 유저가 존재하지 않습니다."));
 
-        Free free = Free.builder()
+        Free freePost = Free.builder()
+                .boardType(BoardType.FREE)
                 .title(requestDto.getTitle())
                 .content(requestDto.getContent())
                 .author(user)
-                .boardType(requestDto.getBoardType())
                 .build();
 
-        Free savedFree = freeRepository.save(free);
+        Free savedFree = freeRepository.save(freePost);
+
         return FreeSearchResponseDto.fromEntity(savedFree);
     }
 

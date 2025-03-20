@@ -7,9 +7,9 @@ import com.hugudungs.hugupjigup.comment.freecomment.data.dto.FreeCommentUpdateRe
 
 public interface FreeCommentService {
 
-    FreeCommentGenerationResponseDto createComment(FreeCommentGenerationDto requestDto);
+    FreeCommentGenerationResponseDto createComment(Long freeId, FreeCommentGenerationDto requestDto);
 
-    FreeCommentUpdateResponseDto updateComment(Long commentId, FreeCommentUpdateDto requestDto);
+    FreeCommentUpdateResponseDto updateComment(Long freeId, Long commentId, FreeCommentUpdateDto requestDto);
 
     void deleteComment(Long commentId);
 }
