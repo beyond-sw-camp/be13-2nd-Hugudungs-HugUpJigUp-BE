@@ -9,7 +9,6 @@ import lombok.experimental.SuperBuilder;
 
 import java.time.LocalDateTime;
 
-@Setter
 @Getter
 @Entity
 @Table(name = "users")

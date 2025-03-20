@@ -16,7 +16,6 @@ import jakarta.persistence.Table;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
 
-@Setter
 @Getter
 @Entity
 @Table(name = "user_profiles")

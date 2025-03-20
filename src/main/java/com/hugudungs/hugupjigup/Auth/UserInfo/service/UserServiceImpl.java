@@ -71,12 +71,7 @@ public class UserServiceImpl implements UserService {
         User user = userRepository.findByEmail(email)
                 .orElseThrow(() -> new RuntimeException("유저를 찾을 수 없습니다."));
 
-        user.setPassword(updateUserProfileDTO.getPassword());
-        user.setNickName(updateUserProfileDTO.getName());
-        user.setEmail(updateUserProfileDTO.getEmail());
-
-    // 현재 setter를 이용해서 수정중이라 builder test 중입니다
-        user.builder()
+        User.builder()
                 .password(updateUserProfileDTO.getPassword())
                 .nickName(updateUserProfileDTO.getName())
                 .email(updateUserProfileDTO.getEmail())
@@ -100,9 +95,13 @@ public class UserServiceImpl implements UserService {
         UserProfile userProfile = userProfileRepository.findMentorProfileByUserId(user.getId())
                 .orElseThrow(() -> new RuntimeException("유저 프로필을 찾을 수 없습니다."));
 
-        userProfile.setCurrentJob(updateUserMentorProfileDTO.getCurrentJob());
-        userProfile.setIntroduction(updateUserMentorProfileDTO.getIntroduction());
-        userProfile.setExperience(updateUserMentorProfileDTO.getExperience());
+        UserProfile.builder()
+                .currentJob(updateUserMentorProfileDTO.getCurrentJob())
+                .introduction(updateUserMentorProfileDTO.getIntroduction())
+                .experience(updateUserMentorProfileDTO.getExperience())
+                .build();  // 바로 새로운 객체를 생성해서 리턴
+
+
 
         userProfileRepository.saveAndFlush(userProfile);
 
@@ -122,9 +121,11 @@ public class UserServiceImpl implements UserService {
         UserProfile userProfile = userProfileRepository.findMenteeProfileByUserId(user.getId())
                 .orElseThrow(() -> new RuntimeException("유저 프로필을 찾을 수 없습니다."));
 
-        userProfile.setDesiredJob(updateUserMenteeProfileDTO.getDesiredJob());
-        userProfile.setIntroduction(updateUserMenteeProfileDTO.getIntroduction());
-        userProfile.setExperience(updateUserMenteeProfileDTO.getExperience());
+        UserProfile.builder()
+                .desiredJob(updateUserMenteeProfileDTO.getDesiredJob())
+                .introduction(updateUserMenteeProfileDTO.getIntroduction())
+                .experience(updateUserMenteeProfileDTO.getExperience())
+                .build();
 
         userProfileRepository.saveAndFlush(userProfile);
 
