@@ -21,10 +21,6 @@ import jakarta.persistence.Table;
         @AttributeOverride(name = "views", column = @Column(name = "matching_views"))
 })
 public class Matching extends BaseBoardEntity {
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "user_id", referencedColumnName = "user_id")
-    private User user;
-
     @Column(nullable = false)
     private String tag; // 태그 (예: 작업, 기술)
 }
