@@ -1,4 +1,4 @@
-package com.hugudungs.hugupjigup.Auth.UserInfo.service;
+package com.hugudungs.hugupjigup.auth.UserInfo.service;
 
 import com.hugudungs.hugupjigup.Auth.UserInfo.dto.user.UpdateUserMenteeProfileDTO;
 import com.hugudungs.hugupjigup.Auth.UserInfo.dto.user.UpdateUserMentorProfileDTO;
@@ -20,7 +20,7 @@ import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
-public class UserServiceImpl implements UserService {
+public class UserServiceImpl implements com.hugudungs.hugupjigup.Auth.UserInfo.service.UserService {
 
     private final UserRepository userRepository;
     private final UserProfileRepository userProfileRepository;
