@@ -1,15 +1,11 @@
 package com.hugudungs.hugupjigup.data.entity.matching;
 
 import com.hugudungs.hugupjigup.data.entity.board.BaseBoardEntity;
-import com.hugudungs.hugupjigup.data.entity.user.User;
 
-import jakarta.persistence.FetchType;
 import jakarta.persistence.AttributeOverride;
 import jakarta.persistence.AttributeOverrides;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 
 @Entity
@@ -22,5 +18,5 @@ import jakarta.persistence.Table;
 })
 public class Matching extends BaseBoardEntity {
     @Column(nullable = false)
-    private String tag; // 태그 (예: 작업, 기술)
+    private String tag;
 }

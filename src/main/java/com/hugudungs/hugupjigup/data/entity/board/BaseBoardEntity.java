@@ -3,26 +3,21 @@ package com.hugudungs.hugupjigup.data.entity.board;
 import com.hugudungs.hugupjigup.common.enums.BoardType;
 import com.hugudungs.hugupjigup.data.entity.common.BaseEntity;
 import com.hugudungs.hugupjigup.data.entity.user.User;
-
 import jakarta.persistence.Column;
-import jakarta.persistence.EnumType;
-import jakarta.persistence.Enumerated;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.MappedSuperclass;
-import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Builder;
 import lombok.experimental.SuperBuilder;
 
-@Getter
 @MappedSuperclass
-@SuperBuilder
+@Getter
 @NoArgsConstructor
+@SuperBuilder
 public abstract class BaseBoardEntity extends BaseEntity {
-    @Enumerated(EnumType.STRING)
-    @Column(name = "board_type", nullable = false)
     private BoardType boardType;
 
     @ManyToOne(fetch = FetchType.LAZY)
