@@ -1,11 +1,21 @@
 package com.hugudungs.hugupjigup.data.entity.user;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.hugudungs.hugupjigup.data.entity.common.BaseEntity;
 import com.hugudungs.hugupjigup.common.enums.LoginType;
 
-import jakarta.persistence.*;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.FetchType;
+import jakarta.persistence.AttributeOverride;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Enumerated;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.Table;
+import lombok.Getter;
 
 import java.time.LocalDateTime;
 
@@ -14,10 +24,11 @@ import java.time.LocalDateTime;
 @Entity
 @Table(name = "users")
 @AttributeOverride(name = "id", column = @Column(name = "user_id"))
-@NoArgsConstructor(access = AccessLevel.PROTECTED) // 기본 생성자 제한
+@NoArgsConstructor
 @AllArgsConstructor
 @SuperBuilder
 public class User extends BaseEntity {
+    @JsonIgnore
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "role_type_id", referencedColumnName = "role_type_id")
     private RoleTypeEntity roleType;

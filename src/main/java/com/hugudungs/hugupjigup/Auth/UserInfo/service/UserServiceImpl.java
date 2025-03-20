@@ -7,12 +7,12 @@ import com.hugudungs.hugupjigup.Auth.UserInfo.dto.user.UpdateUserProfileDTO;
 import com.hugudungs.hugupjigup.Auth.UserInfo.dto.user.UserProfileResponseDTO;
 import com.hugudungs.hugupjigup.data.entity.user.User;
 import com.hugudungs.hugupjigup.data.entity.user.UserProfile;
-import com.hugudungs.hugupjigup.Auth.UserInfo.repository.UserRepository;
+import com.hugudungs.hugupjigup.user.data.UserRepository;
 import com.hugudungs.hugupjigup.Auth.UserInfo.repository.UserProfileRepository;
 import com.hugudungs.hugupjigup.Auth.UserInfo.repository.PostRepository;
 import com.hugudungs.hugupjigup.Auth.UserInfo.repository.CommentRepository;
-import com.hugudungs.hugupjigup.Auth.UserInfo.repository.MatchingRepository;
 import com.hugudungs.hugupjigup.Auth.UserInfo.repository.MatchingCommentRepository;
+import com.hugudungs.hugupjigup.matching.data.MatchingRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 

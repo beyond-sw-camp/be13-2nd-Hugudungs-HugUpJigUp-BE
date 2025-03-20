@@ -1,9 +1,11 @@
 package com.hugudungs.hugupjigup.data.entity.board;
 
-import com.hugudungs.hugupjigup.common.enums.BoardType;
-import com.hugudungs.hugupjigup.data.entity.user.User;
 
-import jakarta.persistence.*;
+import jakarta.persistence.AttributeOverride;
+import jakarta.persistence.AttributeOverrides;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Table;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
@@ -19,4 +21,6 @@ import lombok.experimental.SuperBuilder;
         @AttributeOverride(name = "content", column = @Column(name = "notice_content")),
         @AttributeOverride(name = "views", column = @Column(name = "notice_views"))
 })
+
 public class Notice extends BaseBoardEntity { }
+

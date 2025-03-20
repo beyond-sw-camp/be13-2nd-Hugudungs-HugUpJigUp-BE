@@ -31,7 +31,4 @@ public class FreeComment extends BaseCommentEntity {
     @JoinColumn(name = "user_id", nullable = false)
     private User user;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "comment_type_id", nullable = false)
-    private CommentTypes commentTypeId;
 }

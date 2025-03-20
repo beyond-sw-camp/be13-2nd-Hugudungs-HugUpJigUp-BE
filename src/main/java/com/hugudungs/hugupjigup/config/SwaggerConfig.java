@@ -18,8 +18,8 @@ public class SwaggerConfig {
                 .description("허겁직업 프로젝트의 API는 사용자 프로필 관리 및 멘토링 기능을 제공합니다.<br>"
                         + "주요 기능으로는 사용자 등록, 프로필 조회 및 수정, 멘토와 멘티 매칭 등이 포함됩니다.<br>"
                         + "인증된 사용자만 접근할 수 있으며, API 요청에 대한 응답으로 JSON 형식의 데이터를 반환합니다.<br>"
-                        + "각 API는 Swagger UI를 통해 테스트할 수 있습니다.")
-                .version("1.0.0"); // API의 버전
+                        + "각 API는 Swagger UI를 통해 테스트할 수 있습니다.");
+
 
         return new OpenAPI()
                 .components(new Components())
