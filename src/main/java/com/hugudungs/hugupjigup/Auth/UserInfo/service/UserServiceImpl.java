@@ -74,19 +74,32 @@ public class UserServiceImpl implements UserService {
         User user = userRepository.findByEmail(email)
                 .orElseThrow(() -> new RuntimeException("유저를 찾을 수 없습니다."));
 
-        User.builder()
-                .password(updateUserProfileDTO.getPassword())
-                .nickName(updateUserProfileDTO.getName())
-                .email(updateUserProfileDTO.getEmail())
-                .build();
+        user.setPassword(updateUserProfileDTO.getPassword());
+        user.setNickName(updateUserProfileDTO.getName());
+        user.setEmail(updateUserProfileDTO.getEmail());
 
         userRepository.saveAndFlush(user);
+
+//        user = User.builder()
+//                .password(updateUserProfileDTO.getPassword())
+//                .nickName(updateUserProfileDTO.getName())
+//                .email(updateUserProfileDTO.getEmail())
+//                .build();
+
+//        return UpdateUserProfileDTO.builder()
+//                .name(usersave.getNickName())
+//                .email(usersave.getEmail())
+//                .password(usersave.getPassword())
+//                .build();
+//
+//        User usersave = userRepository.saveAndFlush(user);
 
         return new UpdateUserProfileDTO(
                 user.getNickName(),
                 user.getEmail(),
                 user.getPassword()
         );
+
     }
 
     // 멘티 프로필 수정
@@ -98,13 +111,15 @@ public class UserServiceImpl implements UserService {
         UserProfile userProfile = userProfileRepository.findMentorProfileByUserId(user.getId())
                 .orElseThrow(() -> new RuntimeException("유저 프로필을 찾을 수 없습니다."));
 
-        UserProfile.builder()
-                .currentJob(updateUserMentorProfileDTO.getCurrentJob())
-                .introduction(updateUserMentorProfileDTO.getIntroduction())
-                .experience(updateUserMentorProfileDTO.getExperience())
-                .build();  // 바로 새로운 객체를 생성해서 리턴
+        userProfile.setCurrentJob(updateUserMentorProfileDTO.getCurrentJob());
+        userProfile.setIntroduction(updateUserMentorProfileDTO.getIntroduction());
+        userProfile.setExperience(updateUserMentorProfileDTO.getExperience());
 
-
+//        UserProfile.builder()
+//                .currentJob(updateUserMentorProfileDTO.getCurrentJob())
+//                .introduction(updateUserMentorProfileDTO.getIntroduction())
+//                .experience(updateUserMentorProfileDTO.getExperience())
+//                .build();  // 바로 새로운 객체를 생성해서 리턴
 
         userProfileRepository.saveAndFlush(userProfile);
 
@@ -124,11 +139,16 @@ public class UserServiceImpl implements UserService {
         UserProfile userProfile = userProfileRepository.findMenteeProfileByUserId(user.getId())
                 .orElseThrow(() -> new RuntimeException("유저 프로필을 찾을 수 없습니다."));
 
-        UserProfile.builder()
-                .desiredJob(updateUserMenteeProfileDTO.getDesiredJob())
-                .introduction(updateUserMenteeProfileDTO.getIntroduction())
-                .experience(updateUserMenteeProfileDTO.getExperience())
-                .build();
+        userProfile.setDesiredJob(updateUserMenteeProfileDTO.getDesiredJob());
+        userProfile.setIntroduction(updateUserMenteeProfileDTO.getIntroduction());
+        userProfile.setExperience(updateUserMenteeProfileDTO.getExperience());
+
+
+//        UserProfile.builder()
+//                .desiredJob(updateUserMenteeProfileDTO.getDesiredJob())
+//                .introduction(updateUserMenteeProfileDTO.getIntroduction())
+//                .experience(updateUserMenteeProfileDTO.getExperience())
+//                .build();
 
         userProfileRepository.saveAndFlush(userProfile);
 

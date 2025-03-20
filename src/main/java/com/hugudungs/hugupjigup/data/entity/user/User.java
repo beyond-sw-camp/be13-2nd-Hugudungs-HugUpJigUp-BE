@@ -9,6 +9,7 @@ import lombok.experimental.SuperBuilder;
 
 import java.time.LocalDateTime;
 
+@Setter
 @Getter
 @Entity
 @Table(name = "users")
@@ -36,4 +37,5 @@ public class User extends BaseEntity {
     @Enumerated(EnumType.STRING)
     @Column(name = "user_login_type", nullable = false)
     private LoginType loginType;
+
 }

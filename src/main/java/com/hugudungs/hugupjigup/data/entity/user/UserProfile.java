@@ -16,6 +16,7 @@ import jakarta.persistence.Table;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
 
+@Setter
 @Getter
 @Entity
 @Table(name = "user_profiles")
@@ -53,4 +54,5 @@ public class UserProfile extends BaseEntity{
     @Enumerated(EnumType.STRING)
     @Column(name = "gender")
     private Gender gender;
+
 }
