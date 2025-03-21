@@ -9,14 +9,14 @@ import lombok.Setter;
 @Getter
 @Setter
 public class FreeCreateRequestDto {
-    @NotNull(message = "boardType은 필수 입력값입니다.")
-    private BoardType boardType;
 
     @NotBlank(message = "title은 필수 입력값입니다.")
     private String title;
 
     @NotBlank(message = "content는 필수 입력값입니다.")
     private String content;
+
+    private BoardType boardType;
 
     @NotNull(message = "userId는 필수 입력값입니다.")
     private Long userId;

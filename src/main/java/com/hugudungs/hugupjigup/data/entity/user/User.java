@@ -7,7 +7,6 @@ import lombok.AllArgsConstructor;
 import lombok.Setter;
 import lombok.experimental.SuperBuilder;
 import jakarta.persistence.EnumType;
-import jakarta.persistence.FetchType;
 import jakarta.persistence.AttributeOverride;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;

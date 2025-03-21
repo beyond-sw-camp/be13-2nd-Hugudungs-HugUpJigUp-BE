@@ -1,12 +1,11 @@
 package com.hugudungs.hugupjigup.data.entity.user;
 
-import com.hugudungs.hugupjigup.data.entity.common.BaseEntity;
 import com.hugudungs.hugupjigup.common.enums.RoleType;
-
-import jakarta.persistence.EnumType;
+import com.hugudungs.hugupjigup.data.entity.common.BaseEntity;
 import jakarta.persistence.AttributeOverride;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
 import jakarta.persistence.Table;
 import lombok.Getter;
