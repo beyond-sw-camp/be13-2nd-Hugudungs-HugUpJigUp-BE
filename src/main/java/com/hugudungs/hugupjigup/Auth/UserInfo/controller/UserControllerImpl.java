@@ -1,16 +1,21 @@
-package com.hugudungs.hugupjigup.Auth.UserInfo.controller;
+package com.hugudungs.hugupjigup.auth.userInfo.controller;
 
-import com.hugudungs.hugupjigup.Auth.UserInfo.dto.user.UpdateUserMenteeProfileDTO;
-import com.hugudungs.hugupjigup.Auth.UserInfo.dto.user.UpdateUserMentorProfileDTO;
-import com.hugudungs.hugupjigup.Auth.UserInfo.dto.user.UpdateUserProfileDTO;
-import com.hugudungs.hugupjigup.Auth.UserInfo.dto.user.UserProfileResponseDTO;
-import com.hugudungs.hugupjigup.Auth.UserInfo.service.UserService;
+import com.hugudungs.hugupjigup.auth.userInfo.dto.user.UpdateUserMenteeProfileDTO;
+import com.hugudungs.hugupjigup.auth.userInfo.dto.user.UpdateUserMentorProfileDTO;
+import com.hugudungs.hugupjigup.auth.userInfo.dto.user.UpdateUserProfileDTO;
+import com.hugudungs.hugupjigup.auth.userInfo.dto.user.UserProfileResponseDTO;
+import com.hugudungs.hugupjigup.auth.userInfo.service.UserService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/api-docs/user")

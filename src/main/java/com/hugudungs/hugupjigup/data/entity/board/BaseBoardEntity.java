@@ -3,18 +3,14 @@ package com.hugudungs.hugupjigup.data.entity.board;
 import com.hugudungs.hugupjigup.common.enums.BoardType;
 import com.hugudungs.hugupjigup.data.entity.common.BaseEntity;
 import com.hugudungs.hugupjigup.data.entity.user.User;
-
-import jakarta.persistence.EnumType;
-import jakarta.persistence.Enumerated;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-
 import jakarta.persistence.Column;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.MappedSuperclass;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
 
 @Getter
@@ -22,8 +18,6 @@ import lombok.experimental.SuperBuilder;
 @SuperBuilder
 @NoArgsConstructor
 public abstract class BaseBoardEntity extends BaseEntity {
-
-    @Enumerated(EnumType.STRING)
     private BoardType boardType;
 
     @ManyToOne(fetch = FetchType.LAZY)
@@ -59,5 +53,3 @@ public abstract class BaseBoardEntity extends BaseEntity {
         this.views = views;
     }
 }
-
-

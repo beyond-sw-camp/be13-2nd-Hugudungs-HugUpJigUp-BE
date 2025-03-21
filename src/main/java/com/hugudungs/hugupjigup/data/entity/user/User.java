@@ -1,23 +1,22 @@
 package com.hugudungs.hugupjigup.data.entity.user;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.hugudungs.hugupjigup.data.entity.common.BaseEntity;
 import com.hugudungs.hugupjigup.common.enums.LoginType;
-
-import lombok.*;
-import lombok.experimental.SuperBuilder;
-import jakarta.persistence.EnumType;
-import jakarta.persistence.FetchType;
+import com.hugudungs.hugupjigup.data.entity.common.BaseEntity;
 import jakarta.persistence.AttributeOverride;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-
+import lombok.Setter;
+import lombok.experimental.SuperBuilder;
 
 import java.time.LocalDateTime;
 

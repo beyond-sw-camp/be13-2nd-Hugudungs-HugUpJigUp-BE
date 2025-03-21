@@ -1,7 +1,7 @@
-package com.hugudungs.hugupjigup.Auth.UserInfo.repository;
+package com.hugudungs.hugupjigup.auth.userInfo.repository;
 
-import com.hugudungs.hugupjigup.data.entity.user.UserProfile;
 import com.hugudungs.hugupjigup.data.entity.user.User;
+import com.hugudungs.hugupjigup.data.entity.user.UserProfile;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -20,5 +20,4 @@ public interface UserProfileRepository extends JpaRepository<UserProfile, Long> 
     // JPQL을 사용한 방법 (멘티 프로필 조회)
     @Query("SELECT up FROM UserProfile up WHERE up.user.id = :userId AND up.profileType = 'MENTEE'")
     Optional<UserProfile> findMenteeProfileByUserId(@Param("userId") Long userId);
-
 }

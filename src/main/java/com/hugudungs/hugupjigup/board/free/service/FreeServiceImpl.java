@@ -18,6 +18,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -34,10 +35,11 @@ public class FreeServiceImpl implements FreeService {
                 .orElseThrow(() -> new IllegalArgumentException("해당 유저가 존재하지 않습니다."));
 
         Free freePost = Free.builder()
-                .boardType(BoardType.FREE)
                 .title(requestDto.getTitle())
                 .content(requestDto.getContent())
                 .author(user)
+                .boardType(requestDto.getBoardType())
+                .comments(new ArrayList<>())
                 .build();
 
         Free savedFree = freeRepository.save(freePost);
@@ -95,15 +97,11 @@ public class FreeServiceImpl implements FreeService {
         Free free = freeRepository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("해당 게시글이 존재하지 않습니다."));
 
-        // ✅ 댓글 조회
         List<FreeComment> commentEntities = freeCommentRepository.findByFreeId(id);
-
-        // ✅ 댓글 엔티티 → DTO 변환
         List<FreeCommentGenerationResponseDto> commentDtos = commentEntities.stream()
                 .map(FreeCommentGenerationResponseDto::fromEntity)
                 .toList();
 
-        // ✅ 댓글 포함해서 반환
         return FreeSearchResponseDto.fromEntity(free, commentDtos);
     }
 }

@@ -34,17 +34,19 @@ public class FreeSearchResponseDto {
                 .views(free.getViews())
                 .createdAt(free.getCreatedAt())
                 .updatedAt(free.getUpdatedAt())
-                .comments(List.of()) // ✅ 혹은 null 처리도 가능
                 .build();
     }
 
-    public static FreeSearchResponseDto fromEntity(Free free, List<FreeCommentGenerationResponseDto> commentDtos) {
+    public static FreeSearchResponseDto fromEntity(
+            com.hugudungs.hugupjigup.data.entity.board.Free free,
+            List<FreeCommentGenerationResponseDto> commentDtos
+    ) {
         return FreeSearchResponseDto.builder()
                 .id(free.getId())
+                .boardType(free.getBoardType())
                 .title(free.getTitle())
                 .content(free.getContent())
                 .userNickname(free.getAuthor().getNickName())
-                .boardType(free.getBoardType())
                 .views(free.getViews())
                 .createdAt(free.getCreatedAt())
                 .updatedAt(free.getUpdatedAt())

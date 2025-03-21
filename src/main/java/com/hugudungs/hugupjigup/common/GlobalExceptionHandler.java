@@ -12,7 +12,7 @@ import org.springframework.web.method.annotation.HandlerMethodValidationExceptio
 @RestControllerAdvice
 public class GlobalExceptionHandler {
     @ExceptionHandler(Exception.class)
-     public ResponseEntity<ResponseDto<Void>> handleException(Exception e) {
+    public ResponseEntity<ResponseDto<Void>> handleException(Exception e) {
         return new ResponseEntity<>(
                 new ResponseDto<>(
                         HttpStatus.INTERNAL_SERVER_ERROR.value(),

@@ -20,6 +20,7 @@ public class FreeControllerImpl implements FreeController {
     @Override
     public ResponseEntity<FreeSearchResponseDto> createPost(FreeCreateRequestDto requestDto) {
         FreeSearchResponseDto createdPost = freeService.createPost(requestDto);
+
         return ResponseEntity.ok(createdPost);
     }
 
@@ -31,18 +32,21 @@ public class FreeControllerImpl implements FreeController {
     @Override
     public ResponseEntity<FreeSearchResponseDto> updatePost(Long id, FreeUpdateRequestDto requestDto) {
         FreeSearchResponseDto updatedPost = freeService.updatePost(id, requestDto);
+
         return ResponseEntity.ok(updatedPost);
     }
 
     @Override
     public ResponseEntity<String> deletePost(Long id) {
         freeService.deletePost(id);
+
         return ResponseEntity.ok("게시글이 성공적으로 삭제되었습니다.");
     }
 
     @Override
     public ResponseEntity<FreeSearchResponseDto> getPostById(Long id) {
         FreeSearchResponseDto post = freeService.getPostById(id);
+
         return ResponseEntity.ok(post);
     }
 }
