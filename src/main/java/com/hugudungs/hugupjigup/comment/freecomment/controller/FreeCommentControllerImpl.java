@@ -11,12 +11,10 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/api/free/{freeId}/comments")
 public class FreeCommentControllerImpl implements FreeCommentController {
 
     private final FreeCommentService freeCommentService;
 
-    @PostMapping
     public ResponseEntity<FreeCommentGenerationResponseDto> createComment(
             @PathVariable Long freeId, @RequestBody FreeCommentGenerationDto requestDto) {
 
@@ -24,7 +22,6 @@ public class FreeCommentControllerImpl implements FreeCommentController {
         return ResponseEntity.ok(createdComment);
     }
 
-    @PutMapping("/{commentId}")
     public ResponseEntity<FreeCommentUpdateResponseDto> updateComment(
             @PathVariable Long freeId, @PathVariable Long commentId, @RequestBody FreeCommentUpdateDto requestDto) {
 
@@ -32,7 +29,6 @@ public class FreeCommentControllerImpl implements FreeCommentController {
         return ResponseEntity.ok(updatedComment);
     }
 
-    @DeleteMapping("/{commentId}")
     public ResponseEntity<Void> deleteComment(@PathVariable Long commentId) {
         freeCommentService.deleteComment(commentId);
         return ResponseEntity.noContent().build();

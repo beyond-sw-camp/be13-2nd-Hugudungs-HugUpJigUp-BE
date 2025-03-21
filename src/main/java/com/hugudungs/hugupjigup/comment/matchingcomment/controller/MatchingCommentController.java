@@ -22,7 +22,7 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/matching/{matchingId}/comments")
+@RequestMapping("/api/v1/matching/{matchingId}/comments")
 @Tag(name = "멘토링 후기 API", description = "멘토링 후기 관련 API 목록")
 public interface MatchingCommentController {
 
