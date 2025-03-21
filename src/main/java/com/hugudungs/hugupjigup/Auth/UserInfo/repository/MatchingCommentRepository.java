@@ -1,4 +1,4 @@
-package com.hugudungs.hugupjigup.Auth.UserInfo.repository;
+package com.hugudungs.hugupjigup.auth.userInfo.repository;
 
 import com.hugudungs.hugupjigup.data.entity.matching.MatchingComment;
 import com.hugudungs.hugupjigup.data.entity.user.User;

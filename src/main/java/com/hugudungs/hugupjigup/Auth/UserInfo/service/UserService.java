@@ -1,12 +1,11 @@
-package com.hugudungs.hugupjigup.Auth.UserInfo.service;
+package com.hugudungs.hugupjigup.auth.userInfo.service;
 
-import com.hugudungs.hugupjigup.Auth.UserInfo.dto.user.UpdateUserMenteeProfileDTO;
-import com.hugudungs.hugupjigup.Auth.UserInfo.dto.user.UpdateUserMentorProfileDTO;
-import com.hugudungs.hugupjigup.Auth.UserInfo.dto.user.UpdateUserProfileDTO;
-import com.hugudungs.hugupjigup.Auth.UserInfo.dto.user.UserProfileResponseDTO;
+import com.hugudungs.hugupjigup.auth.userInfo.dto.user.UpdateUserMenteeProfileDTO;
+import com.hugudungs.hugupjigup.auth.userInfo.dto.user.UpdateUserMentorProfileDTO;
+import com.hugudungs.hugupjigup.auth.userInfo.dto.user.UpdateUserProfileDTO;
+import com.hugudungs.hugupjigup.auth.userInfo.dto.user.UserProfileResponseDTO;
 
 public interface UserService {
-
     // 유저의 기본 정보 조회
     UserProfileResponseDTO getUserProfileByEmail(String email);
 

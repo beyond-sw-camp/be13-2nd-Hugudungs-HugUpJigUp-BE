@@ -1,19 +1,21 @@
 package com.hugudungs.hugupjigup.data.entity.user;
 
-import com.hugudungs.hugupjigup.data.entity.common.BaseEntity;
 import com.hugudungs.hugupjigup.common.enums.Gender;
 import com.hugudungs.hugupjigup.common.enums.ProfileType;
-
-import jakarta.persistence.EnumType;
-import jakarta.persistence.FetchType;
+import com.hugudungs.hugupjigup.data.entity.common.BaseEntity;
 import jakarta.persistence.AttributeOverride;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 import lombok.experimental.SuperBuilder;
 
 @Setter
@@ -24,7 +26,7 @@ import lombok.experimental.SuperBuilder;
 @AllArgsConstructor
 @NoArgsConstructor
 @SuperBuilder
-public class UserProfile extends BaseEntity{
+public class UserProfile extends BaseEntity {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id", referencedColumnName = "user_id")
     private User user;
@@ -33,7 +35,7 @@ public class UserProfile extends BaseEntity{
     private String currentJob;
 
     @Column(name = "desired_job")
-    private String  desiredJob;
+    private String desiredJob;
 
     @Column(name = "introduction")
     private String introduction;

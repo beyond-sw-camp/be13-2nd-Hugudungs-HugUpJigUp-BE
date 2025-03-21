@@ -76,6 +76,7 @@ public class NoticeServiceImpl implements NoticeService {
                     .noticeId(updatedNotice.getId())
                     .noticeTitle(updatedNotice.getTitle())
                     .noticeContent(updatedNotice.getContent())
+                    .boardType(updatedNotice.getBoardType())
                     .updateDate(updatedNotice.getUpdatedAt())
                     .build();
 

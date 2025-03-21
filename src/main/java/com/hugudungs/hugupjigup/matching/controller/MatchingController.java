@@ -17,27 +17,27 @@ import org.springframework.web.bind.annotation.RequestBody;
 public interface MatchingController {
     @PostMapping("/matching/{userId}")
     @Operation(summary = "매칭 게시글 등록 메서드", description = "매칭 게시글 등록 메서드입니다.")
-    public ResponseEntity<MatchingResponseDto> createMatching(
-            @RequestBody MatchingRequestDto requestDto) throws Exception ;
+    ResponseEntity<MatchingResponseDto> createMatching(
+            @RequestBody MatchingRequestDto requestDto) throws Exception;
 
     @PutMapping("/update/{matchingId}")
     @Operation(summary = "매칭 게시글 수정 메서드", description = "매칭 게시글 수정 메서드입니다.")
-    public ResponseEntity<MatchingResponseDto> updateMatching(
+    ResponseEntity<MatchingResponseDto> updateMatching(
             @PathVariable Long matchingId,
             @RequestBody MatchingRequestDto requestDto) throws Exception;
 
     @DeleteMapping("/delete/{matchingId}")
     @Operation(summary = "매칭 게시글 삭제 메서드", description = "매칭 게시글 삭제 메서드입니다.")
-    public ResponseEntity<Void> deleteMatching(
+    ResponseEntity<Void> deleteMatching(
             @PathVariable Long matchingId) throws Exception;
 
     @GetMapping("/posts")
     @Operation(summary = "매칭 게시판 조회 메서드", description = "매칭 게시판 조회 메서드입니다.")
-    public ResponseEntity<Page<MatchingResponseDto>> getMatchingPosts(
+    ResponseEntity<Page<MatchingResponseDto>> getMatchingPosts(
             @ParameterObject Pageable pageable) throws Exception;
 
     @GetMapping("/{matchingId}")
     @Operation(summary = "매칭 게시글 조회 메서드", description = "매칭 게시글 조회 메서드입니다.")
-    public ResponseEntity<MatchingResponseDto> getMatchingById(
+    ResponseEntity<MatchingResponseDto> getMatchingById(
             @PathVariable Long matchingId) throws Exception;
 }
