@@ -1,4 +1,4 @@
-package com.hugudungs.hugupjigup.dto.applicationqueue;
+package com.hugudungs.hugupjigup.applicationqueue.data.dto;
 
 import com.hugudungs.hugupjigup.data.entity.matching.ApplicationQueue;
 import lombok.AllArgsConstructor;

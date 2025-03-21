@@ -1,8 +1,8 @@
-package com.hugudungs.hugupjigup.controller;
+package com.hugudungs.hugupjigup.applicationqueue.controller;
 
-import com.hugudungs.hugupjigup.dto.applicationqueue.ApplicationQueueRequestDto;
-import com.hugudungs.hugupjigup.dto.applicationqueue.ApplicationQueueResponseDto;
-import com.hugudungs.hugupjigup.dto.applicationqueue.ApplicationQueueUpdateDto;
+import com.hugudungs.hugupjigup.applicationqueue.data.dto.ApplicationQueueRequestDto;
+import com.hugudungs.hugupjigup.applicationqueue.data.dto.ApplicationQueueResponseDto;
+import com.hugudungs.hugupjigup.applicationqueue.data.dto.ApplicationQueueUpdateDto;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.http.ResponseEntity;
