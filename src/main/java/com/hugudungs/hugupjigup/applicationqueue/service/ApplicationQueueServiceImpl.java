@@ -57,7 +57,7 @@ public class ApplicationQueueServiceImpl implements ApplicationQueueService {
     @Override
     @Transactional(readOnly = true)
     public List<ApplicationQueueResponseDto> getApplicationsByUserId(Long userId) {
-        return applicationQueueRepository.findByUserId(userId) // ✅ 올바르게 변경
+        return applicationQueueRepository.findByUserId(userId)
                 .stream()
                 .map(ApplicationQueueResponseDto::fromEntity)
                 .collect(Collectors.toList());
