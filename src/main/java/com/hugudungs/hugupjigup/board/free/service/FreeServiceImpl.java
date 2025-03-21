@@ -1,7 +1,10 @@
 package com.hugudungs.hugupjigup.board.free.service;
 
+import com.hugudungs.hugupjigup.comment.freecomment.data.FreeCommentRepository;
+import com.hugudungs.hugupjigup.comment.freecomment.data.dto.FreeCommentGenerationResponseDto;
 import com.hugudungs.hugupjigup.common.enums.BoardType;
 import com.hugudungs.hugupjigup.data.entity.board.Free;
+import com.hugudungs.hugupjigup.data.entity.comment.FreeComment;
 import com.hugudungs.hugupjigup.data.entity.user.User;
 import com.hugudungs.hugupjigup.board.free.data.dto.FreeCreateRequestDto;
 import com.hugudungs.hugupjigup.board.free.data.dto.FreeSearchRequestDto;
@@ -15,11 +18,14 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+
 @Service
 @RequiredArgsConstructor
 public class FreeServiceImpl implements FreeService {
     private final FreeRepository freeRepository;
     private final UserRepository userRepository;
+    private final FreeCommentRepository freeCommentRepository;
 
     @Override
     @Transactional
@@ -89,6 +95,15 @@ public class FreeServiceImpl implements FreeService {
         Free free = freeRepository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("해당 게시글이 존재하지 않습니다."));
 
-        return FreeSearchResponseDto.fromEntity(free);
+        // ✅ 댓글 조회
+        List<FreeComment> commentEntities = freeCommentRepository.findByFreeId(id);
+
+        // ✅ 댓글 엔티티 → DTO 변환
+        List<FreeCommentGenerationResponseDto> commentDtos = commentEntities.stream()
+                .map(FreeCommentGenerationResponseDto::fromEntity)
+                .toList();
+
+        // ✅ 댓글 포함해서 반환
+        return FreeSearchResponseDto.fromEntity(free, commentDtos);
     }
 }

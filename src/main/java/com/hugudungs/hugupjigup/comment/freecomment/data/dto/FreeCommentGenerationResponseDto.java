@@ -1,5 +1,6 @@
 package com.hugudungs.hugupjigup.comment.freecomment.data.dto;
 
+import com.hugudungs.hugupjigup.data.entity.comment.FreeComment;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -18,4 +19,13 @@ public class FreeCommentGenerationResponseDto {
     private String userNickname;
 
     private String commentType;
+
+    public static FreeCommentGenerationResponseDto fromEntity(FreeComment comment) {
+        FreeCommentGenerationResponseDto dto = new FreeCommentGenerationResponseDto();
+        dto.setId(comment.getId());
+        dto.setContent(comment.getContent());
+        dto.setUserNickname(comment.getUser().getNickName());
+        dto.setCommentType(comment.getCommentType().name());
+        return dto;
+    }
 }
