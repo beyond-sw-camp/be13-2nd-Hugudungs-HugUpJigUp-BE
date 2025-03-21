@@ -29,7 +29,7 @@ public class FreeCommentServiceImpl implements FreeCommentService {
         User user = userRepository.findById(requestDto.getUserId())
                 .orElseThrow(() -> new IllegalArgumentException("해당 유저가 존재하지 않습니다."));
 
-        Free free = freeRepository.findById(freeId) // ✅ requestDto.getFreeId() 대신 freeId 사용
+        Free free = freeRepository.findById(freeId)
                 .orElseThrow(() -> new IllegalArgumentException("해당 게시글이 존재하지 않습니다."));
 
         CommentType commentType = requestDto.getCommentType();
