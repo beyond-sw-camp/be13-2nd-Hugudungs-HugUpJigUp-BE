@@ -30,7 +30,7 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @SuperBuilder
 public class User extends BaseEntity {
-    @JsonIgnore
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "role_type_id", referencedColumnName = "role_type_id")
     private RoleTypeEntity roleType;

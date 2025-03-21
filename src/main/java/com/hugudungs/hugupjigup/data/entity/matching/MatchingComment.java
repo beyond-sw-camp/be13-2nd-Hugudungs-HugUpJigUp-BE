@@ -12,9 +12,13 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
+import lombok.Getter;
+import lombok.Setter;
 
 @Entity
 @Table(name = "matching_comment")
+@Setter
+@Getter
 @AttributeOverrides({
         @AttributeOverride(name = "id", column = @Column(name = "matching_comment_id")),
 })
