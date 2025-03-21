@@ -21,8 +21,6 @@ import lombok.experimental.SuperBuilder;
 @NoArgsConstructor
 public abstract class BaseBoardEntity extends BaseEntity {
 
-    @Enumerated(EnumType.STRING)
-    @Column(name = "board_type", nullable = false)
     private BoardType boardType;
 
     @ManyToOne(fetch = FetchType.LAZY)
