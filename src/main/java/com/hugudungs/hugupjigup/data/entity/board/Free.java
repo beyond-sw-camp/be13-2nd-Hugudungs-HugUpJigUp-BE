@@ -29,7 +29,7 @@ import java.util.List;
 
 
 public class Free extends BaseBoardEntity{
-    @OneToMany(mappedBy = "free", cascade = CascadeType.REMOVE, orphanRemoval = true) // ✅ 삭제 시 연관 댓글도 삭제
+    @OneToMany(mappedBy = "free", cascade = CascadeType.REMOVE, orphanRemoval = true)
     private List<FreeComment> comments;
 }
 
