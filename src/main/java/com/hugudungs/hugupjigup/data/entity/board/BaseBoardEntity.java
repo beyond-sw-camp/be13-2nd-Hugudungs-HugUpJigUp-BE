@@ -53,5 +53,3 @@ public abstract class BaseBoardEntity extends BaseEntity {
         this.views = views;
     }
 }
-
-

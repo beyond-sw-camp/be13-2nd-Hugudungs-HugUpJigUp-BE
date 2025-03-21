@@ -1,4 +1,4 @@
-package com.hugudungs.hugupjigup.dto.comment.freecomment;
+package com.hugudungs.hugupjigup.comment.freecomment.data.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -7,15 +7,11 @@ import lombok.Setter;
 
 @Getter
 @Setter
-@AllArgsConstructor
 @NoArgsConstructor
-public class FreeCommentGenerationResponseDto {
-
+@AllArgsConstructor
+public class FreeCommentUpdateResponseDto {
     private Long id;
-
     private String content;
-
-    private String userNickname;
-
-    private String commentType;
+    private Long userId;
+    private Long freeId;
 }

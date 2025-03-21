@@ -37,6 +37,7 @@ public class FreeServiceImpl implements FreeService {
                 .build();
 
         Free savedFree = freeRepository.save(free);
+
         return FreeSearchResponseDto.fromEntity(savedFree);
     }
 
@@ -57,6 +58,7 @@ public class FreeServiceImpl implements FreeService {
                             .map(FreeSearchResponseDto::fromEntity);
             }
         } else {
+
             return freeRepository.findAll(pageable)
                     .map(FreeSearchResponseDto::fromEntity);
         }
@@ -72,6 +74,7 @@ public class FreeServiceImpl implements FreeService {
         free.setContent(requestDto.getContent());
 
         Free updatedFree = freeRepository.save(free);
+
         return FreeSearchResponseDto.fromEntity(updatedFree);
     }
 

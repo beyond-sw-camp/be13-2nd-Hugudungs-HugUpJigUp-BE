@@ -1,4 +1,4 @@
-package com.hugudungs.hugupjigup.dto.applicationqueue;
+package com.hugudungs.hugupjigup.applicationqueue.data.dto;
 
 import com.hugudungs.hugupjigup.common.enums.ApplicationQueueStatus;
 import jakarta.validation.constraints.NotBlank;

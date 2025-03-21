@@ -1,8 +1,8 @@
-package com.hugudungs.hugupjigup.service;
+package com.hugudungs.hugupjigup.applicationqueue.service;
 
-import com.hugudungs.hugupjigup.dto.applicationqueue.ApplicationQueueRequestDto;
-import com.hugudungs.hugupjigup.dto.applicationqueue.ApplicationQueueResponseDto;
-import com.hugudungs.hugupjigup.dto.applicationqueue.ApplicationQueueUpdateDto;
+import com.hugudungs.hugupjigup.applicationqueue.data.dto.ApplicationQueueRequestDto;
+import com.hugudungs.hugupjigup.applicationqueue.data.dto.ApplicationQueueResponseDto;
+import com.hugudungs.hugupjigup.applicationqueue.data.dto.ApplicationQueueUpdateDto;
 
 import java.util.List;
 

@@ -31,7 +31,7 @@ public class FreeSearchResponseDto {
                 .stream()
                 .map(FreeCommentDto::fromEntity)
                 .collect(Collectors.toList());
-        
+
         return FreeSearchResponseDto.builder()
                 .id(free.getId())
                 .title(free.getTitle())
