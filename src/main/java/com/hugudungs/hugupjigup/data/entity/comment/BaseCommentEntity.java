@@ -2,8 +2,10 @@ package com.hugudungs.hugupjigup.data.entity.comment;
 
 import com.hugudungs.hugupjigup.common.enums.CommentType;
 import com.hugudungs.hugupjigup.data.entity.common.BaseEntity;
-
-import jakarta.persistence.*;
+import jakarta.persistence.Column;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
+import jakarta.persistence.MappedSuperclass;
 import lombok.Getter;
 import lombok.Setter;
 

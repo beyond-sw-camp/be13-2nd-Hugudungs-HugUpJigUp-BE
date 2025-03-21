@@ -13,7 +13,6 @@ import org.springframework.stereotype.Service;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -38,7 +37,7 @@ public class AuthServiceImpl implements AuthService {
         String otpCode = this.createOtp();
         // otp redis에 저장 유효기간 10분
         cacheService.set(this.createOtpKey(email), otpCode, 60 * 10);
-        Map<String, Object> parameters =  new HashMap<>();
+        Map<String, Object> parameters = new HashMap<>();
         parameters.put("otp", otpCode);
         // 이메일 전송
         emailService.sendMimeMail(email,
@@ -56,7 +55,7 @@ public class AuthServiceImpl implements AuthService {
         }
         cacheService.delete(this.createOtpKey(email));
         // 인증 성공시 verified redis에 저장 유효기간 10분
-        cacheService.set(this.verifiedUserKey(email),"1", 60 * 10);
+        cacheService.set(this.verifiedUserKey(email), "1", 60 * 10);
 
         return true;
     }

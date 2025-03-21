@@ -1,14 +1,20 @@
 package com.hugudungs.hugupjigup.data.entity.board;
 
+import com.hugudungs.hugupjigup.data.entity.comment.FreeComment;
 import jakarta.persistence.AttributeOverride;
 import jakarta.persistence.AttributeOverrides;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
-
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @SuperBuilder
@@ -21,7 +27,9 @@ import lombok.experimental.SuperBuilder;
         @AttributeOverride(name = "content", column = @Column(name = "free_content", nullable = false, columnDefinition = "TEXT")),
         @AttributeOverride(name = "views", column = @Column(name = "free_views", nullable = false, columnDefinition = "INT DEFAULT 0"))
 })
+public class Free extends BaseBoardEntity {
+    @OneToMany(mappedBy = "free", fetch = FetchType.EAGER)
+    private List<FreeComment> freeComments;
 
-
-public class Free extends BaseBoardEntity{ }
+}
 

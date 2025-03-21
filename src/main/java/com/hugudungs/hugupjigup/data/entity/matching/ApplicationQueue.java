@@ -1,14 +1,13 @@
 package com.hugudungs.hugupjigup.data.entity.matching;
 
-import com.hugudungs.hugupjigup.data.entity.common.BaseEntity;
 import com.hugudungs.hugupjigup.common.enums.ApplicationQueueStatus;
+import com.hugudungs.hugupjigup.data.entity.common.BaseEntity;
 import com.hugudungs.hugupjigup.data.entity.user.User;
-
-import jakarta.persistence.FetchType;
 import jakarta.persistence.AttributeOverride;
 import jakarta.persistence.AttributeOverrides;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
@@ -18,7 +17,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Entity
-@Table(name="application_queue")
+@Table(name = "application_queue")
 @Getter
 @Setter
 @NoArgsConstructor

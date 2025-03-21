@@ -1,7 +1,6 @@
 package com.hugudungs.hugupjigup.data.entity.matching;
 
 import com.hugudungs.hugupjigup.data.entity.board.BaseBoardEntity;
-
 import jakarta.persistence.AttributeOverride;
 import jakarta.persistence.AttributeOverrides;
 import jakarta.persistence.Column;
@@ -15,7 +14,7 @@ import lombok.experimental.SuperBuilder;
 @Entity
 @SuperBuilder
 @NoArgsConstructor
-@Table(name="matching")
+@Table(name = "matching")
 @AttributeOverrides({
         @AttributeOverride(name = "id", column = @Column(name = "matching_id")),
         @AttributeOverride(name = "title", column = @Column(name = "matching_title")),

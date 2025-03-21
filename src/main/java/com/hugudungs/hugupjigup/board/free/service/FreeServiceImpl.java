@@ -1,18 +1,20 @@
 package com.hugudungs.hugupjigup.board.free.service;
 
-import com.hugudungs.hugupjigup.data.entity.board.Free;
-import com.hugudungs.hugupjigup.data.entity.user.User;
+import com.hugudungs.hugupjigup.board.free.data.FreeRepository;
 import com.hugudungs.hugupjigup.board.free.data.dto.FreeCreateRequestDto;
 import com.hugudungs.hugupjigup.board.free.data.dto.FreeSearchRequestDto;
 import com.hugudungs.hugupjigup.board.free.data.dto.FreeSearchResponseDto;
 import com.hugudungs.hugupjigup.board.free.data.dto.FreeUpdateRequestDto;
-import com.hugudungs.hugupjigup.board.free.data.FreeRepository;
+import com.hugudungs.hugupjigup.data.entity.board.Free;
+import com.hugudungs.hugupjigup.data.entity.user.User;
 import com.hugudungs.hugupjigup.user.data.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.ArrayList;
 
 @Service
 @RequiredArgsConstructor
@@ -31,6 +33,7 @@ public class FreeServiceImpl implements FreeService {
                 .content(requestDto.getContent())
                 .author(user)
                 .boardType(requestDto.getBoardType())
+                .freeComments(new ArrayList<>())
                 .build();
 
         Free savedFree = freeRepository.save(free);
@@ -84,7 +87,7 @@ public class FreeServiceImpl implements FreeService {
     @Override
     @Transactional(readOnly = true)
     public FreeSearchResponseDto getPostById(Long id) {
-        Free free = freeRepository.findById(id)
+        Free free = freeRepository.findByIdWithComments(id)
                 .orElseThrow(() -> new IllegalArgumentException("해당 게시글이 존재하지 않습니다."));
 
         return FreeSearchResponseDto.fromEntity(free);

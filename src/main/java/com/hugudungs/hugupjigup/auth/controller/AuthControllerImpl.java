@@ -1,9 +1,9 @@
 package com.hugudungs.hugupjigup.auth.controller;
 
 import com.hugudungs.hugupjigup.auth.dto.SendOtpRequestDto;
-import com.hugudungs.hugupjigup.auth.service.AuthService;
 import com.hugudungs.hugupjigup.auth.dto.SignUpRequestDto;
 import com.hugudungs.hugupjigup.auth.dto.VerificationOtpRequestDto;
+import com.hugudungs.hugupjigup.auth.service.AuthService;
 import com.hugudungs.hugupjigup.common.dto.ResponseDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;

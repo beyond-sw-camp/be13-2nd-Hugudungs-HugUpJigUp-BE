@@ -1,11 +1,10 @@
-package com.hugudungs.hugupjigup.Auth.UserInfo.controller;
+package com.hugudungs.hugupjigup.auth.userInfo.controller;
 
-import com.hugudungs.hugupjigup.Auth.UserInfo.dto.user.UpdateUserMenteeProfileDTO;
-import com.hugudungs.hugupjigup.Auth.UserInfo.dto.user.UpdateUserMentorProfileDTO;
-import com.hugudungs.hugupjigup.Auth.UserInfo.dto.user.UpdateUserProfileDTO;
-import com.hugudungs.hugupjigup.Auth.UserInfo.dto.user.UserProfileResponseDTO;
+import com.hugudungs.hugupjigup.auth.userInfo.dto.user.UpdateUserMenteeProfileDTO;
+import com.hugudungs.hugupjigup.auth.userInfo.dto.user.UpdateUserMentorProfileDTO;
+import com.hugudungs.hugupjigup.auth.userInfo.dto.user.UpdateUserProfileDTO;
+import com.hugudungs.hugupjigup.auth.userInfo.dto.user.UserProfileResponseDTO;
 import io.swagger.v3.oas.annotations.Operation;
-import io.swagger.v3.oas.annotations.parameters.RequestBody;
 
 public interface UserController {
 
