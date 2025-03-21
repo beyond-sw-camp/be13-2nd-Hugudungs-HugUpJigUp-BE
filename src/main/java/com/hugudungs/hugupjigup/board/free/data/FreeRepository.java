@@ -11,9 +11,6 @@ import java.util.Optional;
 
 public interface FreeRepository extends JpaRepository<Free, Long> {
 
-    @Query("SELECT f FROM Free f LEFT JOIN FETCH f.freeComments WHERE f.id = :id")
-    Optional<Free> findByIdWithComments(@Param("id") Long id);
-
     // 제목으로 검색
     Page<Free> findByTitleContaining(String titleKeyword, Pageable pageable);
 

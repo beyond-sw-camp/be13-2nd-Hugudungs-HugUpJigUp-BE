@@ -3,6 +3,7 @@ package com.hugudungs.hugupjigup.data.entity.board;
 import com.hugudungs.hugupjigup.data.entity.comment.FreeComment;
 import jakarta.persistence.AttributeOverride;
 import jakarta.persistence.AttributeOverrides;
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
@@ -12,6 +13,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -26,7 +28,7 @@ import java.util.List;
         @AttributeOverride(name = "views", column = @Column(name = "free_views", nullable = false, columnDefinition = "INT DEFAULT 0"))
 })
 public class Free extends BaseBoardEntity {
-    @OneToMany(mappedBy = "free", fetch = FetchType.EAGER)
-    private List<FreeComment> freeComments;
+    @OneToMany(mappedBy = "free", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
+    private List<FreeComment> comments = new ArrayList<>();
 }
 

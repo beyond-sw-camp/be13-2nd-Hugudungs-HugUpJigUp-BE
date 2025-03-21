@@ -1,15 +1,14 @@
 package com.hugudungs.hugupjigup.board.free.data.dto;
 
+import com.hugudungs.hugupjigup.comment.freecomment.data.dto.FreeCommentGenerationResponseDto;
 import com.hugudungs.hugupjigup.common.enums.BoardType;
 import com.hugudungs.hugupjigup.data.entity.board.Free;
-import com.hugudungs.hugupjigup.data.entity.comment.FreeComment;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 
 import java.time.LocalDateTime;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Getter
 @Builder
@@ -20,43 +19,38 @@ public class FreeSearchResponseDto {
     private String title;
     private String content;
     private String userNickname;
-    private List<FreeCommentDto> comments;
     private int views;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
+    private List<FreeCommentGenerationResponseDto> comments;
 
-    // 엔티티 → DTO 변환
     public static FreeSearchResponseDto fromEntity(Free free) {
-        List<FreeCommentDto> comments = free.getFreeComments()
-                .stream()
-                .map(FreeCommentDto::fromEntity)
-                .collect(Collectors.toList());
-
         return FreeSearchResponseDto.builder()
                 .id(free.getId())
                 .title(free.getTitle())
                 .content(free.getContent())
                 .userNickname(free.getAuthor().getNickName())
                 .boardType(free.getBoardType())
-                .comments(comments)
                 .views(free.getViews())
                 .createdAt(free.getCreatedAt())
                 .updatedAt(free.getUpdatedAt())
                 .build();
     }
 
-    @Getter
-    private static class FreeCommentDto {
-        private Long id;
-        private String content;
-
-        public static FreeCommentDto fromEntity(FreeComment freeComment) {
-            return new FreeCommentDto(freeComment.getId(), freeComment.getContent());
-        }
-
-        public FreeCommentDto(Long id, String content) {
-            this.id = id;
-            this.content = content;
-        }
+    public static FreeSearchResponseDto fromEntity(
+            com.hugudungs.hugupjigup.data.entity.board.Free free,
+            List<FreeCommentGenerationResponseDto> commentDtos
+    ) {
+        return FreeSearchResponseDto.builder()
+                .id(free.getId())
+                .boardType(free.getBoardType())
+                .title(free.getTitle())
+                .content(free.getContent())
+                .userNickname(free.getAuthor().getNickName())
+                .views(free.getViews())
+                .createdAt(free.getCreatedAt())
+                .updatedAt(free.getUpdatedAt())
+                .comments(commentDtos)
+                .build();
     }
 }
