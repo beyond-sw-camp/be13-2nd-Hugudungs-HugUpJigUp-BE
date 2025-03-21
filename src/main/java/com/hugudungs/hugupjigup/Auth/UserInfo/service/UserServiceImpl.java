@@ -2,17 +2,17 @@ package com.hugudungs.hugupjigup.auth.userInfo.service;
 
 import com.hugudungs.hugupjigup.auth.userInfo.dto.user.UpdateUserMenteeProfileDTO;
 import com.hugudungs.hugupjigup.auth.userInfo.dto.user.UpdateUserMentorProfileDTO;
+import com.hugudungs.hugupjigup.common.enums.ProfileType;
 import com.hugudungs.hugupjigup.auth.userInfo.dto.user.UpdateUserProfileDTO;
 import com.hugudungs.hugupjigup.auth.userInfo.dto.user.UserProfileResponseDTO;
-import com.hugudungs.hugupjigup.auth.userInfo.repository.CommentRepository;
-import com.hugudungs.hugupjigup.auth.userInfo.repository.MatchingCommentRepository;
-import com.hugudungs.hugupjigup.auth.userInfo.repository.PostRepository;
-import com.hugudungs.hugupjigup.auth.userInfo.repository.UserProfileRepository;
-import com.hugudungs.hugupjigup.common.enums.ProfileType;
 import com.hugudungs.hugupjigup.data.entity.user.User;
 import com.hugudungs.hugupjigup.data.entity.user.UserProfile;
-import com.hugudungs.hugupjigup.matching.data.MatchingRepository;
 import com.hugudungs.hugupjigup.user.data.UserRepository;
+import com.hugudungs.hugupjigup.auth.userInfo.repository.UserProfileRepository;
+import com.hugudungs.hugupjigup.auth.userInfo.repository.PostRepository;
+import com.hugudungs.hugupjigup.auth.userInfo.repository.CommentRepository;
+import com.hugudungs.hugupjigup.auth.userInfo.repository.MatchingCommentRepository;
+import com.hugudungs.hugupjigup.matching.data.MatchingRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -20,8 +20,7 @@ import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
-public class UserServiceImpl implements com.hugudungs.hugupjigup.auth.userInfo.service.UserService {
-
+public class UserServiceImpl implements UserService {
     private final UserRepository userRepository;
     private final UserProfileRepository userProfileRepository;
     private final PostRepository postRepository;

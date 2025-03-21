@@ -1,20 +1,26 @@
 package com.hugudungs.hugupjigup.auth.controller;
 
+import com.hugudungs.hugupjigup.auth.dto.LoginRequestDto;
 import com.hugudungs.hugupjigup.auth.dto.SendOtpRequestDto;
+import com.hugudungs.hugupjigup.auth.dto.TokenResponseDto;
+import com.hugudungs.hugupjigup.auth.service.AuthService;
 import com.hugudungs.hugupjigup.auth.dto.SignUpRequestDto;
 import com.hugudungs.hugupjigup.auth.dto.VerificationOtpRequestDto;
-import com.hugudungs.hugupjigup.auth.service.AuthService;
 import com.hugudungs.hugupjigup.common.dto.ResponseDto;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+@Slf4j
 @RestController
 @RequestMapping("api/v1/auth")
 @RequiredArgsConstructor
@@ -96,5 +102,35 @@ public class AuthControllerImpl implements AuthController {
                         null
                 )
         );
+    }
+
+    @PostMapping("/login")
+    @Override
+    public ResponseEntity<TokenResponseDto> login(
+            @Valid @RequestBody LoginRequestDto loginRequestDto) {
+        TokenResponseDto tokenResponseDto = authService.login(
+                loginRequestDto.getEmail(),
+                loginRequestDto.getPassword()
+        );
+
+        return ResponseEntity.ok(tokenResponseDto);
+    }
+
+    @PostMapping("/logout")
+    @Override
+    public ResponseEntity<Void> logout(@RequestHeader("Authorization") String bearerToken) {
+
+        authService.logout(bearerToken);
+
+        return ResponseEntity.noContent().build();
+    }
+
+    @PostMapping("/refresh")
+    @Override
+    public ResponseEntity<TokenResponseDto> refresh(@RequestHeader("Authorization") String bearerToken) {
+
+        TokenResponseDto tokenResponseDto = authService.refresh(bearerToken);
+
+        return ResponseEntity.ok(tokenResponseDto);
     }
 }

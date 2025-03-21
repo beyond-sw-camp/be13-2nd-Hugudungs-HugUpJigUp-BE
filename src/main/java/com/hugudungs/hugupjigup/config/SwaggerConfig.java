@@ -3,6 +3,8 @@ package com.hugudungs.hugupjigup.config;
 import io.swagger.v3.oas.models.Components;
 import io.swagger.v3.oas.models.OpenAPI;
 import io.swagger.v3.oas.models.info.Info;
+import io.swagger.v3.oas.models.security.SecurityRequirement;
+import io.swagger.v3.oas.models.security.SecurityScheme;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -20,7 +22,16 @@ public class SwaggerConfig {
                         + "각 API는 Swagger UI를 통해 테스트할 수 있습니다.");
 
         return new OpenAPI()
-                .components(new Components())
+                .components(new Components().addSecuritySchemes(
+                        "bearer-auth",
+                        new SecurityScheme()
+                        .type(SecurityScheme.Type.HTTP)
+                        .scheme("bearer")
+                        .bearerFormat("JWT")
+                ))
+                .addSecurityItem(
+                        new SecurityRequirement().addList("bearer-auth")
+                )
                 .info(info);
     }
 }
