@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/api/free/{freeId}/comments") // ✅ 경로 수정
+@RequestMapping("/api/free/{freeId}/comments")
 public class FreeCommentControllerImpl implements FreeCommentController {
 
     private final FreeCommentService freeCommentService;
