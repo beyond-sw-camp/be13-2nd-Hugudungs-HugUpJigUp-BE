@@ -3,6 +3,9 @@ package com.hugudungs.hugupjigup.data.entity.user;
 import com.hugudungs.hugupjigup.data.entity.common.BaseEntity;
 import com.hugudungs.hugupjigup.common.enums.LoginType;
 
+import lombok.AllArgsConstructor;
+import lombok.Setter;
+import lombok.experimental.SuperBuilder;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.AttributeOverride;
@@ -14,24 +17,28 @@ import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.experimental.SuperBuilder;
+
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
+
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
-@Entity
-@SuperBuilder
 @Getter
+@Setter
+@Entity
 @Table(name = "users")
 @AttributeOverride(name = "id", column = @Column(name = "user_id"))
+@AllArgsConstructor
 @NoArgsConstructor
+@SuperBuilder
 public class User extends BaseEntity implements UserDetails {
-    @ManyToOne(fetch = FetchType.LAZY)
+
+    @ManyToOne
     @JoinColumn(name = "role_type_id", referencedColumnName = "role_type_id")
     private RoleTypeEntity roleType;
 
@@ -44,7 +51,7 @@ public class User extends BaseEntity implements UserDetails {
     @Column(name = "user_password", nullable = false)
     private String password;
 
-    @Column(name = "user_deleted_at", nullable = true)
+    @Column(name = "user_deleted_at")
     private LocalDateTime deletedAt;
 
     @Enumerated(EnumType.STRING)
