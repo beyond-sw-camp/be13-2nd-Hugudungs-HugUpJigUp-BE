@@ -3,6 +3,7 @@ package com.hugudungs.hugupjigup.auth.service;
 import com.hugudungs.hugupjigup.auth.dto.SignUpRequestDto;
 import com.hugudungs.hugupjigup.auth.dto.TokenResponseDto;
 import com.hugudungs.hugupjigup.auth.dto.VerificationOtpRequestDto;
+import com.hugudungs.hugupjigup.auth.exception.UnauthorizeException;
 import com.hugudungs.hugupjigup.auth.jwt.JwtTokenProvider;
 import com.hugudungs.hugupjigup.auth.userInfo.repository.UserProfileRepository;
 import com.hugudungs.hugupjigup.common.cache.CacheService;
@@ -129,11 +130,11 @@ public class AuthServiceImpl implements AuthService {
     @Override
     public TokenResponseDto login(String email, String password) {
         User user = userRepository.findByEmail(email)
-                .orElseThrow(() -> new RuntimeException("아이디 또는 비밀번호가 올바르지 않습니다."));
+                .orElseThrow(() -> new UnauthorizeException("아이디 또는 비밀번호가 올바르지 않습니다."));
 
         if(user == null || !passwordEncoder.matches(password, user.getPassword())) {
 //        if(!passwordEncoder.matches(password, user.getPassword())) {
-            throw new RuntimeException("아이디 또는 비밀번호가 올바르지 않습니다.");
+            throw new UnauthorizeException("아이디 또는 비밀번호가 올바르지 않습니다.");
         }
 
         return new TokenResponseDto(
@@ -147,7 +148,7 @@ public class AuthServiceImpl implements AuthService {
         String accessToken = jwtTokenProvider.resolveToken(bearerToken);
 
         if (accessToken == null || !jwtTokenProvider.validateToken(accessToken)) {
-            throw new RuntimeException("토큰이 유효하지 않습니다.");
+            throw new UnauthorizeException("토큰이 유효하지 않습니다.");
         }
 
         jwtTokenProvider.addBlackList(accessToken);
@@ -160,16 +161,16 @@ public class AuthServiceImpl implements AuthService {
         String refreshToken = jwtTokenProvider.resolveToken(bearerToken);
 
         if (refreshToken == null || !jwtTokenProvider.validateToken(refreshToken)) {
-            throw new RuntimeException("토큰이 유효하지 않습니다.");
+            throw new UnauthorizeException("토큰이 유효하지 않습니다.");
         }
 
         if (!jwtTokenProvider.isValidRefreshToken(refreshToken)) {
-            throw new RuntimeException("토큰이 유효하지 않습니다.");
+            throw new UnauthorizeException("토큰이 유효하지 않습니다.");
         }
 
         User user;
         user = userRepository.findByEmail(jwtTokenProvider.getUserEmail(refreshToken))
-                .orElseThrow(() -> new RuntimeException("아이디 또는 비밀번호가 올바르지 않습니다."));
+                .orElseThrow(() -> new UnauthorizeException("아이디 또는 비밀번호가 올바르지 않습니다."));
 
         return new TokenResponseDto(
                 jwtTokenProvider.createAccessToken(user.getUsername(), String.valueOf(user.getRoleType().getRoleType())),

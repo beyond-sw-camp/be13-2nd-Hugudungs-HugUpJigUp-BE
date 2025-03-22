@@ -1,9 +1,11 @@
 package com.hugudungs.hugupjigup.common;
 
+import com.hugudungs.hugupjigup.auth.exception.UnauthorizeException;
 import com.hugudungs.hugupjigup.common.dto.ResponseDto;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.method.annotation.HandlerMethodValidationException;
@@ -34,6 +36,32 @@ public class GlobalExceptionHandler {
                         null
                 ),
                 HttpStatus.BAD_REQUEST
+        );
+    }
+
+    @ExceptionHandler(UsernameNotFoundException.class)
+    public ResponseEntity<ResponseDto<Void>> handleUsernameNotFoundException(UsernameNotFoundException e) {
+        return new ResponseEntity<>(
+                new ResponseDto<>(
+                        HttpStatus.NOT_FOUND.value(),
+                        e.getMessage(),
+                        false,
+                        null
+                ),
+                HttpStatus.NOT_FOUND
+        );
+    }
+
+    @ExceptionHandler(UnauthorizeException.class)
+    public ResponseEntity<ResponseDto<Void>> handleAuthorizeException(UnauthorizeException e) {
+        return new ResponseEntity<>(
+                new ResponseDto<>(
+                        HttpStatus.UNAUTHORIZED.value(),
+                        e.getMessage(),
+                        false,
+                        null
+                ),
+                HttpStatus.UNAUTHORIZED
         );
     }
 }
