@@ -64,14 +64,13 @@ public class AuthControllerImpl implements AuthController {
     public ResponseEntity<ResponseDto<Void>> sendOtp(@RequestBody SendOtpRequestDto sendOtpRequestDto) {
         authService.sendOtp(sendOtpRequestDto.getEmail());
 
-        return ResponseEntity.ok(
-                new ResponseDto<>(
-                        HttpStatus.OK.value(),
-                        "OTP Send Success",
-                        true,
-                        null
-                )
-        );
+        return ResponseEntity.status(HttpStatus.CREATED)
+                .body(new ResponseDto<>(
+                                HttpStatus.CREATED.value(),
+                                "OTP Send Success",
+                                true,
+                                null
+                        ));
     }
 
     @PostMapping("/otp/verification")
@@ -79,14 +78,13 @@ public class AuthControllerImpl implements AuthController {
     public ResponseEntity<ResponseDto<Void>> verificationOtp(@RequestBody VerificationOtpRequestDto verificationOtpRequestDto) {
         boolean result = authService.checkOtpValidity(verificationOtpRequestDto);
 
-        return ResponseEntity.ok(
-                new ResponseDto<>(
-                        HttpStatus.OK.value(),
+        return ResponseEntity.status(HttpStatus.CREATED)
+                .body(new ResponseDto<>(
+                        HttpStatus.CREATED.value(),
                         "OTP Verify Success",
                         result,
                         null
-                )
-        );
+                ));
     }
 
     @PostMapping("/signup")
@@ -94,43 +92,65 @@ public class AuthControllerImpl implements AuthController {
     public ResponseEntity<ResponseDto<Void>> signUp(@RequestBody SignUpRequestDto signUpRequestDto) {
         authService.createUser(signUpRequestDto);
 
-        return ResponseEntity.ok(
-                new ResponseDto<>(
-                        HttpStatus.OK.value(),
-                        "OTP Verify Success",
-                        true,
-                        null
-                )
-        );
+        return ResponseEntity.status(HttpStatus.CREATED)
+                .body(
+                        new ResponseDto<>(
+                                HttpStatus.CREATED.value(),
+                                "Sign Up Success",
+                                true,
+                                null
+                        ));
+
     }
 
     @PostMapping("/login")
     @Override
-    public ResponseEntity<TokenResponseDto> login(
+    public ResponseEntity<ResponseDto<TokenResponseDto>> login(
             @Valid @RequestBody LoginRequestDto loginRequestDto) {
         TokenResponseDto tokenResponseDto = authService.login(
                 loginRequestDto.getEmail(),
                 loginRequestDto.getPassword()
         );
 
-        return ResponseEntity.ok(tokenResponseDto);
+        return ResponseEntity.status(HttpStatus.CREATED)
+                .body(
+                        new ResponseDto<>(
+                                HttpStatus.CREATED.value(),
+                                "Login Success",
+                                true,
+                                tokenResponseDto
+                        ));
     }
 
     @PostMapping("/logout")
     @Override
-    public ResponseEntity<Void> logout(@RequestHeader("Authorization") String bearerToken) {
+    public ResponseEntity<ResponseDto<Void>> logout(@RequestHeader("Authorization") String bearerToken) {
 
         authService.logout(bearerToken);
 
-        return ResponseEntity.noContent().build();
+        return ResponseEntity.status(HttpStatus.NO_CONTENT)
+                .body(
+                        new ResponseDto<>(
+                                HttpStatus.NO_CONTENT.value(),
+                                "Logout Success",
+                                true,
+                                null
+                        ));
     }
 
     @PostMapping("/refresh")
     @Override
-    public ResponseEntity<TokenResponseDto> refresh(@RequestHeader("Authorization") String bearerToken) {
+    public ResponseEntity<ResponseDto<TokenResponseDto>> refresh(@RequestHeader("Authorization") String bearerToken) {
 
         TokenResponseDto tokenResponseDto = authService.refresh(bearerToken);
 
-        return ResponseEntity.ok(tokenResponseDto);
+        return ResponseEntity.status(HttpStatus.NO_CONTENT)
+                .body(
+                        new ResponseDto<>(
+                                HttpStatus.NO_CONTENT.value(),
+                                "Refresh Success",
+                                true,
+                                tokenResponseDto
+                        ));
     }
 }

@@ -130,7 +130,7 @@ public interface AuthController {
                     content = @Content(mediaType = "application/json")
             )
     })
-    ResponseEntity<TokenResponseDto> login(@Valid @RequestBody LoginRequestDto loginRequestDto);
+    ResponseEntity<ResponseDto<TokenResponseDto>> login(@Valid @RequestBody LoginRequestDto loginRequestDto);
 
     @Operation(summary = "로그아웃", description = "Access Token을 전달받아 로그아웃한다.")
     @ApiResponses({
@@ -145,7 +145,7 @@ public interface AuthController {
                     content = @Content(mediaType = "application/json")
             )
     })
-    ResponseEntity<Void> logout(@RequestHeader("Authorization") String bearerToken);
+    ResponseEntity<ResponseDto<Void>> logout(@RequestHeader("Authorization") String bearerToken);
 
     @Operation(summary = "토큰 재발급", description = "Refresh Token으로 Access Token 재발급")
     @ApiResponses({
@@ -165,7 +165,6 @@ public interface AuthController {
                     content = @Content(mediaType = "application/json")
             )
     })
-    ResponseEntity<TokenResponseDto> refresh(@RequestHeader("Authorization") String bearerToken);
-
+    ResponseEntity<ResponseDto<TokenResponseDto>> refresh(@RequestHeader("Authorization") String bearerToken);
 }
 
