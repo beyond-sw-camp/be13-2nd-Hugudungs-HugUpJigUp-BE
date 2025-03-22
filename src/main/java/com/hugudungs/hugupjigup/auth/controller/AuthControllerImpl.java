@@ -8,11 +8,14 @@ import com.hugudungs.hugupjigup.auth.dto.SignUpRequestDto;
 import com.hugudungs.hugupjigup.auth.dto.VerificationOtpRequestDto;
 import com.hugudungs.hugupjigup.common.dto.ResponseDto;
 import jakarta.validation.Valid;
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotBlank;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
@@ -27,9 +30,10 @@ import org.springframework.web.bind.annotation.RestController;
 public class AuthControllerImpl implements AuthController {
     private final AuthService authService;
 
-    @GetMapping(value = "/duplicate", params = "email")
+    @GetMapping("/duplicate/email/{email}")
     @Override
-    public ResponseEntity<ResponseDto<Void>> emailDuplicateCheck(@RequestParam String email) {
+    public ResponseEntity<ResponseDto<Void>> emailDuplicateCheck(
+            @PathVariable @NotBlank @Email String email) {
         // true if email is already in use, false otherwise
         boolean result = authService.hasUserByEmail(email);
 
@@ -43,9 +47,10 @@ public class AuthControllerImpl implements AuthController {
         );
     }
 
-    @GetMapping(value = "/duplicate", params = "nickname")
+    @GetMapping("/duplicate/nickname/{nickname}")
     @Override
-    public ResponseEntity<ResponseDto<Void>> nicknameDuplicateCheck(@RequestParam String nickname) {
+    public ResponseEntity<ResponseDto<Void>> nicknameDuplicateCheck(
+            @PathVariable @NotBlank String nickname) {
         // true if nickname is already in use, false otherwise
         boolean result = authService.hasUserByNickname(nickname);
 

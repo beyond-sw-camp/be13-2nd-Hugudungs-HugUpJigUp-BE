@@ -15,6 +15,7 @@ import jakarta.validation.Valid;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -37,7 +38,7 @@ public interface AuthController {
                     content = @Content(mediaType = "application/json")
             )
     })
-    ResponseEntity<ResponseDto<Void>> emailDuplicateCheck(@RequestParam("email") @NotBlank @Email String email);
+    ResponseEntity<ResponseDto<Void>> emailDuplicateCheck(@PathVariable @NotBlank @Email String email);
 
     @Operation(summary = "닉네임 중복 체크", description = "사용자가 입력한 닉네임의 중복을 체크합니다.")
     @ApiResponses({
@@ -55,7 +56,7 @@ public interface AuthController {
                     content = @Content(mediaType = "application/json")
             )
     })
-    ResponseEntity<ResponseDto<Void>> nicknameDuplicateCheck(@RequestParam("nickname") @NotBlank String nickname);
+    ResponseEntity<ResponseDto<Void>> nicknameDuplicateCheck(@PathVariable @NotBlank String nickname);
 
 
     @Operation(summary = "OTP 코드 전송", description = "사용자가 입력한 이메일로 OTP 코드를 전송합니다.")
