@@ -24,11 +24,11 @@ public interface AuthController {
     @Operation(summary = "이메일 중복 체크", description = "사용자가 입력한 이메일의 중복을 체크합니다.")
     @ApiResponses({
             @ApiResponse(responseCode = "200",
-                    description = "성공",
+                    description = "Success",
                     content = @Content(mediaType = "application/json")
             ),
             @ApiResponse(responseCode = "401",
-                    description = "성공",
+                    description = "UNAUTHORIZED",
                     content = @Content(mediaType = "application/json")
             ),
             @ApiResponse(
@@ -42,11 +42,11 @@ public interface AuthController {
     @Operation(summary = "닉네임 중복 체크", description = "사용자가 입력한 닉네임의 중복을 체크합니다.")
     @ApiResponses({
             @ApiResponse(responseCode = "200",
-                    description = "성공",
+                    description = "Success",
                     content = @Content(mediaType = "application/json")
             ),
             @ApiResponse(responseCode = "401",
-                    description = "성공",
+                    description = "UNAUTHORIZED",
                     content = @Content(mediaType = "application/json")
             ),
             @ApiResponse(
@@ -61,11 +61,11 @@ public interface AuthController {
     @Operation(summary = "OTP 코드 전송", description = "사용자가 입력한 이메일로 OTP 코드를 전송합니다.")
     @ApiResponses({
             @ApiResponse(responseCode = "201",
-                    description = "성공",
+                    description = "Success",
                     content = @Content(mediaType = "application/json")
             ),
             @ApiResponse(responseCode = "401",
-                    description = "성공",
+                    description = "UNAUTHORIZED",
                     content = @Content(mediaType = "application/json")
             ),
             @ApiResponse(
@@ -79,11 +79,11 @@ public interface AuthController {
     @Operation(summary = "OTP 코드 검증", description = "사용자가 입력한 OTP 코드를 검증합니다.")
     @ApiResponses({
             @ApiResponse(responseCode = "201",
-                    description = "성공",
+                    description = "Success",
                     content = @Content(mediaType = "application/json")
             ),
             @ApiResponse(responseCode = "401",
-                    description = "성공",
+                    description = "UNAUTHORIZED",
                     content = @Content(mediaType = "application/json")
             ),
             @ApiResponse(
@@ -97,11 +97,11 @@ public interface AuthController {
     @Operation(summary = "회원가입", description = "사용자의 회원가입을 진행합니다.")
     @ApiResponses({
             @ApiResponse(responseCode = "201",
-                    description = "성공",
+                    description = "Success",
                     content = @Content(mediaType = "application/json")
             ),
             @ApiResponse(responseCode = "401",
-                    description = "성공",
+                    description = "UNAUTHORIZED",
                     content = @Content(mediaType = "application/json")
             ),
             @ApiResponse(
