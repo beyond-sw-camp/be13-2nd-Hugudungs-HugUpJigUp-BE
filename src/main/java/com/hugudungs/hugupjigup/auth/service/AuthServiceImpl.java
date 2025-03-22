@@ -3,15 +3,20 @@ package com.hugudungs.hugupjigup.auth.service;
 import com.hugudungs.hugupjigup.auth.dto.SignUpRequestDto;
 import com.hugudungs.hugupjigup.auth.dto.TokenResponseDto;
 import com.hugudungs.hugupjigup.auth.dto.VerificationOtpRequestDto;
+import com.hugudungs.hugupjigup.auth.exception.UnauthorizeException;
 import com.hugudungs.hugupjigup.auth.jwt.JwtTokenProvider;
+import com.hugudungs.hugupjigup.auth.userInfo.repository.UserProfileRepository;
 import com.hugudungs.hugupjigup.common.cache.CacheService;
 import com.hugudungs.hugupjigup.common.email.EmailService;
 import com.hugudungs.hugupjigup.common.enums.LoginType;
+import com.hugudungs.hugupjigup.common.enums.ProfileType;
 import com.hugudungs.hugupjigup.data.entity.user.User;
+import com.hugudungs.hugupjigup.data.entity.user.UserProfile;
 import com.hugudungs.hugupjigup.user.data.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -20,6 +25,7 @@ import java.util.Map;
 @RequiredArgsConstructor
 public class AuthServiceImpl implements AuthService {
     private final UserRepository userRepository;
+    private final UserProfileRepository userProfileRepository;
     private final EmailService emailService;
     private final CacheService cacheService;
     private final PasswordEncoder passwordEncoder;
@@ -64,6 +70,7 @@ public class AuthServiceImpl implements AuthService {
     }
 
     @Override
+    @Transactional
     public void createUser(SignUpRequestDto signUpRequestDto) {
         String email = signUpRequestDto.getEmail();
         String getVerified = cacheService.get(this.verifiedUserKey(email));
@@ -88,8 +95,19 @@ public class AuthServiceImpl implements AuthService {
                 .nickName(signUpRequestDto.getNickname())
                 .loginType(LoginType.COMMON)
                 .build();
-
         userRepository.save(user);
+
+        UserProfile mentorProfile = UserProfile.builder()
+                .user(user)
+                .profileType(ProfileType.MENTOR)
+                .build();
+        userProfileRepository.save(mentorProfile);
+
+        UserProfile menteeProfile = UserProfile.builder()
+                .user(user)
+                .profileType(ProfileType.MENTEE)
+                .build();
+        userProfileRepository.save(menteeProfile);
     }
 
     private String createOtp() {
@@ -112,11 +130,11 @@ public class AuthServiceImpl implements AuthService {
     @Override
     public TokenResponseDto login(String email, String password) {
         User user = userRepository.findByEmail(email)
-                .orElseThrow(() -> new RuntimeException("아이디 또는 비밀번호가 올바르지 않습니다."));
+                .orElseThrow(() -> new UnauthorizeException("아이디 또는 비밀번호가 올바르지 않습니다."));
 
         if(user == null || !passwordEncoder.matches(password, user.getPassword())) {
 //        if(!passwordEncoder.matches(password, user.getPassword())) {
-            throw new RuntimeException("아이디 또는 비밀번호가 올바르지 않습니다.");
+            throw new UnauthorizeException("아이디 또는 비밀번호가 올바르지 않습니다.");
         }
 
         return new TokenResponseDto(
@@ -130,7 +148,7 @@ public class AuthServiceImpl implements AuthService {
         String accessToken = jwtTokenProvider.resolveToken(bearerToken);
 
         if (accessToken == null || !jwtTokenProvider.validateToken(accessToken)) {
-            throw new RuntimeException("토큰이 유효하지 않습니다.");
+            throw new UnauthorizeException("토큰이 유효하지 않습니다.");
         }
 
         jwtTokenProvider.addBlackList(accessToken);
@@ -143,16 +161,16 @@ public class AuthServiceImpl implements AuthService {
         String refreshToken = jwtTokenProvider.resolveToken(bearerToken);
 
         if (refreshToken == null || !jwtTokenProvider.validateToken(refreshToken)) {
-            throw new RuntimeException("토큰이 유효하지 않습니다.");
+            throw new UnauthorizeException("토큰이 유효하지 않습니다.");
         }
 
         if (!jwtTokenProvider.isValidRefreshToken(refreshToken)) {
-            throw new RuntimeException("토큰이 유효하지 않습니다.");
+            throw new UnauthorizeException("토큰이 유효하지 않습니다.");
         }
 
         User user;
         user = userRepository.findByEmail(jwtTokenProvider.getUserEmail(refreshToken))
-                .orElseThrow(() -> new RuntimeException("아이디 또는 비밀번호가 올바르지 않습니다."));
+                .orElseThrow(() -> new UnauthorizeException("아이디 또는 비밀번호가 올바르지 않습니다."));
 
         return new TokenResponseDto(
                 jwtTokenProvider.createAccessToken(user.getUsername(), String.valueOf(user.getRoleType().getRoleType())),

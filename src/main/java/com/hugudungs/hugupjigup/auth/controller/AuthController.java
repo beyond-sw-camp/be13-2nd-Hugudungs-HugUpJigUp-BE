@@ -15,6 +15,7 @@ import jakarta.validation.Valid;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -24,11 +25,11 @@ public interface AuthController {
     @Operation(summary = "이메일 중복 체크", description = "사용자가 입력한 이메일의 중복을 체크합니다.")
     @ApiResponses({
             @ApiResponse(responseCode = "200",
-                    description = "성공",
+                    description = "Success",
                     content = @Content(mediaType = "application/json")
             ),
             @ApiResponse(responseCode = "401",
-                    description = "성공",
+                    description = "UNAUTHORIZED",
                     content = @Content(mediaType = "application/json")
             ),
             @ApiResponse(
@@ -37,16 +38,16 @@ public interface AuthController {
                     content = @Content(mediaType = "application/json")
             )
     })
-    ResponseEntity<ResponseDto<Void>> emailDuplicateCheck(@RequestParam("email") @NotBlank @Email String email);
+    ResponseEntity<ResponseDto<Void>> emailDuplicateCheck(@PathVariable @NotBlank @Email String email);
 
     @Operation(summary = "닉네임 중복 체크", description = "사용자가 입력한 닉네임의 중복을 체크합니다.")
     @ApiResponses({
             @ApiResponse(responseCode = "200",
-                    description = "성공",
+                    description = "Success",
                     content = @Content(mediaType = "application/json")
             ),
             @ApiResponse(responseCode = "401",
-                    description = "성공",
+                    description = "UNAUTHORIZED",
                     content = @Content(mediaType = "application/json")
             ),
             @ApiResponse(
@@ -55,17 +56,17 @@ public interface AuthController {
                     content = @Content(mediaType = "application/json")
             )
     })
-    ResponseEntity<ResponseDto<Void>> nicknameDuplicateCheck(@RequestParam("nickname") @NotBlank String nickname);
+    ResponseEntity<ResponseDto<Void>> nicknameDuplicateCheck(@PathVariable @NotBlank String nickname);
 
 
     @Operation(summary = "OTP 코드 전송", description = "사용자가 입력한 이메일로 OTP 코드를 전송합니다.")
     @ApiResponses({
             @ApiResponse(responseCode = "201",
-                    description = "성공",
+                    description = "Success",
                     content = @Content(mediaType = "application/json")
             ),
             @ApiResponse(responseCode = "401",
-                    description = "성공",
+                    description = "UNAUTHORIZED",
                     content = @Content(mediaType = "application/json")
             ),
             @ApiResponse(
@@ -79,11 +80,11 @@ public interface AuthController {
     @Operation(summary = "OTP 코드 검증", description = "사용자가 입력한 OTP 코드를 검증합니다.")
     @ApiResponses({
             @ApiResponse(responseCode = "201",
-                    description = "성공",
+                    description = "Success",
                     content = @Content(mediaType = "application/json")
             ),
             @ApiResponse(responseCode = "401",
-                    description = "성공",
+                    description = "UNAUTHORIZED",
                     content = @Content(mediaType = "application/json")
             ),
             @ApiResponse(
@@ -97,11 +98,11 @@ public interface AuthController {
     @Operation(summary = "회원가입", description = "사용자의 회원가입을 진행합니다.")
     @ApiResponses({
             @ApiResponse(responseCode = "201",
-                    description = "성공",
+                    description = "Success",
                     content = @Content(mediaType = "application/json")
             ),
             @ApiResponse(responseCode = "401",
-                    description = "성공",
+                    description = "UNAUTHORIZED",
                     content = @Content(mediaType = "application/json")
             ),
             @ApiResponse(
@@ -130,7 +131,7 @@ public interface AuthController {
                     content = @Content(mediaType = "application/json")
             )
     })
-    ResponseEntity<TokenResponseDto> login(@Valid @RequestBody LoginRequestDto loginRequestDto);
+    ResponseEntity<ResponseDto<TokenResponseDto>> login(@Valid @RequestBody LoginRequestDto loginRequestDto);
 
     @Operation(summary = "로그아웃", description = "Access Token을 전달받아 로그아웃한다.")
     @ApiResponses({
@@ -145,7 +146,7 @@ public interface AuthController {
                     content = @Content(mediaType = "application/json")
             )
     })
-    ResponseEntity<Void> logout(@RequestHeader("Authorization") String bearerToken);
+    ResponseEntity<ResponseDto<Void>> logout(@RequestHeader("Authorization") String bearerToken);
 
     @Operation(summary = "토큰 재발급", description = "Refresh Token으로 Access Token 재발급")
     @ApiResponses({
@@ -165,7 +166,6 @@ public interface AuthController {
                     content = @Content(mediaType = "application/json")
             )
     })
-    ResponseEntity<TokenResponseDto> refresh(@RequestHeader("Authorization") String bearerToken);
-
+    ResponseEntity<ResponseDto<TokenResponseDto>> refresh(@RequestHeader("Authorization") String bearerToken);
 }
 

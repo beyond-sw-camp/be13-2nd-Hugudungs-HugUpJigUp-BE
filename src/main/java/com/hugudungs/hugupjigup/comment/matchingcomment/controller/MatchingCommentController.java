@@ -4,6 +4,7 @@ package com.hugudungs.hugupjigup.comment.matchingcomment.controller;
 import com.hugudungs.hugupjigup.comment.matchingcomment.data.dto.MatchingCommentRequestDto;
 import com.hugudungs.hugupjigup.comment.matchingcomment.data.dto.MatchingCommentResponseDto;
 import com.hugudungs.hugupjigup.comment.matchingcomment.data.dto.MatchingCommentUpdateDto;
+import com.hugudungs.hugupjigup.common.dto.ResponseDto;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.http.ResponseEntity;
@@ -28,14 +29,14 @@ public interface MatchingCommentController {
 
     @Operation(summary = "멘토링 후기 작성")
     @PostMapping
-    ResponseEntity<Void> createComment(
+    ResponseEntity<ResponseDto<Void>> createComment(
             @PathVariable Long matchingId,
             @RequestBody @Valid MatchingCommentRequestDto requestDto
     );
 
     @PutMapping("/{commentId}")
     @Operation(summary = "멘토링 후기 수정")
-    ResponseEntity<Void> updateComment(
+    ResponseEntity<ResponseDto<Void>> updateComment(
             @PathVariable Long matchingId,
             @PathVariable Long commentId,
             @RequestBody @Valid MatchingCommentUpdateDto requestDto
@@ -43,13 +44,13 @@ public interface MatchingCommentController {
 
     @GetMapping
     @Operation(summary = "멘토링 후기 전체 조회")
-    ResponseEntity<List<MatchingCommentResponseDto>> getCommentsByMatchingId(
+    ResponseEntity<ResponseDto<List<MatchingCommentResponseDto>>> getCommentsByMatchingId(
             @PathVariable Long matchingId
     );
 
     @DeleteMapping("/{commentId}")
     @Operation(summary = "멘토링 후기 삭제")
-    ResponseEntity<Void> deleteComment(
+    ResponseEntity<ResponseDto<Void>> deleteComment(
             @PathVariable Long matchingId,
             @PathVariable Long commentId
     );

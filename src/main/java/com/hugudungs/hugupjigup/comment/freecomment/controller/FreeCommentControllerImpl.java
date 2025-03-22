@@ -5,7 +5,9 @@ import com.hugudungs.hugupjigup.comment.freecomment.data.dto.FreeCommentGenerati
 import com.hugudungs.hugupjigup.comment.freecomment.data.dto.FreeCommentUpdateDto;
 import com.hugudungs.hugupjigup.comment.freecomment.data.dto.FreeCommentUpdateResponseDto;
 import com.hugudungs.hugupjigup.comment.freecomment.service.FreeCommentService;
+import com.hugudungs.hugupjigup.common.dto.ResponseDto;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -15,22 +17,43 @@ public class FreeCommentControllerImpl implements FreeCommentController {
 
     private final FreeCommentService freeCommentService;
 
-    public ResponseEntity<FreeCommentGenerationResponseDto> createComment(
+    public ResponseEntity<ResponseDto<FreeCommentGenerationResponseDto>> createComment(
             @PathVariable Long freeId, @RequestBody FreeCommentGenerationDto requestDto) {
-
         FreeCommentGenerationResponseDto createdComment = freeCommentService.createComment(freeId, requestDto);
-        return ResponseEntity.ok(createdComment);
+
+        return ResponseEntity.status(HttpStatus.CREATED)
+                .body(
+                        new ResponseDto<>(
+                                HttpStatus.CREATED.value(),
+                                "댓글 생성 성공",
+                                true,
+                                createdComment
+                        ));
     }
 
-    public ResponseEntity<FreeCommentUpdateResponseDto> updateComment(
+    public ResponseEntity<ResponseDto<FreeCommentUpdateResponseDto>> updateComment(
             @PathVariable Long freeId, @PathVariable Long commentId, @RequestBody FreeCommentUpdateDto requestDto) {
-
         FreeCommentUpdateResponseDto updatedComment = freeCommentService.updateComment(freeId, commentId, requestDto);
-        return ResponseEntity.ok(updatedComment);
+
+        return ResponseEntity.ok(
+                new ResponseDto<>(
+                        HttpStatus.OK.value(),
+                        "댓글 수정 성공",
+                        true,
+                        updatedComment
+                ));
     }
 
-    public ResponseEntity<Void> deleteComment(@PathVariable Long commentId) {
+    public ResponseEntity<ResponseDto<Void>> deleteComment(@PathVariable Long commentId) {
         freeCommentService.deleteComment(commentId);
-        return ResponseEntity.noContent().build();
+
+        return ResponseEntity.status(HttpStatus.NO_CONTENT)
+                .body(
+                        new ResponseDto<>(
+                                HttpStatus.NO_CONTENT.value(),
+                                "댓글 삭제 성공",
+                                true,
+                                null
+                        ));
     }
 }

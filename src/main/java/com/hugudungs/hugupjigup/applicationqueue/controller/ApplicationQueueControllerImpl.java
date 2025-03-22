@@ -4,7 +4,9 @@ import com.hugudungs.hugupjigup.applicationqueue.data.dto.ApplicationQueueReques
 import com.hugudungs.hugupjigup.applicationqueue.data.dto.ApplicationQueueResponseDto;
 import com.hugudungs.hugupjigup.applicationqueue.data.dto.ApplicationQueueUpdateDto;
 import com.hugudungs.hugupjigup.applicationqueue.service.ApplicationQueueService;
+import com.hugudungs.hugupjigup.common.dto.ResponseDto;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -17,29 +19,64 @@ public class ApplicationQueueControllerImpl implements ApplicationQueueControlle
     private final ApplicationQueueService applicationQueueService;
 
     @Override
-    public ResponseEntity<ApplicationQueueResponseDto> createApplication(Long matchingId, ApplicationQueueRequestDto requestDto) {
+    public ResponseEntity<ResponseDto<ApplicationQueueResponseDto>> createApplication(Long matchingId, ApplicationQueueRequestDto requestDto) {
         ApplicationQueueResponseDto createdApplication = applicationQueueService.createApplication(matchingId, requestDto);
-        return ResponseEntity.ok(createdApplication);
+
+        return ResponseEntity.status(HttpStatus.CREATED)
+                .body(
+                        new ResponseDto<>(
+                                HttpStatus.CREATED.value(),
+                                "신청이 성공적으로 등록되었습니다.",
+                                true,
+                                createdApplication
+                        )
+                );
     }
 
     @Override
-    public ResponseEntity<List<ApplicationQueueResponseDto>> getApplicationsByMatchingId(Long matchingId) {
-        return ResponseEntity.ok(applicationQueueService.getApplicationsByMatchingId(matchingId));
+    public ResponseEntity<ResponseDto<List<ApplicationQueueResponseDto>>> getApplicationsByMatchingId(Long matchingId) {
+        return ResponseEntity.ok(
+                new ResponseDto<>(
+                        HttpStatus.OK.value(),
+                        "매칭 ID에 해당하는 신청 목록을 조회하였습니다.",
+                        true,
+                        applicationQueueService.getApplicationsByMatchingId(matchingId)
+                ));
     }
 
     @Override
-    public ResponseEntity<List<ApplicationQueueResponseDto>> getApplicationsByUserId(Long userId) {
-        return ResponseEntity.ok(applicationQueueService.getApplicationsByUserId(userId));
+    public ResponseEntity<ResponseDto<List<ApplicationQueueResponseDto>>> getApplicationsByUserId(Long userId) {
+        return ResponseEntity.ok(
+                new ResponseDto<>(
+                        HttpStatus.OK.value(),
+                        "유저 ID에 해당하는 신청 목록을 조회하였습니다.",
+                        true,
+                        applicationQueueService.getApplicationsByUserId(userId)
+                ));
     }
 
     @Override
-    public ResponseEntity<ApplicationQueueResponseDto> updateApplication(Long applicationQueueId, ApplicationQueueUpdateDto requestDto) {
-        return ResponseEntity.ok(applicationQueueService.updateApplication(applicationQueueId, requestDto));
+    public ResponseEntity<ResponseDto<ApplicationQueueResponseDto>> updateApplication(Long applicationQueueId, ApplicationQueueUpdateDto requestDto) {
+        return ResponseEntity.ok(
+                new ResponseDto<>(
+                        HttpStatus.OK.value(),
+                        "신청이 성공적으로 수정되었습니다.",
+                        true,
+                        applicationQueueService.updateApplication(applicationQueueId, requestDto)
+                ));
     }
 
     @Override
-    public ResponseEntity<Void> deleteApplication(Long applicationQueueId) {
+    public ResponseEntity<ResponseDto<Void>> deleteApplication(Long applicationQueueId) {
         applicationQueueService.deleteApplication(applicationQueueId);
-        return ResponseEntity.noContent().build();
+
+        return ResponseEntity.status(HttpStatus.NO_CONTENT)
+                .body(
+                        new ResponseDto<>(
+                                HttpStatus.NO_CONTENT.value(),
+                                "신청이 성공적으로 삭제되었습니다.",
+                                true,
+                                null
+                        ));
     }
 }

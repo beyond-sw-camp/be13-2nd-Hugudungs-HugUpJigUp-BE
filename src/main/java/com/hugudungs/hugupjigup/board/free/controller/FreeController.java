@@ -4,6 +4,7 @@ import com.hugudungs.hugupjigup.board.free.data.dto.FreeCreateRequestDto;
 import com.hugudungs.hugupjigup.board.free.data.dto.FreeSearchRequestDto;
 import com.hugudungs.hugupjigup.board.free.data.dto.FreeSearchResponseDto;
 import com.hugudungs.hugupjigup.board.free.data.dto.FreeUpdateRequestDto;
+import com.hugudungs.hugupjigup.common.dto.ResponseDto;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springdoc.core.annotations.ParameterObject;
@@ -25,27 +26,27 @@ public interface FreeController {
 
     @PostMapping
     @Operation(summary = "자유게시판 게시글 생성", description = "새로운 게시글을 생성합니다.")
-    ResponseEntity<FreeSearchResponseDto> createPost(@RequestBody FreeCreateRequestDto requestDto);
+    ResponseEntity<ResponseDto<FreeSearchResponseDto>> createPost(@RequestBody FreeCreateRequestDto requestDto);
 
     @GetMapping
     @Operation(summary = "자유게시판 목록 조회", description = "자유 게시판 목록을 조회합니다.")
-    Page<FreeSearchResponseDto> getPosts(
+    ResponseEntity<ResponseDto<Page<FreeSearchResponseDto>>> getPosts(
             @ParameterObject FreeSearchRequestDto searchRequest,
             @ParameterObject Pageable pageable
     );
 
     @PutMapping("/{id}")
     @Operation(summary = "자유게시판 게시글 수정", description = "특정 게시글을 수정합니다.")
-    ResponseEntity<FreeSearchResponseDto> updatePost(
+    ResponseEntity<ResponseDto<FreeSearchResponseDto>> updatePost(
             @PathVariable Long id,
             @RequestBody FreeUpdateRequestDto requestDto
     );
 
     @DeleteMapping("/{id}")
     @Operation(summary = "자유게시판 게시글 삭제", description = "특정 게시글을 삭제합니다.")
-    ResponseEntity<String> deletePost(@PathVariable Long id);
+    ResponseEntity<ResponseDto<Void>> deletePost(@PathVariable Long id);
 
     @GetMapping("/{id}")
     @Operation(summary = "자유게시판 게시글 조회", description = "특정 게시글을 조회합니다.")
-    ResponseEntity<FreeSearchResponseDto> getPostById(@PathVariable Long id);
+    ResponseEntity<ResponseDto<FreeSearchResponseDto>> getPostById(@PathVariable Long id);
 }

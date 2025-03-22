@@ -1,5 +1,6 @@
 package com.hugudungs.hugupjigup.matching.controller;
 
+import com.hugudungs.hugupjigup.common.dto.ResponseDto;
 import com.hugudungs.hugupjigup.matching.data.dto.MatchingRequestDto;
 import com.hugudungs.hugupjigup.matching.data.dto.MatchingResponseDto;
 import io.swagger.v3.oas.annotations.Operation;
@@ -17,27 +18,27 @@ import org.springframework.web.bind.annotation.RequestBody;
 public interface MatchingController {
     @PostMapping("/matching/{userId}")
     @Operation(summary = "매칭 게시글 등록 메서드", description = "매칭 게시글 등록 메서드입니다.")
-    ResponseEntity<MatchingResponseDto> createMatching(
+    ResponseEntity<ResponseDto<MatchingResponseDto>> createMatching(
             @RequestBody MatchingRequestDto requestDto) throws Exception;
 
     @PutMapping("/update/{matchingId}")
     @Operation(summary = "매칭 게시글 수정 메서드", description = "매칭 게시글 수정 메서드입니다.")
-    ResponseEntity<MatchingResponseDto> updateMatching(
+    ResponseEntity<ResponseDto<MatchingResponseDto>> updateMatching(
             @PathVariable Long matchingId,
             @RequestBody MatchingRequestDto requestDto) throws Exception;
 
     @DeleteMapping("/delete/{matchingId}")
     @Operation(summary = "매칭 게시글 삭제 메서드", description = "매칭 게시글 삭제 메서드입니다.")
-    ResponseEntity<Void> deleteMatching(
+    ResponseEntity<ResponseDto<Void>> deleteMatching(
             @PathVariable Long matchingId) throws Exception;
 
     @GetMapping("/posts")
     @Operation(summary = "매칭 게시판 조회 메서드", description = "매칭 게시판 조회 메서드입니다.")
-    ResponseEntity<Page<MatchingResponseDto>> getMatchingPosts(
+    ResponseEntity<ResponseDto<Page<MatchingResponseDto>>> getMatchingPosts(
             @ParameterObject Pageable pageable) throws Exception;
 
     @GetMapping("/{matchingId}")
     @Operation(summary = "매칭 게시글 조회 메서드", description = "매칭 게시글 조회 메서드입니다.")
-    ResponseEntity<MatchingResponseDto> getMatchingById(
+    ResponseEntity<ResponseDto<MatchingResponseDto>> getMatchingById(
             @PathVariable Long matchingId) throws Exception;
 }

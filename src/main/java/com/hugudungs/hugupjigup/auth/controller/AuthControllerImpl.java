@@ -8,16 +8,18 @@ import com.hugudungs.hugupjigup.auth.dto.SignUpRequestDto;
 import com.hugudungs.hugupjigup.auth.dto.VerificationOtpRequestDto;
 import com.hugudungs.hugupjigup.common.dto.ResponseDto;
 import jakarta.validation.Valid;
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotBlank;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @Slf4j
@@ -27,9 +29,10 @@ import org.springframework.web.bind.annotation.RestController;
 public class AuthControllerImpl implements AuthController {
     private final AuthService authService;
 
-    @GetMapping(value = "/duplicate", params = "email")
+    @GetMapping("/duplicate/email/{email}")
     @Override
-    public ResponseEntity<ResponseDto<Void>> emailDuplicateCheck(@RequestParam String email) {
+    public ResponseEntity<ResponseDto<Void>> emailDuplicateCheck(
+            @PathVariable @NotBlank @Email String email) {
         // true if email is already in use, false otherwise
         boolean result = authService.hasUserByEmail(email);
 
@@ -39,13 +42,13 @@ public class AuthControllerImpl implements AuthController {
                         "Email Duplicate Check Success",
                         result,
                         null
-                )
-        );
+                ));
     }
 
-    @GetMapping(value = "/duplicate", params = "nickname")
+    @GetMapping("/duplicate/nickname/{nickname}")
     @Override
-    public ResponseEntity<ResponseDto<Void>> nicknameDuplicateCheck(@RequestParam String nickname) {
+    public ResponseEntity<ResponseDto<Void>> nicknameDuplicateCheck(
+            @PathVariable @NotBlank String nickname) {
         // true if nickname is already in use, false otherwise
         boolean result = authService.hasUserByNickname(nickname);
 
@@ -55,8 +58,7 @@ public class AuthControllerImpl implements AuthController {
                         "Nickname Duplicate Check Success",
                         result,
                         null
-                )
-        );
+                ));
     }
 
     @PostMapping("/otp/send")
@@ -64,14 +66,13 @@ public class AuthControllerImpl implements AuthController {
     public ResponseEntity<ResponseDto<Void>> sendOtp(@RequestBody SendOtpRequestDto sendOtpRequestDto) {
         authService.sendOtp(sendOtpRequestDto.getEmail());
 
-        return ResponseEntity.ok(
-                new ResponseDto<>(
-                        HttpStatus.OK.value(),
-                        "OTP Send Success",
-                        true,
-                        null
-                )
-        );
+        return ResponseEntity.status(HttpStatus.CREATED)
+                .body(new ResponseDto<>(
+                                HttpStatus.CREATED.value(),
+                                "OTP Send Success",
+                                true,
+                                null
+                        ));
     }
 
     @PostMapping("/otp/verification")
@@ -79,14 +80,13 @@ public class AuthControllerImpl implements AuthController {
     public ResponseEntity<ResponseDto<Void>> verificationOtp(@RequestBody VerificationOtpRequestDto verificationOtpRequestDto) {
         boolean result = authService.checkOtpValidity(verificationOtpRequestDto);
 
-        return ResponseEntity.ok(
-                new ResponseDto<>(
-                        HttpStatus.OK.value(),
+        return ResponseEntity.status(HttpStatus.CREATED)
+                .body(new ResponseDto<>(
+                        HttpStatus.CREATED.value(),
                         "OTP Verify Success",
                         result,
                         null
-                )
-        );
+                ));
     }
 
     @PostMapping("/signup")
@@ -94,43 +94,65 @@ public class AuthControllerImpl implements AuthController {
     public ResponseEntity<ResponseDto<Void>> signUp(@RequestBody SignUpRequestDto signUpRequestDto) {
         authService.createUser(signUpRequestDto);
 
-        return ResponseEntity.ok(
-                new ResponseDto<>(
-                        HttpStatus.OK.value(),
-                        "OTP Verify Success",
-                        true,
-                        null
-                )
-        );
+        return ResponseEntity.status(HttpStatus.CREATED)
+                .body(
+                        new ResponseDto<>(
+                                HttpStatus.CREATED.value(),
+                                "Sign Up Success",
+                                true,
+                                null
+                        ));
+
     }
 
     @PostMapping("/login")
     @Override
-    public ResponseEntity<TokenResponseDto> login(
+    public ResponseEntity<ResponseDto<TokenResponseDto>> login(
             @Valid @RequestBody LoginRequestDto loginRequestDto) {
         TokenResponseDto tokenResponseDto = authService.login(
                 loginRequestDto.getEmail(),
                 loginRequestDto.getPassword()
         );
 
-        return ResponseEntity.ok(tokenResponseDto);
+        return ResponseEntity.status(HttpStatus.CREATED)
+                .body(
+                        new ResponseDto<>(
+                                HttpStatus.CREATED.value(),
+                                "Login Success",
+                                true,
+                                tokenResponseDto
+                        ));
     }
 
     @PostMapping("/logout")
     @Override
-    public ResponseEntity<Void> logout(@RequestHeader("Authorization") String bearerToken) {
+    public ResponseEntity<ResponseDto<Void>> logout(@RequestHeader("Authorization") String bearerToken) {
 
         authService.logout(bearerToken);
 
-        return ResponseEntity.noContent().build();
+        return ResponseEntity.status(HttpStatus.NO_CONTENT)
+                .body(
+                        new ResponseDto<>(
+                                HttpStatus.NO_CONTENT.value(),
+                                "Logout Success",
+                                true,
+                                null
+                        ));
     }
 
     @PostMapping("/refresh")
     @Override
-    public ResponseEntity<TokenResponseDto> refresh(@RequestHeader("Authorization") String bearerToken) {
+    public ResponseEntity<ResponseDto<TokenResponseDto>> refresh(@RequestHeader("Authorization") String bearerToken) {
 
         TokenResponseDto tokenResponseDto = authService.refresh(bearerToken);
 
-        return ResponseEntity.ok(tokenResponseDto);
+        return ResponseEntity.status(HttpStatus.NO_CONTENT)
+                .body(
+                        new ResponseDto<>(
+                                HttpStatus.NO_CONTENT.value(),
+                                "Refresh Success",
+                                true,
+                                tokenResponseDto
+                        ));
     }
 }

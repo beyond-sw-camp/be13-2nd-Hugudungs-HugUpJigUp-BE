@@ -3,6 +3,7 @@ package com.hugudungs.hugupjigup.board.notice.controller;
 import com.hugudungs.hugupjigup.board.notice.data.dto.NoticeRequestDto;
 import com.hugudungs.hugupjigup.board.notice.data.dto.NoticeResponseDto;
 import com.hugudungs.hugupjigup.board.notice.service.NoticeService;
+import com.hugudungs.hugupjigup.common.dto.ResponseDto;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.extern.slf4j.Slf4j;
 import org.springdoc.core.annotations.ParameterObject;
@@ -33,12 +34,20 @@ public class NoticeControllerImpl implements NoticeController {
 
     @Override
     @PostMapping("/create")
-    public ResponseEntity<NoticeResponseDto> createNotice(
+    public ResponseEntity<ResponseDto<NoticeResponseDto>> createNotice(
             @RequestBody NoticeRequestDto requestDto) {
         try {
             log.info("Received request: {}", requestDto); // 요청 데이터 로깅
             NoticeResponseDto responseDto = noticeService.createNotice(requestDto);
-            return ResponseEntity.status(HttpStatus.OK).body(responseDto);
+
+            return ResponseEntity.status(HttpStatus.CREATED)
+                    .body(
+                        new ResponseDto<>(
+                            HttpStatus.CREATED.value(),
+                            "공지 게시글이 성공적으로 생성되었습니다.",
+                            true,
+                            responseDto
+                    ));
         } catch (DataAccessException e) {
             log.error("Database error: ", e); // 상세 오류 로깅
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
@@ -50,13 +59,19 @@ public class NoticeControllerImpl implements NoticeController {
 
     @Override
     @PutMapping("/update/{noticeId}")
-    public ResponseEntity<NoticeResponseDto> updateNotice(
+    public ResponseEntity<ResponseDto<NoticeResponseDto>> updateNotice(
             @PathVariable Long noticeId,
             @RequestBody NoticeRequestDto requestDto) {
         try {
             NoticeResponseDto responseDto = noticeService.updateNotice(noticeId, requestDto);
 
-            return ResponseEntity.status(HttpStatus.OK).body(responseDto);
+            return ResponseEntity.ok(
+                    new ResponseDto<>(
+                            HttpStatus.OK.value(),
+                            "공지 게시글이 성공적으로 수정되었습니다.",
+                            true,
+                            responseDto
+                    ));
         } catch (DataAccessException e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
         } catch (Exception e) {
@@ -66,12 +81,19 @@ public class NoticeControllerImpl implements NoticeController {
 
     @Override
     @DeleteMapping("/delete/{noticeId}")
-    public ResponseEntity<Void> deleteNotice(
+    public ResponseEntity<ResponseDto<Void>> deleteNotice(
             @PathVariable Long noticeId) {
         try {
             noticeService.deleteNotice(noticeId);
 
-            return ResponseEntity.status(HttpStatus.OK).build();
+            return ResponseEntity.ok(
+                    new ResponseDto<>(
+                            HttpStatus.OK.value(),
+                            "공지 게시글이 성공적으로 삭제되었습니다.",
+                            true,
+                            null
+                    ));
+
 //        } catch (UnauthorizedException e) {
 //            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
         } catch (DataAccessException e) {
@@ -83,12 +105,19 @@ public class NoticeControllerImpl implements NoticeController {
 
     @Override
     @GetMapping("/get/{noticeId}")
-    public ResponseEntity<NoticeResponseDto> getNotice(
+    public ResponseEntity<ResponseDto<NoticeResponseDto>> getNotice(
             @PathVariable Long noticeId) {
         try {
             NoticeResponseDto responseDto = noticeService.getNoticeById(noticeId);
 
-            return ResponseEntity.status(HttpStatus.OK).body(responseDto);
+            return ResponseEntity.ok(
+                    new ResponseDto<>(
+                            HttpStatus.OK.value(),
+                            "공지 게시글 조회 성공",
+                            true,
+                            responseDto
+                    ));
+//            return ResponseEntity.status(HttpStatus.OK).body(responseDto);
         } catch (RuntimeException e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
         } catch (Exception e) {
@@ -98,12 +127,18 @@ public class NoticeControllerImpl implements NoticeController {
 
     @Override
     @GetMapping("/posts")
-    public ResponseEntity<Page<NoticeResponseDto>> getNoticePosts(
+    public ResponseEntity<ResponseDto<Page<NoticeResponseDto>>> getNoticePosts(
             @ParameterObject Pageable pageable) {
         try {
             Page<NoticeResponseDto> responseDto = noticeService.getNoticePosts(pageable);
 
-            return ResponseEntity.status(HttpStatus.OK).body(responseDto);
+            return ResponseEntity.ok(
+                    new ResponseDto<>(
+                            HttpStatus.OK.value(),
+                            "공지 게시판 조회 성공",
+                            true,
+                            responseDto
+                    ));
         } catch (DataAccessException e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
         } catch (Exception e) {
