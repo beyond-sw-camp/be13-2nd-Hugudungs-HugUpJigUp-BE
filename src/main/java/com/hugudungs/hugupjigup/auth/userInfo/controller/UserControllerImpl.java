@@ -5,11 +5,14 @@ import com.hugudungs.hugupjigup.auth.userInfo.dto.user.UpdateUserMentorProfileDT
 import com.hugudungs.hugupjigup.auth.userInfo.dto.user.UpdateUserProfileDTO;
 import com.hugudungs.hugupjigup.auth.userInfo.dto.user.UserProfileResponseDTO;
 import com.hugudungs.hugupjigup.auth.userInfo.service.UserService;
+import com.hugudungs.hugupjigup.common.dto.ResponseDto;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -53,8 +56,14 @@ public class UserControllerImpl implements UserController {
             )
     })
     @GetMapping("/{email}")
-    public UserProfileResponseDTO getUserProfile(@PathVariable String email) {
-        return userService.getUserProfileByEmail(email);
+    public ResponseEntity<ResponseDto<UserProfileResponseDTO>> getUserProfile(@PathVariable String email) {
+        return ResponseEntity.ok(
+                new ResponseDto<>(
+                        HttpStatus.OK.value(),
+                        "유저 프로필 조회 성공",
+                        true,
+                        userService.getUserProfileByEmail(email)
+                ));
     }
 
     // 유저의 기본 정보 수정
@@ -88,9 +97,14 @@ public class UserControllerImpl implements UserController {
             )
     })
     @PutMapping("/{email}")
-    public UpdateUserProfileDTO updateUserProfile(@PathVariable String email,
-                                                  @RequestBody UpdateUserProfileDTO updateUserProfileDTO) {
-        return userService.updateUserProfile(email, updateUserProfileDTO);
+    public ResponseEntity<ResponseDto<UpdateUserProfileDTO>> updateUserProfile(@PathVariable String email, @RequestBody UpdateUserProfileDTO updateUserProfileDTO) {
+        return ResponseEntity.ok(
+                new ResponseDto<>(
+                        HttpStatus.OK.value(),
+                        "프로필 수정 성공",
+                        true,
+                        userService.updateUserProfile(email, updateUserProfileDTO)
+                ));
     }
 
     // 유저 멘토 정보 수정
@@ -121,9 +135,14 @@ public class UserControllerImpl implements UserController {
 
     })
     @PutMapping("{email}/mentor")
-    public UpdateUserMentorProfileDTO updateUserMentorProfile(@PathVariable String email,
-                                                              @RequestBody UpdateUserMentorProfileDTO updateUserMentorProfileDTO) {
-        return userService.updateUserMentorProfile(email, updateUserMentorProfileDTO);
+    public ResponseEntity<ResponseDto<UpdateUserMentorProfileDTO>> updateUserMentorProfile(@PathVariable String email, @RequestBody UpdateUserMentorProfileDTO updateUserMentorProfileDTO) {
+        return ResponseEntity.ok(
+                new ResponseDto<>(
+                        HttpStatus.OK.value(),
+                        "멘토 프로필 수정 성공",
+                        true,
+                        userService.updateUserMentorProfile(email, updateUserMentorProfileDTO)
+                ));
     }
 
     // 유저 멘티 정보 수정
@@ -157,9 +176,14 @@ public class UserControllerImpl implements UserController {
             )
     })
     @PutMapping("{email}/mentee")
-    public UpdateUserMenteeProfileDTO updateUserMenteeProfile(@PathVariable String email,
-                                                              @RequestBody UpdateUserMenteeProfileDTO updateUserMenteeProfileDTO) {
-        return userService.updateUserMenteeProfile(email, updateUserMenteeProfileDTO);
+    public ResponseEntity<ResponseDto<UpdateUserMenteeProfileDTO>> updateUserMenteeProfile(@PathVariable String email, @RequestBody UpdateUserMenteeProfileDTO updateUserMenteeProfileDTO) {
+        return ResponseEntity.ok(
+                new ResponseDto<>(
+                        HttpStatus.OK.value(),
+                        "멘티 프로필 수정 성공",
+                        true,
+                        userService.updateUserMenteeProfile(email, updateUserMenteeProfileDTO)
+                ));
     }
 
 }
