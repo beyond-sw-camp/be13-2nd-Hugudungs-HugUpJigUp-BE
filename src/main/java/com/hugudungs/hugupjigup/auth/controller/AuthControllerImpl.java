@@ -20,7 +20,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @Slf4j
@@ -43,8 +42,7 @@ public class AuthControllerImpl implements AuthController {
                         "Email Duplicate Check Success",
                         result,
                         null
-                )
-        );
+                ));
     }
 
     @GetMapping("/duplicate/nickname/{nickname}")
@@ -60,8 +58,7 @@ public class AuthControllerImpl implements AuthController {
                         "Nickname Duplicate Check Success",
                         result,
                         null
-                )
-        );
+                ));
     }
 
     @PostMapping("/otp/send")
