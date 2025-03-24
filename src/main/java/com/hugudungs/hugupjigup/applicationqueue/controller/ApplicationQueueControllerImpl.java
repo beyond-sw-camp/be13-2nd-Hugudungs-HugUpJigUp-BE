@@ -70,10 +70,9 @@ public class ApplicationQueueControllerImpl implements ApplicationQueueControlle
     public ResponseEntity<ResponseDto<Void>> deleteApplication(Long applicationQueueId) {
         applicationQueueService.deleteApplication(applicationQueueId);
 
-        return ResponseEntity.status(HttpStatus.NO_CONTENT)
-                .body(
+        return ResponseEntity.ok(
                         new ResponseDto<>(
-                                HttpStatus.NO_CONTENT.value(),
+                                HttpStatus.OK.value(),
                                 "신청이 성공적으로 삭제되었습니다.",
                                 true,
                                 null

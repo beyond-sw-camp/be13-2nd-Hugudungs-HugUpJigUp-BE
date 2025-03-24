@@ -47,10 +47,9 @@ public class FreeCommentControllerImpl implements FreeCommentController {
     public ResponseEntity<ResponseDto<Void>> deleteComment(@PathVariable Long commentId) {
         freeCommentService.deleteComment(commentId);
 
-        return ResponseEntity.status(HttpStatus.NO_CONTENT)
-                .body(
+        return ResponseEntity.ok(
                         new ResponseDto<>(
-                                HttpStatus.NO_CONTENT.value(),
+                                HttpStatus.OK.value(),
                                 "댓글 삭제 성공",
                                 true,
                                 null

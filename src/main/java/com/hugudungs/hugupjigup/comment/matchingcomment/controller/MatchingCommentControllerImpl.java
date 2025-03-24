@@ -60,10 +60,9 @@ public class MatchingCommentControllerImpl implements MatchingCommentController 
     public ResponseEntity<ResponseDto<Void>> deleteComment(Long matchingId, Long commentId) {
         matchingCommentService.deleteMatchingComment(matchingId, commentId);
 
-        return ResponseEntity.status(HttpStatus.NO_CONTENT)
-                .body(
+        return ResponseEntity.ok(
                         new ResponseDto<>(
-                                HttpStatus.NO_CONTENT.value(),
+                                HttpStatus.OK.value(),
                                 "멘토링 후기 삭제 성공",
                                 true,
                                 null

@@ -127,17 +127,15 @@ public class AuthControllerImpl implements AuthController {
     @PostMapping("/logout")
     @Override
     public ResponseEntity<ResponseDto<Void>> logout(@RequestHeader("Authorization") String bearerToken) {
-
         authService.logout(bearerToken);
 
-        return ResponseEntity.status(HttpStatus.NO_CONTENT)
-                .body(
-                        new ResponseDto<>(
-                                HttpStatus.NO_CONTENT.value(),
-                                "Logout Success",
-                                true,
-                                null
-                        ));
+        return ResponseEntity.ok(
+                new ResponseDto<>(
+                        HttpStatus.OK.value(),
+                        "Logout Success",
+                        true,
+                        null
+                ));
     }
 
     @PostMapping("/refresh")
