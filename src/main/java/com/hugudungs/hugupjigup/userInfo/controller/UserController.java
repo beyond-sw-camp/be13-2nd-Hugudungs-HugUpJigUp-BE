@@ -1,5 +1,6 @@
 package com.hugudungs.hugupjigup.userInfo.controller;
 
+import com.hugudungs.hugupjigup.auth.dto.UpdateUserResponseDto;
 import com.hugudungs.hugupjigup.userInfo.dto.user.UpdateUserMenteeProfileDTO;
 import com.hugudungs.hugupjigup.userInfo.dto.user.UpdateUserMentorProfileDTO;
 import com.hugudungs.hugupjigup.userInfo.dto.user.UpdateUserProfileDTO;
@@ -68,7 +69,7 @@ public interface UserController {
                     content = @Content(mediaType = "application/json")
             )
     })
-    ResponseEntity<ResponseDto<UpdateUserProfileDTO>> updateUserProfile(Long userId, UpdateUserProfileDTO updateUserProfileDTO);
+    ResponseEntity<ResponseDto<UpdateUserResponseDto>> updateUserProfile(Long userId, UpdateUserProfileDTO updateUserProfileDTO);
 
     // 유저 멘토 정보 수정
     @Operation(summary = "유저 멘토 프로필 수정", description = "유저의 멘토 프로필 정보를 수정합니다.")

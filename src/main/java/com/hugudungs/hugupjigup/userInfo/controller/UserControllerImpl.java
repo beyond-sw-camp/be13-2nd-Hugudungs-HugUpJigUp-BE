@@ -1,5 +1,6 @@
 package com.hugudungs.hugupjigup.userInfo.controller;
 
+import com.hugudungs.hugupjigup.auth.dto.UpdateUserResponseDto;
 import com.hugudungs.hugupjigup.userInfo.dto.user.UpdateUserMenteeProfileDTO;
 import com.hugudungs.hugupjigup.userInfo.dto.user.UpdateUserMentorProfileDTO;
 import com.hugudungs.hugupjigup.userInfo.dto.user.UpdateUserProfileDTO;
@@ -46,7 +47,7 @@ public class UserControllerImpl implements UserController {
     // 유저의 기본 정보 수정
     @Override
     @PutMapping("/{userId}")
-    public ResponseEntity<ResponseDto<UpdateUserProfileDTO>> updateUserProfile(@PathVariable Long userId, @RequestBody UpdateUserProfileDTO updateUserProfileDTO) {
+    public ResponseEntity<ResponseDto<UpdateUserResponseDto>> updateUserProfile(@PathVariable Long userId, @RequestBody UpdateUserProfileDTO updateUserProfileDTO) {
         return ResponseEntity.ok(
                 new ResponseDto<>(
                         HttpStatus.OK.value(),

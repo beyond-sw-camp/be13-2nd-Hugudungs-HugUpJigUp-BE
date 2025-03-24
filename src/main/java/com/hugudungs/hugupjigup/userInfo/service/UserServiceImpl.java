@@ -1,9 +1,11 @@
 package com.hugudungs.hugupjigup.userInfo.service;
 
+import com.hugudungs.hugupjigup.auth.dto.UpdateUserResponseDto;
 import com.hugudungs.hugupjigup.userInfo.dto.user.UpdateUserMenteeProfileDTO;
 import com.hugudungs.hugupjigup.userInfo.dto.user.UpdateUserMentorProfileDTO;
 import com.hugudungs.hugupjigup.common.enums.ProfileType;
 import com.hugudungs.hugupjigup.userInfo.dto.user.UpdateUserProfileDTO;
+import com.hugudungs.hugupjigup.userInfo.dto.user.UserProfileResponse;
 import com.hugudungs.hugupjigup.userInfo.dto.user.UserProfileResponseDTO;
 import com.hugudungs.hugupjigup.data.entity.user.User;
 import com.hugudungs.hugupjigup.data.entity.user.UserProfile;
@@ -14,6 +16,7 @@ import com.hugudungs.hugupjigup.userInfo.repository.CommentRepository;
 import com.hugudungs.hugupjigup.userInfo.repository.MatchingCommentRepository;
 import com.hugudungs.hugupjigup.matching.data.MatchingRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -28,14 +31,13 @@ public class UserServiceImpl implements UserService {
     private final CommentRepository commentRepository;
     private final MatchingRepository matchingRepository;
     private final MatchingCommentRepository matchingCommentRepository;
+    private final PasswordEncoder passwordEncoder;
 
     // 유저 정보 조회
     @Override
     public UserProfileResponseDTO getUserProfile(Long userId) {
         User user = userRepository.findById(userId)
                 .orElseThrow(() -> new RuntimeException("유저를 찾을 수 없습니다."));
-
-        System.out.println(user);
 
         List<UserProfile> userProfile = userProfileRepository.findByUser(user)
                 .orElseThrow(() -> new RuntimeException("유저 프로필을 찾을 수 없습니다."));
@@ -51,41 +53,41 @@ public class UserServiceImpl implements UserService {
                 .orElseThrow(() -> new RuntimeException("멘티 프로필을 찾을 수 없습니다."));
 
         int writtenPostsCount = Optional.ofNullable(postRepository.countByUser(user)).orElse(0);
-
         int writtenCommentsCount = Optional.ofNullable(commentRepository.countByUser(user)).orElse(0);
-
         int mentoringOpenedCount = Optional.ofNullable(matchingRepository.countByUser(user)).orElse(0);
-
         int menteeJoinedCount = Optional.ofNullable(matchingCommentRepository.countByUserComments(user)).orElse(0);
 
         return UserProfileResponseDTO.builder()
                 .nickname(user.getNickName())
                 .email(user.getEmail())
-                .mentorProfile(mentorProfile)
-                .menteeProfile(menteeProfile)
                 .postCount(writtenPostsCount)
                 .commentCount(writtenCommentsCount)
                 .matchingCount(mentoringOpenedCount)
                 .matchingCommentCount(menteeJoinedCount)
+                .mentorIntroduction(mentorProfile.getIntroduction())
+                .menteeIntroduction(menteeProfile.getIntroduction())
+                .mentorProfile(UserProfileResponse.of(mentorProfile))
+                .menteeProfile(UserProfileResponse.of(menteeProfile))
                 .build();
     }
 
     // 유저 기본 프로필 수정
     @Override
-    public UpdateUserProfileDTO updateUserProfile(Long userId, UpdateUserProfileDTO updateUserProfileDTO) {
+    public UpdateUserResponseDto updateUserProfile(Long userId, UpdateUserProfileDTO updateUserProfileDTO) {
         User user = userRepository.findById(userId)
                 .orElseThrow(() -> new RuntimeException("유저를 찾을 수 없습니다."));
 
-        user.setPassword(updateUserProfileDTO.getPassword());
+        user.setPassword(
+                passwordEncoder.encode(updateUserProfileDTO.getPassword())
+        );
         user.setNickName(updateUserProfileDTO.getName());
         user.setEmail(updateUserProfileDTO.getEmail());
 
         userRepository.saveAndFlush(user);
 
-        return new UpdateUserProfileDTO(
+        return new UpdateUserResponseDto(
                 user.getNickName(),
-                user.getEmail(),
-                user.getPassword()
+                user.getEmail()
         );
     }
 
