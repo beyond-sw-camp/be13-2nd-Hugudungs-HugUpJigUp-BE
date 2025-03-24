@@ -146,10 +146,10 @@ public class AuthControllerImpl implements AuthController {
 
         TokenResponseDto tokenResponseDto = authService.refresh(bearerToken);
 
-        return ResponseEntity.status(HttpStatus.NO_CONTENT)
+        return ResponseEntity.status(HttpStatus.OK)
                 .body(
                         new ResponseDto<>(
-                                HttpStatus.NO_CONTENT.value(),
+                                HttpStatus.OK.value(),
                                 "Refresh Success",
                                 true,
                                 tokenResponseDto
