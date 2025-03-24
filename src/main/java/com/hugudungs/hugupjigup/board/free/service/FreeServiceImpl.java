@@ -2,7 +2,6 @@ package com.hugudungs.hugupjigup.board.free.service;
 
 import com.hugudungs.hugupjigup.comment.freecomment.data.FreeCommentRepository;
 import com.hugudungs.hugupjigup.comment.freecomment.data.dto.FreeCommentGenerationResponseDto;
-import com.hugudungs.hugupjigup.common.enums.BoardType;
 import com.hugudungs.hugupjigup.data.entity.board.Free;
 import com.hugudungs.hugupjigup.data.entity.comment.FreeComment;
 import com.hugudungs.hugupjigup.data.entity.user.User;
@@ -11,7 +10,7 @@ import com.hugudungs.hugupjigup.board.free.data.dto.FreeSearchRequestDto;
 import com.hugudungs.hugupjigup.board.free.data.dto.FreeSearchResponseDto;
 import com.hugudungs.hugupjigup.board.free.data.dto.FreeUpdateRequestDto;
 import com.hugudungs.hugupjigup.board.free.data.FreeRepository;
-import com.hugudungs.hugupjigup.user.data.UserRepository;
+import com.hugudungs.hugupjigup.userInfo.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;

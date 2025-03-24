@@ -1,4 +1,4 @@
-package com.hugudungs.hugupjigup.user.data;
+package com.hugudungs.hugupjigup.userInfo.repository;
 
 import com.hugudungs.hugupjigup.data.entity.user.User;
 import org.springframework.data.jpa.repository.JpaRepository;

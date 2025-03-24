@@ -1,14 +1,14 @@
-package com.hugudungs.hugupjigup.auth.userInfo.dto.user;
+package com.hugudungs.hugupjigup.userInfo.dto.user;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 
-@Getter
 @Builder
+@Getter
 @AllArgsConstructor
-public class UpdateUserMentorProfileDTO {
-    private String currentJob;
+public class UpdateUserMenteeProfileDTO {
+    private String desiredJob;
     private String introduction;
     private String experience;
 }

@@ -1,21 +1,22 @@
-package com.hugudungs.hugupjigup.auth.userInfo.service;
+package com.hugudungs.hugupjigup.userInfo.service;
 
-import com.hugudungs.hugupjigup.auth.userInfo.dto.user.UpdateUserMenteeProfileDTO;
-import com.hugudungs.hugupjigup.auth.userInfo.dto.user.UpdateUserMentorProfileDTO;
+import com.hugudungs.hugupjigup.userInfo.dto.user.UpdateUserMenteeProfileDTO;
+import com.hugudungs.hugupjigup.userInfo.dto.user.UpdateUserMentorProfileDTO;
 import com.hugudungs.hugupjigup.common.enums.ProfileType;
-import com.hugudungs.hugupjigup.auth.userInfo.dto.user.UpdateUserProfileDTO;
-import com.hugudungs.hugupjigup.auth.userInfo.dto.user.UserProfileResponseDTO;
+import com.hugudungs.hugupjigup.userInfo.dto.user.UpdateUserProfileDTO;
+import com.hugudungs.hugupjigup.userInfo.dto.user.UserProfileResponseDTO;
 import com.hugudungs.hugupjigup.data.entity.user.User;
 import com.hugudungs.hugupjigup.data.entity.user.UserProfile;
-import com.hugudungs.hugupjigup.user.data.UserRepository;
-import com.hugudungs.hugupjigup.auth.userInfo.repository.UserProfileRepository;
-import com.hugudungs.hugupjigup.auth.userInfo.repository.PostRepository;
-import com.hugudungs.hugupjigup.auth.userInfo.repository.CommentRepository;
-import com.hugudungs.hugupjigup.auth.userInfo.repository.MatchingCommentRepository;
+import com.hugudungs.hugupjigup.userInfo.repository.UserRepository;
+import com.hugudungs.hugupjigup.userInfo.repository.UserProfileRepository;
+import com.hugudungs.hugupjigup.userInfo.repository.PostRepository;
+import com.hugudungs.hugupjigup.userInfo.repository.CommentRepository;
+import com.hugudungs.hugupjigup.userInfo.repository.MatchingCommentRepository;
 import com.hugudungs.hugupjigup.matching.data.MatchingRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -30,12 +31,24 @@ public class UserServiceImpl implements UserService {
 
     // 유저 정보 조회
     @Override
-    public UserProfileResponseDTO getUserProfileByEmail(String email) {
-        User user = userRepository.findByEmail(email)
+    public UserProfileResponseDTO getUserProfile(Long userId) {
+        User user = userRepository.findById(userId)
                 .orElseThrow(() -> new RuntimeException("유저를 찾을 수 없습니다."));
 
-        UserProfile userProfile = userProfileRepository.findByUser(user)
+        System.out.println(user);
+
+        List<UserProfile> userProfile = userProfileRepository.findByUser(user)
                 .orElseThrow(() -> new RuntimeException("유저 프로필을 찾을 수 없습니다."));
+
+        UserProfile mentorProfile = userProfile.stream()
+                .filter(profile -> profile.getProfileType() == ProfileType.MENTOR)
+                .findFirst()
+                .orElseThrow(() -> new RuntimeException("멘토 프로필을 찾을 수 없습니다."));
+
+        UserProfile menteeProfile = userProfile.stream()
+                .filter(profile -> profile.getProfileType() == ProfileType.MENTEE)
+                .findFirst()
+                .orElseThrow(() -> new RuntimeException("멘티 프로필을 찾을 수 없습니다."));
 
         int writtenPostsCount = Optional.ofNullable(postRepository.countByUser(user)).orElse(0);
 
@@ -45,32 +58,22 @@ public class UserServiceImpl implements UserService {
 
         int menteeJoinedCount = Optional.ofNullable(matchingCommentRepository.countByUserComments(user)).orElse(0);
 
-        String mentorIntroduction = "자기 소개 추가해주세요";
-        String menteeIntroduction = "자기 소개 추가해주세요";
-
-        if (userProfile.getProfileType() == ProfileType.MENTOR) {
-            mentorIntroduction = userProfile.getIntroduction();
-        } else if (userProfile.getProfileType() == ProfileType.MENTEE) {
-            menteeIntroduction = userProfile.getIntroduction();
-        }
-
-        return new UserProfileResponseDTO(
-                user.getNickName(),
-                userProfile.getCurrentJob(),
-                userProfile.getDesiredJob(),
-                writtenPostsCount,
-                writtenCommentsCount,
-                mentoringOpenedCount,
-                menteeJoinedCount,
-                mentorIntroduction,
-                menteeIntroduction
-        );
+        return UserProfileResponseDTO.builder()
+                .nickname(user.getNickName())
+                .email(user.getEmail())
+                .mentorProfile(mentorProfile)
+                .menteeProfile(menteeProfile)
+                .postCount(writtenPostsCount)
+                .commentCount(writtenCommentsCount)
+                .matchingCount(mentoringOpenedCount)
+                .matchingCommentCount(menteeJoinedCount)
+                .build();
     }
 
     // 유저 기본 프로필 수정
     @Override
-    public UpdateUserProfileDTO updateUserProfile(String email, UpdateUserProfileDTO updateUserProfileDTO) {
-        User user = userRepository.findByEmail(email)
+    public UpdateUserProfileDTO updateUserProfile(Long userId, UpdateUserProfileDTO updateUserProfileDTO) {
+        User user = userRepository.findById(userId)
                 .orElseThrow(() -> new RuntimeException("유저를 찾을 수 없습니다."));
 
         user.setPassword(updateUserProfileDTO.getPassword());
@@ -79,32 +82,17 @@ public class UserServiceImpl implements UserService {
 
         userRepository.saveAndFlush(user);
 
-//        user = User.builder()
-//                .password(updateUserProfileDTO.getPassword())
-//                .nickName(updateUserProfileDTO.getName())
-//                .email(updateUserProfileDTO.getEmail())
-//                .build();
-
-//        return UpdateUserProfileDTO.builder()
-//                .name(usersave.getNickName())
-//                .email(usersave.getEmail())
-//                .password(usersave.getPassword())
-//                .build();
-//
-//        User usersave = userRepository.saveAndFlush(user);
-
         return new UpdateUserProfileDTO(
                 user.getNickName(),
                 user.getEmail(),
                 user.getPassword()
         );
-
     }
 
     // 멘티 프로필 수정
     @Override
-    public UpdateUserMentorProfileDTO updateUserMentorProfile(String email, UpdateUserMentorProfileDTO updateUserMentorProfileDTO) {
-        User user = userRepository.findByEmail(email)
+    public UpdateUserMentorProfileDTO updateUserMentorProfile(Long userId, UpdateUserMentorProfileDTO updateUserMentorProfileDTO) {
+        User user = userRepository.findById(userId)
                 .orElseThrow(() -> new RuntimeException("유저를 찾을 수 없습니다."));
 
         UserProfile userProfile = userProfileRepository.findMentorProfileByUserId(user.getId())
@@ -113,12 +101,6 @@ public class UserServiceImpl implements UserService {
         userProfile.setCurrentJob(updateUserMentorProfileDTO.getCurrentJob());
         userProfile.setIntroduction(updateUserMentorProfileDTO.getIntroduction());
         userProfile.setExperience(updateUserMentorProfileDTO.getExperience());
-
-//        UserProfile.builder()
-//                .currentJob(updateUserMentorProfileDTO.getCurrentJob())
-//                .introduction(updateUserMentorProfileDTO.getIntroduction())
-//                .experience(updateUserMentorProfileDTO.getExperience())
-//                .build();  // 바로 새로운 객체를 생성해서 리턴
 
         userProfileRepository.saveAndFlush(userProfile);
 
@@ -131,8 +113,8 @@ public class UserServiceImpl implements UserService {
 
     // 멘토 프로필 수정
     @Override
-    public UpdateUserMenteeProfileDTO updateUserMenteeProfile(String email, UpdateUserMenteeProfileDTO updateUserMenteeProfileDTO) {
-        User user = userRepository.findByEmail(email)
+    public UpdateUserMenteeProfileDTO updateUserMenteeProfile(Long userId, UpdateUserMenteeProfileDTO updateUserMenteeProfileDTO) {
+        User user = userRepository.findById(userId)
                 .orElseThrow(() -> new RuntimeException("유저를 찾을 수 없습니다."));
 
         UserProfile userProfile = userProfileRepository.findMenteeProfileByUserId(user.getId())
@@ -141,13 +123,6 @@ public class UserServiceImpl implements UserService {
         userProfile.setDesiredJob(updateUserMenteeProfileDTO.getDesiredJob());
         userProfile.setIntroduction(updateUserMenteeProfileDTO.getIntroduction());
         userProfile.setExperience(updateUserMenteeProfileDTO.getExperience());
-
-
-//        UserProfile.builder()
-//                .desiredJob(updateUserMenteeProfileDTO.getDesiredJob())
-//                .introduction(updateUserMenteeProfileDTO.getIntroduction())
-//                .experience(updateUserMenteeProfileDTO.getExperience())
-//                .build();
 
         userProfileRepository.saveAndFlush(userProfile);
 

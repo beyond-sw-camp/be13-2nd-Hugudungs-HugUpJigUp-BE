@@ -1,6 +1,6 @@
 package com.hugudungs.hugupjigup.auth.service;
 
-import com.hugudungs.hugupjigup.user.data.UserRepository;
+import com.hugudungs.hugupjigup.userInfo.repository.UserRepository;
 import com.hugudungs.hugupjigup.data.entity.user.User;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

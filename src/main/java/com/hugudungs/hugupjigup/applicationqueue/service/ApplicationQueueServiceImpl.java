@@ -9,7 +9,7 @@ import com.hugudungs.hugupjigup.data.entity.matching.ApplicationQueue;
 import com.hugudungs.hugupjigup.data.entity.matching.Matching;
 import com.hugudungs.hugupjigup.data.entity.user.User;
 import com.hugudungs.hugupjigup.matching.data.MatchingRepository;
-import com.hugudungs.hugupjigup.user.data.UserRepository;
+import com.hugudungs.hugupjigup.userInfo.repository.UserRepository;
 import org.springframework.transaction.annotation.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;

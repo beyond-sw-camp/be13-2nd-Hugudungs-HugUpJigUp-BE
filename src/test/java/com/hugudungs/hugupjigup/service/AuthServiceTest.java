@@ -1,9 +1,9 @@
 package com.hugudungs.hugupjigup.service;
 
-import com.hugudungs.hugupjigup.auth.repository.UserRepository;
 import com.hugudungs.hugupjigup.auth.service.AuthService;
 import com.hugudungs.hugupjigup.common.enums.LoginType;
 import com.hugudungs.hugupjigup.data.entity.user.User;
+import com.hugudungs.hugupjigup.userInfo.repository.UserRepository;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;

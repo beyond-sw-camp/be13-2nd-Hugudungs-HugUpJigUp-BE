@@ -11,7 +11,7 @@ import com.hugudungs.hugupjigup.data.entity.matching.MatchingComment;
 import com.hugudungs.hugupjigup.data.entity.user.User;
 import com.hugudungs.hugupjigup.matching.data.MatchingRepository;
 
-import com.hugudungs.hugupjigup.user.data.UserRepository;
+import com.hugudungs.hugupjigup.userInfo.repository.UserRepository;
 import com.hugudungs.hugupjigup.applicationqueue.data.ApplicationQueueRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;

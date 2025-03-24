@@ -1,4 +1,4 @@
-package com.hugudungs.hugupjigup.auth.userInfo.repository;
+package com.hugudungs.hugupjigup.userInfo.repository;
 
 import com.hugudungs.hugupjigup.data.entity.board.Free;
 import com.hugudungs.hugupjigup.data.entity.user.User;
