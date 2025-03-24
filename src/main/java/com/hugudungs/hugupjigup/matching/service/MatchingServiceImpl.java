@@ -5,7 +5,7 @@ import com.hugudungs.hugupjigup.data.entity.user.User;
 import com.hugudungs.hugupjigup.matching.data.MatchingRepository;
 import com.hugudungs.hugupjigup.matching.data.dto.MatchingRequestDto;
 import com.hugudungs.hugupjigup.matching.data.dto.MatchingResponseDto;
-import com.hugudungs.hugupjigup.user.data.UserRepository;
+import com.hugudungs.hugupjigup.userInfo.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.dao.DataAccessException;
 import org.springframework.data.domain.Page;

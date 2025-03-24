@@ -36,7 +36,6 @@ import java.util.List;
 @NoArgsConstructor
 @SuperBuilder
 public class User extends BaseEntity implements UserDetails {
-
     @ManyToOne
     @JoinColumn(name = "role_type_id", referencedColumnName = "role_type_id")
     private RoleTypeEntity roleType;

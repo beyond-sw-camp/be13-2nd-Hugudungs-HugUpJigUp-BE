@@ -1,4 +1,4 @@
-package com.hugudungs.hugupjigup.auth.userInfo.dto.user;
+package com.hugudungs.hugupjigup.userInfo.dto.user;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

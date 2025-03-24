@@ -10,7 +10,7 @@ import com.hugudungs.hugupjigup.comment.freecomment.data.dto.FreeCommentUpdateDt
 import com.hugudungs.hugupjigup.comment.freecomment.data.dto.FreeCommentUpdateResponseDto;
 import com.hugudungs.hugupjigup.common.enums.CommentType;
 import com.hugudungs.hugupjigup.board.free.data.FreeRepository;
-import com.hugudungs.hugupjigup.user.data.UserRepository;
+import com.hugudungs.hugupjigup.userInfo.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

@@ -5,14 +5,17 @@ import com.hugudungs.hugupjigup.auth.dto.TokenResponseDto;
 import com.hugudungs.hugupjigup.auth.dto.VerificationOtpRequestDto;
 import com.hugudungs.hugupjigup.auth.exception.UnauthorizeException;
 import com.hugudungs.hugupjigup.auth.jwt.JwtTokenProvider;
-import com.hugudungs.hugupjigup.auth.userInfo.repository.UserProfileRepository;
+import com.hugudungs.hugupjigup.auth.repository.RoleTypeRepository;
+import com.hugudungs.hugupjigup.common.enums.RoleType;
+import com.hugudungs.hugupjigup.data.entity.user.RoleTypeEntity;
+import com.hugudungs.hugupjigup.userInfo.repository.UserProfileRepository;
 import com.hugudungs.hugupjigup.common.cache.CacheService;
 import com.hugudungs.hugupjigup.common.email.EmailService;
 import com.hugudungs.hugupjigup.common.enums.LoginType;
 import com.hugudungs.hugupjigup.common.enums.ProfileType;
 import com.hugudungs.hugupjigup.data.entity.user.User;
 import com.hugudungs.hugupjigup.data.entity.user.UserProfile;
-import com.hugudungs.hugupjigup.user.data.UserRepository;
+import com.hugudungs.hugupjigup.userInfo.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -26,6 +29,7 @@ import java.util.Map;
 public class AuthServiceImpl implements AuthService {
     private final UserRepository userRepository;
     private final UserProfileRepository userProfileRepository;
+    private final RoleTypeRepository roleTypeRepository;
     private final EmailService emailService;
     private final CacheService cacheService;
     private final PasswordEncoder passwordEncoder;
@@ -89,11 +93,16 @@ public class AuthServiceImpl implements AuthService {
 
         cacheService.delete(this.verifiedUserKey(email));
 
+        RoleTypeEntity roleType = roleTypeRepository.findByRoleType(RoleType.NORMAL).orElseThrow(() -> {
+            throw new RuntimeException("Invalid RoleType");
+        });
+        
         User user = User.builder()
                 .email(signUpRequestDto.getEmail())
                 .password(passwordEncoder.encode(signUpRequestDto.getPassword()))
                 .nickName(signUpRequestDto.getNickname())
                 .loginType(LoginType.COMMON)
+                .roleType(roleType)
                 .build();
         userRepository.save(user);
 

@@ -5,7 +5,7 @@ import com.hugudungs.hugupjigup.board.notice.data.dto.NoticeRequestDto;
 import com.hugudungs.hugupjigup.board.notice.data.dto.NoticeResponseDto;
 import com.hugudungs.hugupjigup.data.entity.board.Notice;
 import com.hugudungs.hugupjigup.data.entity.user.User;
-import com.hugudungs.hugupjigup.user.data.UserRepository;
+import com.hugudungs.hugupjigup.userInfo.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.dao.DataAccessException;
