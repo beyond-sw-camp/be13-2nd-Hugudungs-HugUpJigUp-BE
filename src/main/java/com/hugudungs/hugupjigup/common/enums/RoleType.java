@@ -1,9 +1,9 @@
 package com.hugudungs.hugupjigup.common.enums;
 
 public enum RoleType {
-    NORMAL,
-    ADMIN,
-    PAUSE,
-    QUIT,
-    BLACKLIST
+    ROLE_USER,
+    ROLE_ADMIN,
+    ROLE_PAUSE,
+    ROLE_QUIT,
+    ROLE_BLACKLIST
 }

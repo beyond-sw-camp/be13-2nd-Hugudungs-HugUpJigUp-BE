@@ -93,7 +93,7 @@ public class AuthServiceImpl implements AuthService {
 
         cacheService.delete(this.verifiedUserKey(email));
 
-        RoleTypeEntity roleType = roleTypeRepository.findByRoleType(RoleType.NORMAL).orElseThrow(() -> {
+        RoleTypeEntity roleType = roleTypeRepository.findByRoleType(RoleType.ROLE_USER).orElseThrow(() -> {
             throw new RuntimeException("Invalid RoleType");
         });
         
