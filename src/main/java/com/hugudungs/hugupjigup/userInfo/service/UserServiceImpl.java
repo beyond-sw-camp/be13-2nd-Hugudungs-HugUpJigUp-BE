@@ -61,12 +61,12 @@ public class UserServiceImpl implements UserService {
                 .userId(user.getId())
                 .nickname(user.getNickName())
                 .email(user.getEmail())
+                .currentJob(mentorProfile.getCurrentJob())
+                .desiredJob(menteeProfile.getDesiredJob())
                 .postCount(writtenPostsCount)
                 .commentCount(writtenCommentsCount)
                 .matchingCount(mentoringOpenedCount)
                 .matchingCommentCount(menteeJoinedCount)
-                .mentorIntroduction(mentorProfile.getIntroduction())
-                .menteeIntroduction(menteeProfile.getIntroduction())
                 .mentorProfile(UserProfileResponse.of(mentorProfile))
                 .menteeProfile(UserProfileResponse.of(menteeProfile))
                 .build();
@@ -85,9 +85,9 @@ public class UserServiceImpl implements UserService {
 
 
 
-        user.setPassword(
-                passwordEncoder.encode(updateUserProfileDTO.getPassword())
-        );
+//        user.setPassword(
+//                passwordEncoder.encode(updateUserProfileDTO.getPassword())
+//        );
         user.setNickName(updateUserProfileDTO.getName());
         user.setEmail(updateUserProfileDTO.getEmail());
 

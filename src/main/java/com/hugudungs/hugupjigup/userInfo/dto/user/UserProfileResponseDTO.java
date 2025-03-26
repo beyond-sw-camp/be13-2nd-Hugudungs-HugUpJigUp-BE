@@ -14,12 +14,12 @@ public class UserProfileResponseDTO {
     private Long userId;
     private String nickname;
     private String email;
+    private String currentJob;
+    private String desiredJob;
     private int postCount;
     private int commentCount;
     private int matchingCommentCount;
     private int matchingCount;
-    private String mentorIntroduction;
-    private String menteeIntroduction;
     private UserProfileResponse mentorProfile;
     private UserProfileResponse menteeProfile;
 }

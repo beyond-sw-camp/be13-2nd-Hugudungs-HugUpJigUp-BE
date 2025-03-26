@@ -37,7 +37,7 @@ public class SecurityConfig {
                         .requestMatchers(HttpMethod.POST, "/api/v1/notice/**").hasRole("ADMIN")
                         .requestMatchers(HttpMethod.DELETE, "/api/v1/notice/**").hasRole("ADMIN")
                         .requestMatchers(HttpMethod.PUT, "/api/v1/notice/**").hasRole("ADMIN")
-                        .anyRequest().permitAll()   // 나머지 요청도 모두 허용 (개발 단계에서)
+                        .anyRequest().permitAll()  // 나머지 요청도 모두 허용 (개발 단계에서)
                 )
                 .csrf(csrf -> csrf.disable()) // CSRF 비활성화 (테스트 환경에서만 사용)
                 .cors(cors -> cors.configurationSource(corsConfigurationSource())) // CORS 설정 적용
