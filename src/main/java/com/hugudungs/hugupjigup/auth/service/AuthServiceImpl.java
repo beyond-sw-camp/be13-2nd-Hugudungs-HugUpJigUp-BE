@@ -147,8 +147,11 @@ public class AuthServiceImpl implements AuthService {
         }
 
         return new TokenResponseDto(
-                jwtTokenProvider.createAccessToken(user.getUsername(), String.valueOf(user.getRoleType().getRoleType())),
-                jwtTokenProvider.createRefreshToken(user.getUsername())
+                jwtTokenProvider.createAccessToken(String.valueOf(user.getId()),
+                        user.getUsername(),
+                        String.valueOf(user.getRoleType().getRoleType())
+                ),
+                jwtTokenProvider.createRefreshToken(String.valueOf(user.getId()), user.getUsername())
         );
     }
 
@@ -182,7 +185,10 @@ public class AuthServiceImpl implements AuthService {
                 .orElseThrow(() -> new UnauthorizeException("아이디 또는 비밀번호가 올바르지 않습니다."));
 
         return new TokenResponseDto(
-                jwtTokenProvider.createAccessToken(user.getUsername(), String.valueOf(user.getRoleType().getRoleType())),
+                jwtTokenProvider.createAccessToken(String.valueOf(user.getId()),
+                        user.getUsername(),
+                        String.valueOf(user.getRoleType().getRoleType())
+                ),
                 refreshToken
         );
     }

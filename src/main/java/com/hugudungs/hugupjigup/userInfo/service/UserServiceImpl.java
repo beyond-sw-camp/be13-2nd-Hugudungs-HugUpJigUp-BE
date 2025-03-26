@@ -58,6 +58,7 @@ public class UserServiceImpl implements UserService {
         int menteeJoinedCount = Optional.ofNullable(matchingCommentRepository.countByUserComments(user)).orElse(0);
 
         return UserProfileResponseDTO.builder()
+                .userId(user.getId())
                 .nickname(user.getNickName())
                 .email(user.getEmail())
                 .postCount(writtenPostsCount)
@@ -76,6 +77,13 @@ public class UserServiceImpl implements UserService {
     public UpdateUserResponseDto updateUserProfile(Long userId, UpdateUserProfileDTO updateUserProfileDTO) {
         User user = userRepository.findById(userId)
                 .orElseThrow(() -> new RuntimeException("유저를 찾을 수 없습니다."));
+
+        userRepository.findByNickName(updateUserProfileDTO.getName())
+                        .ifPresent(userProfile -> {
+                            throw new RuntimeException("이미 사용중인 닉네임입니다.");
+                        });
+
+
 
         user.setPassword(
                 passwordEncoder.encode(updateUserProfileDTO.getPassword())

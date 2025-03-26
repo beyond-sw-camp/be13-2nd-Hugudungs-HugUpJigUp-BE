@@ -11,6 +11,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Builder
 public class UserProfileResponseDTO {
+    private Long userId;
     private String nickname;
     private String email;
     private int postCount;
