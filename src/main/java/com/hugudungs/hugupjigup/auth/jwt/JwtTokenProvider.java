@@ -44,21 +44,23 @@ public class JwtTokenProvider {
         this.redisTemplate = redisTemplate;
     }
 
-    public String createAccessToken(String email, String role) {
+    public String createAccessToken(String sub, String email, String role) {
         Map<String, String> claims = new HashMap<>();
 
+        claims.put("sub", sub);
         claims.put("email", email);
         claims.put("role", role);
 
         return createToken(claims, ACCESS_TOKEN_EXP);
     }
 
-    public String createRefreshToken(String email) {
+    public String createRefreshToken(String sub, String email) {
         String key = null;
         String refreshToken = null;
         Map<String, String> claims = new HashMap<>();
 
         claims.put("email", email);
+        claims.put("sub", sub);
 
         refreshToken = createToken(claims, REFRESH_TOKEN_EXP);
 

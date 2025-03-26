@@ -4,15 +4,16 @@ import com.hugudungs.hugupjigup.board.notice.data.dto.NoticeRequestDto;
 import com.hugudungs.hugupjigup.board.notice.data.dto.NoticeResponseDto;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.security.core.userdetails.UserDetails;
 
 public interface NoticeService {
-    NoticeResponseDto createNotice(NoticeRequestDto requestDto) throws Exception;
+    NoticeResponseDto createNotice(UserDetails userDetails, NoticeRequestDto requestDto);
 
-    NoticeResponseDto updateNotice(Long noticeId, NoticeRequestDto requestDto) throws Exception;
+    NoticeResponseDto updateNotice(UserDetails userDetails, Long noticeId, NoticeRequestDto requestDto);
 
-    void deleteNotice(Long id) throws Exception;
+    void deleteNotice(UserDetails userDetails, Long id);
 
-    Page<NoticeResponseDto> getNoticePosts(Pageable pageable) throws Exception;
+    Page<NoticeResponseDto> getNoticePosts(Pageable pageable);
 
-    NoticeResponseDto getNoticeById(Long noticeId) throws Exception;
+    NoticeResponseDto getNoticeById(Long noticeId);
 }
