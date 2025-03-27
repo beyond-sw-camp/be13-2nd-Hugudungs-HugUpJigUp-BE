@@ -40,6 +40,128 @@
 
 # [API 명세서 및 테스트 결과 보고서](https://hexagonal-surf-ffe.notion.site/API-1b6a9f17aadc80f981a4f2c70ad2a8ab)   
 
+---
+
+<details><summary>
+테이블 명세서
+</summary>
+
+## **User (사용자 정보)**
+
+| **컬럼명** | **데이터 타입** | **제약 조건** |
+| --- | --- | --- |
+| userId | int(auto_increment) | NOT NULL (PK) |
+| typeId | tinyint | NOT NULL |
+| nickName | varchar | NOT NULL |
+| email | varchar | NOT NULL |
+| password | varchar | NOT NULL |
+| created_at | date | NOT NULL |
+| deleted_at | date | NULL |
+| login_type | enum | NULL |
+
+## **User_profiles (유저 프로필 정보)**
+
+| **컬럼명** | **데이터 타입** | **제약 조건** |
+| --- | --- | --- |
+| profile_id | int(auto_increment) | NOT NULL (PK) |
+| userId | int(auto_increment) | NOT NULL |
+| current_job | varchar | NULL |
+| desired_job | varchar | NULL |
+| introduction | text | NULL |
+| experience | text | NULL |
+| rate | float | NULL |
+| type | enum | NOT NULL |
+| phoneNumv | varchar | NULL |
+| gender | char | NULL |
+
+## **Type (역할)**
+
+| **컬럼명** | **데이터 타입** | **제약 조건** |
+| --- | --- | --- |
+| type_Id | int(auto_increment) | NOT NULL (PK) |
+| role_type | enum | NOT NULL |
+
+## **Social_accounts (소셜 로그인)**
+
+| **컬럼명** | **데이터 타입** | **제약 조건** |
+| --- | --- | --- |
+| userId | int(auto_increment) | NOT NULL (PK) |
+| provider | enum | NOT NULL |
+| social_id | varchar | NOT NULL |
+
+## **Apply_list (신청 대기열)**
+
+| **컬럼명** | **데이터 타입** | **제약 조건** |
+| --- | --- | --- |
+| apply_list_id | long | NOT NULL (PK) |
+| matching_text_id | int(auto_increment) | NOT NULL |
+| userId | int(auto_increment) | NOT NULL |
+| content | text | NULL |
+| apply_date | date | NOT NULL |
+| status | enum | NOT NULL |
+
+## **Matching (매칭 게시판)**
+
+| **컬럼명** | **데이터 타입** | **제약 조건** |
+| --- | --- | --- |
+| matching_text_id | int(auto_increment) | NOT NULL (PK) |
+| userId | int(auto_increment) | NOT NULL |
+| matching_title | varchar | NOT NULL |
+| board_type | enum | NOT NULL |
+| matching_date | date | NOT NULL |
+| matching_text | text | NOT NULL |
+| matching_number | int | NOT NULL(default=0) |
+| tag | enum | NOT NULL |
+
+## **Matching_comment (매칭 댓글)**
+
+| **컬럼명** | **데이터 타입** | **제약 조건** |
+| --- | --- | --- |
+| matching_text_comment_id | int(auto_increment) | NOT NULL (PK) |
+| matching_text_id | int(auto_increment) | NOT NULL |
+| userId | int(auto_increment) | NOT NULL |
+| apply_list_id | long | NOT NULL |
+| comment_type | enum | NOT NULL |
+| matching_comment_text | text | NOT NULL |
+| matching_comment_date | date | NOT NULL |
+| rate | float | NOT NULL |
+
+## **Free (자유 게시판)**
+
+| **컬럼명** | **데이터 타입** | **제약 조건** |
+| --- | --- | --- |
+| free_text_id | int(auto_increment) | NOT NULL (PK) |
+| userId | int(auto_increment) | NOT NULL |
+| board_type | enum | NOT NULL |
+| free_title | varchar | NOT NULL |
+| free_date | date | NOT NULL |
+| free_text | text | NOT NULL |
+| free_number | int | NOT NULL(default=0) |
+
+## **Free_comment (자유 게시판 댓글)**
+
+| **컬럼명** | **데이터 타입** | **제약 조건** |
+| --- | --- | --- |
+| free_text_comment_id | int(auto_increment) | NOT NULL (PK) |
+| free_text_id | int(auto_increment) | NOT NULL |
+| userId | int(auto_increment) | NOT NULL |
+| comment_type | enum | NOT NULL |
+| free_comment_text | text | NOT NULL |
+| free_comment_date | date | NOT NULL |
+
+## **Notice (공지사항 게시판)**
+
+| **컬럼명** | **데이터 타입** | **제약 조건** |
+| --- | --- | --- |
+| notice_text_id | int(auto_increment) | NOT NULL (PK) |
+| userId | int(auto_increment) | NOT NULL |
+| board_type | enum | NOT NULL |
+| notice_title | varchar | NOT NULL |
+| notice_date | date | NOT NULL |
+| notice_text | text | NOT NULL |
+| notice_number | int | NOT NULL(default=0) |
+</details>
+
 
 # 프로젝트 기능
 
