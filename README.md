@@ -28,7 +28,15 @@
 
 ---
 
+## 요구사항 명세서
+![허거덩스_요구사항명세서 - Google Sheets_page-0001](https://github.com/user-attachments/assets/8fe02292-5ab3-4e31-bb1b-3db5c609c7fd)
 
+---
+
+## ERD
+![prototype (2)](https://github.com/user-attachments/assets/26f0d16c-7dfd-44fd-bf8f-5b20d24858c4)
+
+---
 # 프로젝트 기능
 
 
@@ -144,5 +152,4 @@ src/
                     └── matching/          # 매칭 게시판 테스트 코드
 
 ```
-## ERD
-![prototype (2)](https://github.com/user-attachments/assets/26f0d16c-7dfd-44fd-bf8f-5b20d24858c4)
+
