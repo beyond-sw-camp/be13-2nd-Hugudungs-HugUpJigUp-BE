@@ -13,12 +13,14 @@ public class UserProfileResponse {
     private float rate;
     private ProfileType profileType;
     private String introduction;
+    private String experience;
 
     public static UserProfileResponse of(UserProfile userProfile) {
         return UserProfileResponse.builder()
                 .rate(userProfile.getRate())
                 .profileType(userProfile.getProfileType())
                 .introduction(userProfile.getIntroduction())
+                .experience(userProfile.getExperience())
                 .build();
     }
 }
