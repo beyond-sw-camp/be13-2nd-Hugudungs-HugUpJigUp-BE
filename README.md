@@ -38,6 +38,8 @@
 
 ---
 
+# [플로우차트](https://www.figma.com/board/WFpTCWGFAQv6SYuRj1BlCr/Flow-Chart?node-id=0-1&t=6rcCj2lWCvrQJV2e-1)
+
 # [API 명세서 및 테스트 결과 보고서](https://hexagonal-surf-ffe.notion.site/API-1b6a9f17aadc80f981a4f2c70ad2a8ab)   
 
 ---
